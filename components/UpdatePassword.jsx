@@ -10,7 +10,9 @@ import { getCookie, getCookies } from 'cookies-next';
 
 export default function UpdatePassword() {
 
-    const [uemail, setUserEmail] = useState(session?.user?.email);
+    const userinfo = getCookies();
+
+    const [uemail, setUserEmail] = useState(userinfo?.email);
     const [changeemail, setChangeEmail] = useState("");
     const [newpassword, setNewPassword] = useState("");
     const [confirmpassword, setConfirmPassword] = useState("");
@@ -45,7 +47,7 @@ export default function UpdatePassword() {
                 toast("Password & Confirm Password Not Matched!");
                 return;
             }
-           const newpassemail = changeemail!=''?changeemail:session?.user?.email;
+           const newpassemail = changeemail!=''?changeemail:userinfo?.email;
 
             const res = await fetch(process.env.URL + '/api/updatepassword', {
                 method: "POST",
