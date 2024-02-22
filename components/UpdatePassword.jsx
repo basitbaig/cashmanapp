@@ -45,14 +45,7 @@ export default function UpdatePassword() {
                 toast("Password & Confirm Password Not Matched!");
                 return;
             }
-
-            
-
-          //  console.log(uemail) ;
-
            const newpassemail = changeemail!=''?changeemail:session?.user?.email;
-
-          // console.log({newpassemail}) ;
 
             const res = await fetch('/api/updatepassword', {
                 method: "POST",
@@ -60,8 +53,6 @@ export default function UpdatePassword() {
                 body: JSON.stringify({email:newpassemail, password: newpassword})
             });
 
-           //console.log(res);
- 
             if (res.ok) {
                 // const form = e.target;
                 toast("Password Updated Sucessfully...");
@@ -71,9 +62,6 @@ export default function UpdatePassword() {
                 setTimeout(() => {
                     (handleRedirect());
                 }, 2000);
-
-                
-
             } else {
                 toast("Password Updation Failed, Please try again...");
             }

@@ -1,4 +1,4 @@
-import { connectMongoDB } from "@/dblib/mongodb";
+
 import { NextResponse } from "next/server";  
  
 export const getLoginUser = async ({email,password}) => {
@@ -151,6 +151,27 @@ export const pendingCash = async ({branchid}) => {
 
 } 
  
+
+export async function findTransaction({transactionid}){
+ 
+  try {
+    const res = await fetch('/api/getpendingentry', {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ transactionid })
+    });
+
+    const data = await res.json();
+
+    return data.pendingEntry;
+
+  } catch (error) {
+    return { message: 'Failed to find product' }
+  }
+}
+ 
+ 
+
 const getFeeData = () => {
     fetch('feedata.json', {
       headers: {

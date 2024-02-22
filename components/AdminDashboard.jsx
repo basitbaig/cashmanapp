@@ -93,7 +93,7 @@ export default function AdminDashboard() {
           <button className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-700" onClick={toggle}>{showMe ? "Hide Pending Entries" : "Show Pending Entries"}</button>
 
           <div style={{ display: showMe ? "block" : "none" }}>
-            <h1>Branch ID: {branchid}</h1>
+        
             <ShowPendingCash branchid={decodeURIComponent(branchid)} />
           
           </div>
