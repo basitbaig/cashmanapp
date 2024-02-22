@@ -1,0 +1,182 @@
+[
+    {
+        "id": 0,
+        "branchname": "Select Branch",
+        "comid": "0",
+        "branchemail": "nobranch@fps.edu.pk"
+    },        
+    {
+        "id": 1,
+        "branchname": "A Level Campus",
+        "comid": "1",
+        "branchemail": "alevel@fps.edu.pk"
+    },
+    {
+        "id": 2,
+        "branchname": "Junior Campus Defence",
+        "comid": "1",
+        "branchemail": "juniordha@fps.edu.pk"
+    },
+    {
+        "id": 3,
+        "branchname": "Junior Campus Muhammad Ali Society",
+        "comid": "1",
+        "branchemail": "jr@fps.edu.pk"
+    },
+    {
+        "id": 4,
+        "branchname": "O Level Defence Campus",
+        "comid": "1",
+        "branchemail": "oldc@fps.edu.pk"
+    },
+    {
+        "id": 5,
+        "branchname": "O Level North Campus",
+        "comid": "1",
+        "branchemail": "ncolb@fps.edu.pk"
+    },
+    {
+        "id": 6,
+        "branchname": "North Campus Junior",
+        "comid": "1",
+        "branchemail": "nc@fps.edu.pk"
+    },
+    {
+        "id": 7,
+        "branchname": "Head Start Junior Gulshan",
+        "comid": "2",
+        "branchemail": "hsgj@hs.edu.pk"
+    },
+    {
+        "id": 8,
+        "branchname": "Head Start Clifton Campus",
+        "comid": "2",
+        "branchemail": "hscc@hs.edu.pk"
+    },
+    {
+        "id": 9,
+        "branchname": "Head Start Junior PECHS OLD",
+        "comid": "2",
+        "branchemail": "hsj@hs.edu.pk"
+    },
+    {
+        "id": 10,
+        "branchname": "Head Start CC Elementary Section",
+        "comid": "2",
+        "branchemail": "hsclifton@hs.edu.pk"
+    },
+    {
+        "id": 11,
+        "branchname": "Head Start Kindergarten Gulshan",
+        "comid": "2",
+        "branchemail": "hsgk@hs.edu.pk"
+    },
+    {
+        "id": 12,
+        "branchname": "Head Start North Nazimabad",
+        "comid": "2",
+        "branchemail": "hsn@hs.edu.pk"
+    },
+    {
+        "id": 13,
+        "branchname": "Head Start Junior PECHS",
+        "comid": "2",
+        "branchemail": "hsj@hs.edu.pk"
+    },
+    {
+        "id": 14,
+        "branchname": "Head Start Elementary PECHS",
+        "comid": "2",
+        "branchemail": "hsp@hs.edu.pk"
+    },
+    {
+        "id": 15,
+        "branchname": "Head Start Junior High PECHS",
+        "comid": "2",
+        "branchemail": "hsjhp@hs.edu.pk"
+    },
+    {
+        "id": 16,
+        "branchname": "Autobahn Campus",
+        "comid": "1",
+        "branchemail": "abchyd@fps.edu.pk"
+    },
+    {
+        "id": 17,
+        "branchname": "Defence Campus",
+        "comid": "1",
+        "branchemail": "defencehyd@fps.edu.pk"
+    },
+    {
+        "id": 18,
+        "branchname": "Elementary Section Hyderabad",
+        "comid": "1",
+        "branchemail": "elementaryhyd@fps.edu.pk"
+    },
+    {
+        "id": 19,
+        "branchname": "Head Office",
+        "comid": "1",
+        "branchemail": "ho@fps.edu.pk"
+    },
+    {
+        "id": 21,
+        "branchname": "Elementary Section Shahrah-e-Faisal",
+        "comid": "1",
+        "branchemail": "elmkmchs@fps.edu.pk"
+    },
+    {
+        "id": 22,
+        "branchname": "Head Start O Level Gulshan",
+        "comid": "2",
+        "branchemail": "hsog@hs.edu.pk"
+    },
+    {
+        "id": 26,
+        "branchname": "Elementary Section Defence",
+        "comid": "1",
+        "branchemail": "elementary@fps.edu.pk"
+    },
+    {
+        "id": 27,
+        "branchname": "Junior Section Hyderabad",
+        "comid": "1",
+        "branchemail": "jrsection@fps.edu.pk"
+    },
+    {
+        "id": 29,
+        "branchname": "Junior Campus North Nazimabad",
+        "comid": "1",
+        "branchemail": "jrnorth@fps.edu.pk"
+    },
+    {
+        "id": 30,
+        "branchname": "Elementary Extension",
+        "comid": "1",
+        "branchemail": "elementaryexthyd@fps.edu.pk"
+    },
+    {
+        "id": 31,
+        "branchname": "Malir Campus",
+        "comid": "1",
+        "branchemail": "malircampus@fps.edu.pk"
+    },
+    {
+        "id": 32,
+        "branchname": "Head Start Junior Clifton Campus",
+        "comid": "2",
+        "branchemail": "hsclifton@hs.edu.pk"
+    },
+    {
+        "id": 33,
+        "branchname": "Foundation Institute of Law & Social Sciences",
+        "comid": "1",
+        "branchemail": "defencehyd@fps.edu.pk"
+    },
+    {
+        "id": 34,
+        "branchname": "Jauhar Campus",
+        "comid": "1",
+        "branchemail": "jauharcampus@fps.edu.pk"
+    }
+]

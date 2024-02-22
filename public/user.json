@@ -1,0 +1,10 @@
+[    
+    {
+        "Id": 1,
+        "UserEmail": "alevel@fps.edu.pk",
+        "UserName": "A Level Campus",        
+        "Password": "Fps123",
+        "UserRole": "Admin"
+    }
+    
+]

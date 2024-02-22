@@ -1,0 +1,400 @@
+{
+    "feebilling": [
+        {
+            "pkfeeid": 1651077,
+            "branchid": 21,
+            "rollno": 25003,
+            "feemonth": "AUGUST",
+            "challanid": 41284213,
+            "totalamount": 138866,
+            "receivedate": "2024-01-02"
+        },
+        {
+            "pkfeeid": 1651078,
+            "branchid": 1,
+            "rollno": 25004,
+            "feemonth": "AUGUST",
+            "challanid": 41284787,
+            "totalamount": 47431,
+            "receivedate": "2024-01-02"
+        },
+        {
+            "pkfeeid": 1651079,
+            "branchid": 1,
+            "rollno": 25004,
+            "feemonth": "SEPTEMBER",
+            "challanid": 41284788,
+            "totalamount": 47431,
+            "receivedate": "2024-01-02"
+        },
+        {
+            "pkfeeid": 1651080,
+            "branchid": 5,
+            "rollno": 25005,
+            "feemonth": "AUGUST",
+            "challanid": 41284589,
+            "totalamount": 139485,
+            "receivedate": "2024-01-02"
+        },
+        {
+            "pkfeeid": 1651081,
+            "branchid": 31,
+            "rollno": 25006,
+            "feemonth": "AUGUST",
+            "challanid": 41284595,
+            "totalamount": 79820,
+            "receivedate": "2024-01-02"
+        },
+        {
+            "pkfeeid": 1651083,
+            "branchid": 26,
+            "rollno": 25007,
+            "feemonth": "AUGUST",
+            "challanid": 41284804,
+            "totalamount": 138866,
+            "receivedate": "2024-01-03"
+        },
+        {
+            "pkfeeid": 1651084,
+            "branchid": 26,
+            "rollno": 25008,
+            "feemonth": "AUGUST",
+            "challanid": 41284794,
+            "totalamount": 138866,
+            "receivedate": "2024-01-03"
+        },
+        {
+            "pkfeeid": 1651103,
+            "branchid": 21,
+            "rollno": 25024,
+            "feemonth": "AUGUST",
+            "challanid": 41284825,
+            "totalamount": 138866,
+            "receivedate": "2024-01-04"
+        },
+        {
+            "pkfeeid": 1651104,
+            "branchid": 1,
+            "rollno": 25025,
+            "feemonth": "AUGUST",
+            "challanid": 41284450,
+            "totalamount": 47431,
+            "receivedate": "2024-01-04"
+        },
+        {
+            "pkfeeid": 1651105,
+            "branchid": 1,
+            "rollno": 25025,
+            "feemonth": "SEPTEMBER",
+            "challanid": 41284451,
+            "totalamount": 47431,
+            "receivedate": "2024-01-04"
+        },
+        {
+            "pkfeeid": 1651106,
+            "branchid": 21,
+            "rollno": 25026,
+            "feemonth": "AUGUST",
+            "challanid": 41284695,
+            "totalamount": 138866,
+            "receivedate": "2024-01-04"
+        },
+        {
+            "pkfeeid": 1651113,
+            "branchid": 26,
+            "rollno": 25032,
+            "feemonth": "AUGUST",
+            "challanid": 41284802,
+            "totalamount": 138866,
+            "receivedate": "2024-01-02"
+        },
+        {
+            "pkfeeid": 1651114,
+            "branchid": 31,
+            "rollno": 25033,
+            "feemonth": "AUGUST",
+            "challanid": 41284753,
+            "totalamount": 79820,
+            "receivedate": "2024-01-02"
+        },
+        {
+            "pkfeeid": 1651115,
+            "branchid": 6,
+            "rollno": 25034,
+            "feemonth": "AUGUST",
+            "challanid": 41284775,
+            "totalamount": 134820,
+            "receivedate": "2024-01-02"
+        },
+        {
+            "pkfeeid": 1651116,
+            "branchid": 26,
+            "rollno": 25035,
+            "feemonth": "AUGUST",
+            "challanid": 41284806,
+            "totalamount": 138866,
+            "receivedate": "2024-01-03"
+        },
+        {
+            "pkfeeid": 1651117,
+            "branchid": 26,
+            "rollno": 25036,
+            "feemonth": "AUGUST",
+            "challanid": 41284800,
+            "totalamount": 138866,
+            "receivedate": "2024-01-03"
+        },
+        {
+            "pkfeeid": 1651126,
+            "branchid": 26,
+            "rollno": 25037,
+            "feemonth": "AUGUST",
+            "challanid": 41284893,
+            "totalamount": 138866,
+            "receivedate": "2024-01-05"
+        },
+        {
+            "pkfeeid": 1651127,
+            "branchid": 31,
+            "rollno": 25038,
+            "feemonth": "AUGUST",
+            "challanid": 41284837,
+            "totalamount": 79820,
+            "receivedate": "2024-01-05"
+        },
+        {
+            "pkfeeid": 1651135,
+            "branchid": 26,
+            "rollno": 25040,
+            "feemonth": "AUGUST",
+            "challanid": 41284569,
+            "totalamount": 138866,
+            "receivedate": "2024-01-04"
+        },
+        {
+            "pkfeeid": 1651137,
+            "branchid": 1,
+            "rollno": 25042,
+            "feemonth": "AUGUST",
+            "challanid": 41284822,
+            "totalamount": 47431,
+            "receivedate": "2024-01-08"
+        },
+        {
+            "pkfeeid": 1651138,
+            "branchid": 1,
+            "rollno": 25042,
+            "feemonth": "SEPTEMBER",
+            "challanid": 41284823,
+            "totalamount": 47431,
+            "receivedate": "2024-01-08"
+        },
+        {
+            "pkfeeid": 1651139,
+            "branchid": 29,
+            "rollno": 25043,
+            "feemonth": "AUGUST",
+            "challanid": 41284831,
+            "totalamount": 77086,
+            "receivedate": "2024-01-08"
+        },
+        {
+            "pkfeeid": 1651143,
+            "branchid": 6,
+            "rollno": 25044,
+            "feemonth": "AUGUST",
+            "challanid": 41284887,
+            "totalamount": 137152,
+            "receivedate": "2024-01-09"
+        },
+        {
+            "pkfeeid": 1651144,
+            "branchid": 6,
+            "rollno": 25045,
+            "feemonth": "AUGUST",
+            "challanid": 41284903,
+            "totalamount": 134820,
+            "receivedate": "2024-01-09"
+        },
+        {
+            "pkfeeid": 1651145,
+            "branchid": 6,
+            "rollno": 25046,
+            "feemonth": "AUGUST",
+            "challanid": 41284905,
+            "totalamount": 134820,
+            "receivedate": "2024-01-09"
+        },
+        {
+            "pkfeeid": 1651146,
+            "branchid": 21,
+            "rollno": 25047,
+            "feemonth": "AUGUST",
+            "challanid": 41284735,
+            "totalamount": 138866,
+            "receivedate": "2024-01-09"
+        },
+        {
+            "pkfeeid": 1651147,
+            "branchid": 6,
+            "rollno": 25048,
+            "feemonth": "AUGUST",
+            "challanid": 41284907,
+            "totalamount": 138484,
+            "receivedate": "2024-01-08"
+        },
+        {
+            "pkfeeid": 1651148,
+            "branchid": 1,
+            "rollno": 25049,
+            "feemonth": "AUGUST",
+            "challanid": 41284814,
+            "totalamount": 143581,
+            "receivedate": "2024-01-10"
+        },
+        {
+            "pkfeeid": 1651149,
+            "branchid": 5,
+            "rollno": 25050,
+            "feemonth": "AUGUST",
+            "challanid": 41284956,
+            "totalamount": 138984,
+            "receivedate": "2024-01-10"
+        },
+        {
+            "pkfeeid": 1651150,
+            "branchid": 21,
+            "rollno": 25051,
+            "feemonth": "AUGUST",
+            "challanid": 41284946,
+            "totalamount": 138866,
+            "receivedate": "2024-01-11"
+        },
+        {
+            "pkfeeid": 1651151,
+            "branchid": 31,
+            "rollno": 25052,
+            "feemonth": "AUGUST",
+            "challanid": 41284919,
+            "totalamount": 79820,
+            "receivedate": "2024-01-11"
+        },
+        {
+            "pkfeeid": 1651152,
+            "branchid": 2,
+            "rollno": 25053,
+            "feemonth": "AUGUST",
+            "challanid": 41284587,
+            "totalamount": 138316,
+            "receivedate": "2024-01-11"
+        },
+        {
+            "pkfeeid": 1651153,
+            "branchid": 29,
+            "rollno": 25054,
+            "feemonth": "AUGUST",
+            "challanid": 41284938,
+            "totalamount": 77086,
+            "receivedate": "2024-01-05"
+        },
+        {
+            "pkfeeid": 1651155,
+            "branchid": 26,
+            "rollno": 25055,
+            "feemonth": "AUGUST",
+            "challanid": 41284895,
+            "totalamount": 138866,
+            "receivedate": "2024-01-09"
+        },
+        {
+            "pkfeeid": 1651156,
+            "branchid": 6,
+            "rollno": 25056,
+            "feemonth": "AUGUST",
+            "challanid": 41284715,
+            "totalamount": 134820,
+            "receivedate": "2024-01-10"
+        },
+        {
+            "pkfeeid": 1651157,
+            "branchid": 6,
+            "rollno": 25057,
+            "feemonth": "AUGUST",
+            "challanid": 41284913,
+            "totalamount": 134820,
+            "receivedate": "2024-01-10"
+        },
+        {
+            "pkfeeid": 1651158,
+            "branchid": 2,
+            "rollno": 25058,
+            "feemonth": "AUGUST",
+            "challanid": 41284952,
+            "totalamount": 138316,
+            "receivedate": "2024-01-10"
+        },
+        {
+            "pkfeeid": 1651159,
+            "branchid": 31,
+            "rollno": 25059,
+            "feemonth": "AUGUST",
+            "challanid": 41284987,
+            "totalamount": 79820,
+            "receivedate": "2024-01-12"
+        },
+        {
+            "pkfeeid": 1651160,
+            "branchid": 31,
+            "rollno": 25060,
+            "feemonth": "AUGUST",
+            "challanid": 41284989,
+            "totalamount": 79820,
+            "receivedate": "2024-01-12"
+        },
+        {
+            "pkfeeid": 1651161,
+            "branchid": 21,
+            "rollno": 25061,
+            "feemonth": "AUGUST",
+            "challanid": 41284942,
+            "totalamount": 138866,
+            "receivedate": "2024-01-11"
+        },
+        {
+            "pkfeeid": 1651173,
+            "branchid": 2,
+            "rollno": 25062,
+            "feemonth": "AUGUST",
+            "challanid": 41284969,
+            "totalamount": 139983,
+            "receivedate": "2024-01-16"
+        },
+        {
+            "pkfeeid": 1651174,
+            "branchid": 31,
+            "rollno": 25063,
+            "feemonth": "AUGUST",
+            "challanid": 41284979,
+            "totalamount": 79820,
+            "receivedate": "2024-01-16"
+        },
+        {
+            "pkfeeid": 1651175,
+            "branchid": 1,
+            "rollno": 25064,
+            "feemonth": "AUGUST",
+            "challanid": 41285052,
+            "totalamount": 50581,
+            "receivedate": "2024-01-16"
+        },
+        {
+            "pkfeeid": 1651176,
+            "branchid": 1,
+            "rollno": 25064,
+            "feemonth": "SEPTEMBER",
+            "challanid": 41285053,
+            "totalamount": 50581,
+            "receivedate": "2024-01-16"
+        }
+    ]
+}
