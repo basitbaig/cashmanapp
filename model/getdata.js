@@ -5,7 +5,7 @@ export const getLoginUser = async ({email,password}) => {
 
   try {
     
-      const res = await fetch(process.env.URL + '/api/checklogin', {
+      const res = await fetch('/api/checklogin', {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email, password })
