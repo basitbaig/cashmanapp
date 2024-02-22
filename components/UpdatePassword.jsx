@@ -47,7 +47,7 @@ export default function UpdatePassword() {
             }
            const newpassemail = changeemail!=''?changeemail:session?.user?.email;
 
-            const res = await fetch('/api/updatepassword', {
+            const res = await fetch(process.env.URL + '/api/updatepassword', {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({email:newpassemail, password: newpassword})

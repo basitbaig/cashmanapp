@@ -31,7 +31,7 @@ export default function ExpenseHead() {
 
         try {
  
-            const res = await fetch('api/cashexphead', {
+            const res = await fetch(process.env.URL + 'api/cashexphead', {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(formvalues)

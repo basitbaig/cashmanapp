@@ -46,7 +46,7 @@ const handleConfirm = async () => {
 
     try {
  
-      const res = await fetch('/api/confirmpending', {
+      const res = await fetch(process.env.URL + '/api/confirmpending', {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ transid })
