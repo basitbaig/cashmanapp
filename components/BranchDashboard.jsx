@@ -83,20 +83,29 @@ export default function BranchDashboard() {
 
           <div style={{display: showMe?"block":"none" }}>
             {/* <div className="w-1/4 mt-14"> */}
-            <ShowPendingCash branchid={decodeURIComponent(branchid)} />
+
+            
+            {/* <ShowPendingCash branchid={decodeURIComponent(branchid)} /> */}
+
+
             {/* </div> */}
           </div>
 
 
 
           {/* <div className="w-3/4"> */}
-          <div className="float-right {showMe ? mt-1 : mt-0}">
+
+
+
+          {/* <div className="float-right {showMe ? mt-1 : mt-0}">
             <ShowBranchBalance branchid={decodeURIComponent(branchid)} />
           </div>
 
           <div className="{showMe ? mt-11 : mt-0}">
             <ShowBranchDashboard branchid={decodeURIComponent(branchid)} />
-          </div>
+          </div> */}
+
+
           {/* </div> */}
 
         </div>
