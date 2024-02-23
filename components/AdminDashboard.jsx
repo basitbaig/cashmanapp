@@ -45,7 +45,6 @@ export default function AdminDashboard() {
 
   useEffect(() => {    
     callBranchList();
-    console.log(branchlist);
   }, []);
 
   //Make Coma Separated Number
@@ -98,11 +97,11 @@ export default function AdminDashboard() {
           
           </div> */}
 
-          {/* {callbranchid != 0 ?
+          {callbranchid != 0 ?
             <ShowBranchBalance branchid={callbranchid} />
             :
             <ShowBranchBalance branchid={decodeURIComponent(branchid)} />
-          } */}
+          }
 
           <div className="mt-11">
             <div className="flex ">

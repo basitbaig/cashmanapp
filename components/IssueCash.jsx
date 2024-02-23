@@ -57,7 +57,7 @@ export default function IssueCash({...props}) {
 
     try {
 
-      const res = await fetch(process.env.URL + '/api/cashissue', {
+      const res = await fetch('/api/cashissue', {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formvalues)
