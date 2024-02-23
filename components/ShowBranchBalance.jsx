@@ -7,7 +7,7 @@ async function BranchHandBalance({branchid}) {
         return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
       }
  
-        const res = await fetch('../../api/cashbalance', {
+        const res = await fetch(process.env.URL + '/api/cashbalance', {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ branchid })
