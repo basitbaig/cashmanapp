@@ -29,6 +29,8 @@ export default function AdminDashboard() {
  
   const [showMe, setShowMe] = useState(false);
 
+  const [branchlist, Setbranchlist]=useState([]);
+
   function toggle(e){
     e.preventDefault();
     
@@ -36,16 +38,14 @@ export default function AdminDashboard() {
   }
 
   const [callbranchid, SetCallBranchID] = useState(0);
-  const [branchlist, SetBranchList] = useState([]);
-
+  
   const callBranchList = async () => {
-       SetBranchList(await getBranchList("all"));  
+    Setbranchlist(await getBranchList("all"));
   }
 
   useEffect(() => {    
     callBranchList();
-
-    //SetCallBranchID()
+    console.log(branchlist);
   }, []);
 
   //Make Coma Separated Number
@@ -84,25 +84,25 @@ export default function AdminDashboard() {
  
       <div className="flex bg-gray-200 min-h-screen">
 
-        <div className="w-1/4 mt-11">
+        {/* <div className="w-1/4 mt-11">
           <ShowAllBranchBalance />
-        </div>
+        </div> */}
 
         <div className="mt-5">
 
           <button className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-700" onClick={toggle}>{showMe ? "Hide Pending Entries" : "Show Pending Entries"}</button>
 
-          <div style={{ display: showMe ? "block" : "none" }}>
+          {/* <div style={{ display: showMe ? "block" : "none" }}>
         
             <ShowPendingCash branchid={decodeURIComponent(branchid)} />
           
-          </div>
+          </div> */}
 
-          {callbranchid != 0 ?
+          {/* {callbranchid != 0 ?
             <ShowBranchBalance branchid={callbranchid} />
             :
             <ShowBranchBalance branchid={decodeURIComponent(branchid)} />
-          }
+          } */}
 
           <div className="mt-11">
             <div className="flex ">
@@ -112,11 +112,11 @@ export default function AdminDashboard() {
                 }
               </select>
             </div>
-            {callbranchid != 0 ?
+            {/* {callbranchid != 0 ?
               <ShowBranchDashboard branchid={callbranchid} />
               :
               <ShowBranchDashboard branchid={decodeURIComponent(branchid)} />
-            }
+            } */}
           </div>
         </div>
 

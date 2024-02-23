@@ -8,8 +8,6 @@ export async function POST(request) {
 
         const  body  = await request.json();
 
-       // console.log(body);
- 
         await connectMongoDB();
  
         const db = mongoose.connection;
@@ -26,8 +24,6 @@ export async function POST(request) {
         {
             branchlist = await db.collection('branchlists').find({ comid: body }).toArray()
         }
-
-       // console.log(branchlist);
 
         return NextResponse.json(branchlist);
 

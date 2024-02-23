@@ -29,21 +29,7 @@ export default function Navbar({username, userrole, firstlogin}) {
     CallDataTypes();
   
   }, []);
-  // const callCashReceiving = () => {
-
-  //   router.push({
-  //           pathname: "/receivecash",
-  //           query: {role:role, type:type, username:username, useremail:useremail, firstlogin:firstlogin },
-  //         });
-
-  // }
-
-  // const callCashIssuing = () => {
-  //   router.push({
-  //     pathname: "/issuecash",
-  //     query: {role:role, type:type, username:username, useremail:useremail, firstlogin:firstlogin },
-  //   });
-  // }
+ 
 
       // removing cookies
     const removeCookie = () => {

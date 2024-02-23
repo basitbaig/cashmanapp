@@ -23,7 +23,7 @@ export const getLoginUser = async ({email,password}) => {
 
 export const getBranchBalance = async ({branchid}) => {
     try {
-        const res = await fetch(process.env.URL + '/api/cashbalance', {
+        const res = await fetch('/api/cashbalance', {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ branchid })
@@ -41,7 +41,7 @@ export const getBranchBalance = async ({branchid}) => {
 export const getBranchCash = async ({branchid}) => {
 
     try {     
-        const res = await fetch(process.env.URL + '/api/branchcash', {
+        const res = await fetch('/api/branchcash', {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ branchid })
@@ -62,7 +62,7 @@ export const getBranchCash = async ({branchid}) => {
  
 export const getCashTypes = async (entrytype) => {
  
-    const res = await fetch(process.env.URL + '/api/getcashexphead', {
+    const res = await fetch('/api/getcashexphead', {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(entrytype)
@@ -83,15 +83,13 @@ export const getBranchList = async (comid) => {
      
     try {
 
-        const res = await fetch(process.env.URL + '/api/getbranchlist', {
+        const res = await fetch('/api/getbranchlist', {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(comid)
         }).then(response=> response.json());
         
         const data = await res;
-
-        //return NextResponse.json(data);
 
         return data;
         
@@ -117,7 +115,7 @@ export const getBranchList = async (comid) => {
 
 export const getAllBranchBalance = async () => {
  
-    const res = await fetch(process.env.URL + '/api/cashbalanceall', {
+    const res = await fetch('/api/cashbalanceall', {
         method: "POST",
         headers: { "Content-Type": "application/json" }
     });
@@ -133,7 +131,7 @@ export const getAllBranchBalance = async () => {
 export const pendingCash = async ({branchid}) => {
 
     try {     
-        const res = await fetch(process.env.URL +'/api/pendingcash', {
+        const res = await fetch('/api/pendingcash', {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ branchid })
@@ -155,7 +153,7 @@ export const pendingCash = async ({branchid}) => {
 export async function findTransaction({transactionid}){
  
   try {
-    const res = await fetch(process.env.URL + '/api/getpendingentry', {
+    const res = await fetch('/api/getpendingentry', {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ transactionid })

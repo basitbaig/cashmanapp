@@ -28,7 +28,7 @@ export default function BranchList() {
 
         try {
 
-            const res = await fetch(process.env.URL + '/api/branchlist', {
+            const res = await fetch(process.env.URL + '/api/addupdatebranchlist', {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(formvalues)
