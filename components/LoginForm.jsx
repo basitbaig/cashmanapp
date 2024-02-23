@@ -52,8 +52,7 @@ export default function LoginForm() {
 
         // console.log('---Email and Password At Login Page-----');
         // console.log(email);
-        // console.log(password);
-
+ 
         const userdata =  await getLoginUser({email,password});
 
         try {

@@ -5,7 +5,7 @@ export const getLoginUser = async ({email,password}) => {
 
   try {
     
-      const res = await fetch(process.env.URL + '/api/checklogin', {
+      const res = await fetch('/api/checklogin', {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email, password })
@@ -83,7 +83,7 @@ export const getBranchList = async (comid) => {
      
     try {
 
-        const res = await fetch(process.env.URL +'/api/getbranchlist', {
+        const res = await fetch('/api/getbranchlist', {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(comid)
