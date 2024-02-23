@@ -23,7 +23,7 @@ export const getLoginUser = async ({email,password}) => {
 
 export const getBranchBalance = async ({branchid}) => {
     try {
-        const res = await fetch('/api/cashbalance', {
+        const res = await fetch(process.env.URL + '/api/cashbalance', {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ branchid })
