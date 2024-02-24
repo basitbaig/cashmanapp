@@ -106,23 +106,23 @@ export const getBranchList = async (comid) => {
 export const getAllBranchBalance = async () => {
   const apiUrl = process.env.API_URL;
 
-  console.log(`${apiUrl}/api/cashbalanceall`);
+  //console.log(`${apiUrl}/api/cashbalanceall`);
 
-  // try {
-  //   const res = await fetch(`${apiUrl}/api/cashbalanceall`, {
-  //     method: "POST",
-  //     headers: { "Content-Type": "application/json" }
-  //   }, { cache: 'no-store' });
+  try {
+    const res = await fetch(`${apiUrl}/api/cashbalanceall`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" }
+    }, { cache: 'no-store' });
 
-  //   if (!res.ok) {
-  //     throw new Error("Balance List Not Found!!");
-  //   }
+    if (!res.ok) {
+      throw new Error("Balance List Not Found!!");
+    }
 
-  //   return res.json();
+    return res.json();
 
-  // } catch (error) {
-  //   throw new Error("Connection Issue With API Call");
-  // }
+  } catch (error) {
+    throw new Error("Connection Issue With API Call");
+  }
 
 }
 
