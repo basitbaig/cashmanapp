@@ -4,10 +4,7 @@ import PostPending from '@/components/PostPending';
 export default async function ShowPendingCash({branchid}) {
 
     //const [pendingcash, Setpendingcash] = useState([]);
-
-    
- 
-    const pendingcash = await pendingCash({branchid});
+    const {pendingcash} = await pendingCash({branchid});
  
     let grosstotal = 0;
 
@@ -50,6 +47,7 @@ export default async function ShowPendingCash({branchid}) {
                     <table className="table-fixed min-w-full text-left text-sm font-light">
                         <thead className="border-b bg-neutral-800 font-medium text-white dark:border-neutral-500 dark:bg-neutral-900">
                             <tr className="border-b dark:border-neutral-500">
+                                <th className="px-4 py-2">Transaction-Id</th>
                                 <th className="px-4 py-2">Branch</th>
                                 <th className="px-4 py-2">Entry Date</th>
                                 <th className="px-4 py-2">Description</th>
@@ -63,6 +61,7 @@ export default async function ShowPendingCash({branchid}) {
                                 pendingcash.map((item) => {
                                     grosstotal += Number(item.totalamount);
                                     return <tr className="border-b dark:border-neutral-500" key={item._id}>
+                                        <td className="whitespace-nowrap  px-3 py-2">{item._id}</td>
                                         <td className="whitespace-nowrap  px-3 py-2">{item.branchname}</td>
                                         <td className="whitespace-nowrap  px-3 py-2">{formatDate(item.entrydate)}</td>
                                         <td className="whitespace-nowrap  px-3 py-2">{item.description}</td>

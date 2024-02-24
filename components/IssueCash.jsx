@@ -52,12 +52,13 @@ export default function IssueCash({...props}) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const apiUrl = process.env.API_URL;
  
     const formvalues = { comid, branchid, username, entrydate, entrytype, category, description, totalamount, remarks };
 
     try {
 
-      const res = await fetch('/api/cashissue', {
+      const res = await fetch(`${apiUrl}/api/cashissue`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formvalues)

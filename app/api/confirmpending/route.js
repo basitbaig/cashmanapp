@@ -26,7 +26,15 @@ export async function POST(request) {
         console.log(query);
 
         
-        const res = await Branchcashbook.findOneAndUpdate(query, { $set: { ispending: 'false' } }, {new: true})
+        // const res = await Branchcashbook.findOneAndUpdate(query, { $set: { ispending: 'false' } }, {
+        //     returnNewDocument: true
+        // }, function (error, result) {
+        //         // In this moment, you recive a result object or error
+
+        //         // ... Your code when have result ... //
+
+        //         console.log(result);
+        //     });
          
         return NextResponse.json({ message: "Confirm Posting" }, { status: 201 });
 

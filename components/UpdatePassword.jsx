@@ -39,7 +39,7 @@ export default function UpdatePassword() {
         // console.log(newpassword);
         // console.log(confirmpassword);
 
-        //
+        const apiUrl = process.env.API_URL;
 
         try {
 
@@ -49,7 +49,7 @@ export default function UpdatePassword() {
             }
            const newpassemail = changeemail!=''?changeemail:userinfo?.email;
 
-            const res = await fetch(process.env.URL + '/api/updatepassword', {
+            const res = await fetch(`${apiUrl}/api/updatepassword`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({email:newpassemail, password: newpassword})

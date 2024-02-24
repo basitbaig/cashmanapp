@@ -42,14 +42,14 @@ const handleConfirm = async () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    alert(transid);
+    const apiUrl = process.env.API_URL;
 
     try {
  
-      const res = await fetch(process.env.URL + '/api/confirmpending', {
+      const res = await fetch(`${apiUrl}/api/confirmpending`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ transid })
+        body: JSON.stringify(transid)
       });
 
       if (res.ok) {
@@ -89,72 +89,72 @@ const handleConfirm = async () => {
 
             <div className="modal-box">
 
-              <div>
-
+              <div className="text-center">
+                   <h2 className="font-bold pm-4 w-full bg-gray-900 text-white">Confirm Pending</h2>
                   <div className="bg-slate-500 text-white">
                     <button className="flex float-right" type="button" onClick={() => (document.getElementById(id)).close()}>
                       <IoClose />
                     </button>
                   </div>   
               </div>
-              <h2 className="font-bold pm-4">Confirm Pending</h2>
+              
 
+              <div className="px-4 py-4 ml-10">
+                <form onSubmit={handleSubmit}>
 
-              <form onSubmit={handleSubmit}>
+                  <input type="text" name="trid" defaultValue={transid} className="font-bold text-green-500" />
+                  <div className="form-control w-full max-w-xs py-4"> 
+                    <label className="inline-block">Branch Name:<h1 className="font-bold text-blue-800 underline">{values.branchname}</h1></label>
+                    
+                    {/* <input
+                      type="text"
+                      id="branchname"
+                      name="branchname"
+                      className="input input-bordered w-full max-w-xs"
+                      value={values.branchname}
+                      readOnly
+                    /> */}
+                  </div>
+                  <div className="form-control w-full max-w-xs py-4">
+                    <label htmlFor="image">Description</label>
+                    <h5 className="font-bold text-blue-800 underline">{values.description}</h5>
+                    {/* <input
+                      type="text"
+                      id="description"
+                      name="description"
+                      value={values.description}
+                      readOnly
+                    /> */}
+                  </div>
+                  <div className="form-control w-full max-w-xs py-4">
+                    <label htmlFor="price">Amount</label>
+                    <h3 className="font-bold text-blue-800 underline">{values.totalamount}</h3>
+                    {/* <input
+                      type="number"
+                      id="totalamount"
+                      name="totalamount"
+                      value={values.totalamount}
+                      readOnly
+                    /> */}
+                  </div>
 
-                <input type="hidden" name="trid" value={transid} />
-                <div className="form-control w-full max-w-xs py-4">
-                  <label htmlFor="name">Branch Name:<h1 className="font-bold text-blue-800 underline">{values.branchname}</h1></label>
-                  
-                  {/* <input
-                    type="text"
-                    id="branchname"
-                    name="branchname"
-                    className="input input-bordered w-full max-w-xs"
-                    value={values.branchname}
-                    readOnly
-                  /> */}
-                </div>
-                <div className="form-control w-full max-w-xs py-4">
-                  <label htmlFor="image">Description</label>
-                  <h5 className="font-bold text-blue-800 underline">{values.description}</h5>
-                  {/* <input
-                    type="text"
-                    id="description"
-                    name="description"
-                    value={values.description}
-                    readOnly
-                  /> */}
-                </div>
-                <div className="form-control w-full max-w-xs py-4">
-                  <label htmlFor="price">Amount</label>
-                  <h3 className="font-bold text-blue-800 underline">{values.totalamount}</h3>
-                  {/* <input
-                    type="number"
-                    id="totalamount"
-                    name="totalamount"
-                    value={values.totalamount}
-                    readOnly
-                  /> */}
-                </div>
+                  <button
+                    className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-700"
+                    type="button"
+                    onClick={() => (document.getElementById(id)).close()}
+                  >
+                    Back
+                  </button>
 
-                <button
-                  className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-700"
-                  type="button"
-                  onClick={() => (document.getElementById(id)).close()}
-                >
-                  Back
-                </button>
-
-                <button
-                  className="rounded ml-8 bg-blue-500 px-4 py-2 text-white hover:bg-blue-700"
-                  type="submit"
-                  disabled={pending}
-                >
-                  Confirm To Post
-                </button>                
-              </form>
-
+                  <button
+                    className="float-right rounded ml-8 bg-blue-500 px-4 py-2 text-white hover:bg-blue-700"
+                    type="submit"
+                    disabled={pending}
+                  >
+                    Confirm To Post
+                  </button>                
+                </form>
+              </div>
 
             </div>
           </dialog>

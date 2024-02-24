@@ -1,83 +1,88 @@
 
 import { NextResponse } from "next/server";  
+
+//https://nextjs.org/docs/pages/building-your-application/deploying/production-checklist
  
 export const getLoginUser = async ({email,password}) => {
-
+  
   try {
     
       const res = await fetch('/api/checklogin', {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: { "Content-Type": "application/json" },          
           body: JSON.stringify({ email, password })
         });
   
-        const data = await res.json();
-        
-        return data;
+        if (!res.ok) {
+          throw new Error("Balance List Not Found!!");
+        }
+    
+        return res.json();
       
   } catch (error) {
-      throw new Error("User Not Found");
+    throw new Error(error);
   }
         
 }
 
-
-
 export const getBranchCash = async ({branchid}) => {
-
+  const apiUrl = process.env.API_URL;
     try {     
-        const res = await fetch('/api/branchcash', {
+      
+        const res = await fetch(`${apiUrl}/api/branchcash`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ branchid })
-        });
+        }, { cache: 'force-cache' });
 
         const data = await res.json();
 
-        //return NextResponse.json(data);
-        
-        
         return data;
 
     } catch (error) {
-        throw new Error("Transaction Not Found");
+      throw new Error(error);
     }
 
 } 
  
 export const getCashTypes = async (entrytype) => {
- 
-    const res = await fetch('/api/getcashexphead', {
+  const apiUrl = process.env.API_URL;
+  try {
+    const res = await fetch(`${apiUrl}/api/getcashexphead`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(entrytype)
-    }).then(response=> response.json());
-  
-    const data = await res;
+    }, { cache: 'force-cache' }).then(response => response.json());
 
-    // console.log(data);
-    // console.log('----Next Resposense Data----');
-    // console.log(NextResponse.json(data));
 
-    // return NextResponse.json(data);
-   
-    return data; 
-  }  
+    if (!res.ok) {
+      throw new Error("Balance List Not Found!!");
+    }
+
+    return res.json();
+
+  } catch (error) {
+    throw new Error(error);
+  }
+}  
 
 export const getBranchList = async (comid) => {
-     
+  const apiUrl = process.env.API_URL;
     try {
 
-        const res = await fetch('/api/getbranchlist', {
+        const res = await fetch(`${apiUrl}/api/getbranchlist`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(comid)
-        }).then(response=> response.json());
+        }, { cache: 'force-cache' }).then(response=> response.json());
         
-        const data = await res;
 
-        return data;
-        
+        if (!res.ok) {
+          throw new Error("Balance List Not Found!!");
+        }
+    
+        return res.json();
+
     } catch (error) {
         throw new Error(error);
     }
@@ -99,61 +104,100 @@ export const getBranchList = async (comid) => {
 };
 
 export const getAllBranchBalance = async () => {
- 
-    const res = await fetch('/api/cashbalanceall', {
-        method: "POST",
-        headers: { "Content-Type": "application/json" }
-    });
+  const apiUrl = process.env.API_URL;
 
-    const data = await res.json();
+  console.log(`${apiUrl}/api/cashbalanceall`);
 
-    //return NextResponse.json(data);
+  // try {
+  //   const res = await fetch(`${apiUrl}/api/cashbalanceall`, {
+  //     method: "POST",
+  //     headers: { "Content-Type": "application/json" }
+  //   }, { cache: 'no-store' });
 
-    return data;
+  //   if (!res.ok) {
+  //     throw new Error("Balance List Not Found!!");
+  //   }
+
+  //   return res.json();
+
+  // } catch (error) {
+  //   throw new Error("Connection Issue With API Call");
+  // }
 
 }
 
 export const pendingCash = async ({branchid}) => {
+  const apiUrl = process.env.API_URL;
 
-    try {     
-        const res = await fetch('/api/pendingcash', {
+    try {    
+
+        const res = await fetch(`${apiUrl}/api/pendingcash`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ branchid })
-        });
+        }, { cache: 'no-store' });
 
-        const data = await res.json();
-
-        //return NextResponse.json(data);
-        
-        return data;
+        if (!res.ok) {
+          throw new Error("No Pending Entries Found!!");
+        }
+     
+        return res.json();
 
     } catch (error) {
-        throw new Error("No Pending Transaction");
+        throw new Error("Connection Issue With API Call");
     }
+
+} 
+
+
+export const userInfo = async () => {
+  const apiUrl = process.env.API_URL;
+  try {     
+      const res = await fetch(`${apiUrl}/api/userinfo`, {
+          method: "GET",
+          headers: { "Content-Type": "application/json" }
+      }, { cache: 'no-store' });
+
+      if (!res.ok) {
+        throw new Error("No Pending Entries Found!!");
+      }
+   
+      return res.json();
+
+  } catch (error) {
+    throw new Error("Connection Issue With API Call");
+  }
 
 } 
  
 
 export async function findTransaction({transactionid}){
- 
+  const apiUrl = process.env.API_URL;
   try {
-    const res = await fetch('/api/getpendingentry', {
+    const res = await fetch(`${apiUrl}/api/getpendingentry`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ transactionid })
-    });
+    }, { cache: 'no-store' });
 
-    const data = await res.json();
 
-    return data.pendingEntry;
+    if (!res.ok) {
+      throw new Error("No Pending Entries Found!!");
+    }
+ 
+    return res.json();
 
   } catch (error) {
-    return { message: 'Failed to find product' }
+    throw new Error("Connection Issue With API Call");
   }
 }
  
  
+
+
+
+
+
 
 const getFeeData = () => {
     fetch('feedata.json', {
@@ -171,12 +215,12 @@ const getFeeData = () => {
   
   const GetApiData = async () => {
   
-    //const feedata = await getAPIData();
+    const apiUrl = process.env.API_URL;
   
     const feedata = getFeeData();
   
     try {
-      const response = await fetch(process.env.URL + +'/api/fetchandpostapi', {
+      const response = await fetch(`${apiUrl}/api/fetchandpostapi`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -28,10 +28,10 @@ export default function ExpenseHead() {
         e.preventDefault();
  
         const formvalues = { username,exphead, headtype };
-
+        const apiUrl = process.env.API_URL;
         try {
  
-            const res = await fetch(process.env.URL + '/api/cashexphead', {
+            const res = await fetch(`${apiUrl}/api/cashexphead`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(formvalues)

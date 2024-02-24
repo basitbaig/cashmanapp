@@ -4,7 +4,7 @@ import { getBranchCash } from '@/model/getdata'
 
 export default async function ShowBranchDashboard({branchid}) {
 
-    const branchdata = await getBranchCash({branchid}); 
+    const {branchdata} = await getBranchCash({branchid}); 
 
     function formatNumber(num) {
         return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")

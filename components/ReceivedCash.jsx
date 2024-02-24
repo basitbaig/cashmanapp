@@ -48,12 +48,13 @@ export default function ReceivedCash({...props}) {
         // const loginuser = decodeURIComponent(getCookie('username'));
         // const loginbranch = decodeURIComponent(getCookie('userbranchid'));
         // const logincomp = decodeURIComponent( getCookie('usercomp'))
+        const apiUrl = process.env.API_URL;
 
         const formvalues = { comid,branchid,username,entrydate,entrytype,category,description,totalamount,remarks };
 
         try {
  
-            const res = await fetch('/api/cashreceive', {
+            const res = await fetch(`${apiUrl}/api/cashreceive`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(formvalues)
