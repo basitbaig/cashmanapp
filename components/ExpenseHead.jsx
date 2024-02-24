@@ -5,8 +5,12 @@ import { useFormState, useFormStatus } from "react-dom"
 import { useState, useEffect, useRef } from "react";
 import { getCookie, getCookies } from 'cookies-next';
 import toast, { Toaster } from 'react-hot-toast'; 
+import { usePathname } from "next/navigation";
+ 
 
 export default function ExpenseHead() {
+
+    const curpath = usePathname();
 
     const { pending } = useFormStatus()
 
@@ -31,23 +35,30 @@ export default function ExpenseHead() {
         const apiUrl = process.env.API_URL;
         try {
  
-            const res = await fetch(`${apiUrl}/api/cashexphead`, {
+            const res = await fetch('/api/cashexphead', {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(formvalues)
             });
 
             if (res.ok) {
-            
-                //toast("Cash/Expense Head Created...");
+                revalidatePath('/'+curpath)
+                toast("Cash/Expense Head Created...");
+
+                //document.getElementById('exphead_modal').close();
+
+                router.refresh();
+               
+                router.push("/dashboard");   
+                 
 
                 // setTimeout(() => {
                 //     (handleRedirect());
                 // }, 1000);
             
-               {() => (document.getElementById('exphead_modal')).close()}
+               //{() => (document.getElementById('exphead_modal')).close()}
 
-               router.push("/dashboard");
+             
 
             } else {
                 const errorMesg = await res.json();
@@ -96,11 +107,11 @@ export default function ExpenseHead() {
                     <section className="bg-white dark:bg-gray-900">
                         <div className="py-8 px-2 mx-auto max-w-2xl lg:py-16">
                             <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-white">Expenses / Cash Head</h2>
-                                                                                
-                            <form onSubmit={handleSubmit}>
+                                                                            
+                            <form name="cashheadform" onSubmit={handleSubmit}>
                                 <div className="grid gap-4 sm:grid-cols-1 sm:gap-6 mb-3">
                                     <div className="sm:col-span-2">
-                                        <label htmlfor="exphead" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cash/Expense Head Title</label>
+                                        <label htmlFor="exphead" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cash/Expense Head Title</label>
                                         <input type="text" 
                                                name="exphead" 
                                                id="exphead" 
@@ -112,7 +123,7 @@ export default function ExpenseHead() {
                                                />
                                     </div>
                                     <div>
-                                    <label htmlfor="headtype" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cash/Expense Head Type</label>
+                                    <label htmlFor="headtype" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cash/Expense Head Type</label>
                                         <select data-te-select-init data-te-select-clear-button="true" name="headtype" required onChange={(e) => SetHeadType(e.target.value)}>
                                             <option value="">Select Head Type</option>
                                             <option value="R">Receiving Head</option>
@@ -153,6 +164,8 @@ export default function ExpenseHead() {
                                 </button>
                                                     
                             </form>
+
+                         
                         </div>
                     </section>
 

@@ -6,7 +6,7 @@ export default async function ShowAllBranchBalance() {
 
     //const [branchbalance,Setbranchbalance]=useState([]);
 
-    const { branchbalance } = await getAllBranchBalance(); 
+    const  branchbalance  = await getAllBranchBalance(); 
 
     let grosstotal = 0;
      

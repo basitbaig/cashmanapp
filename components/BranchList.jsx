@@ -90,7 +90,7 @@ export default function BranchList() {
                                 <div className="grid gap-4 sm:grid-cols-1 sm:gap-6 mb-3">
 
                                     <div className="sm:col-span-1">
-                                        <label htmlfor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Branch ID</label>
+                                        <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Branch ID</label>
                                         <input type="number"
                                             name="branchid"
                                             id="branchid"
@@ -98,7 +98,7 @@ export default function BranchList() {
                                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                             placeholder="BranchID"
                                             required
-                                            value={branchid}
+                                            defaultvalue={branchid}
                                             onChange={(e) => SetBranchId(e.target.value)}
                                         />
                                     </div>
@@ -106,7 +106,7 @@ export default function BranchList() {
 
 
                                     <div className="sm:col-span-2">
-                                        <label htmlfor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Branch Name</label>
+                                        <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Branch Name</label>
                                         <input type="text"
                                             name="branchname"
                                             id="branchname"
@@ -118,7 +118,7 @@ export default function BranchList() {
                                         />
                                     </div>
                                     <div>
-                                        <label htmlfor="company" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Company Name</label>
+                                        <label htmlFor="company" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Company Name</label>
                                         <select data-te-select-init data-te-select-clear-button="true" name="company" required onChange={(e) => SetHeadType(e.target.value)}>
                                             <option value="">Select Company</option>
                                             <option value="1">FPS</option>
@@ -126,7 +126,7 @@ export default function BranchList() {
                                         </select>
                                     </div>
                                     <div className="sm:col-span-2">
-                                        <label htmlfor="branchemail" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Branch Email</label>
+                                        <label htmlFor="branchemail" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Branch Email</label>
                                         <input type="text"
                                             name="branchemail"
                                             id="branchemail"

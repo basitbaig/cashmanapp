@@ -28,7 +28,7 @@ export default function ReceivedCash({...props}) {
     const router = useRouter();
 
     const [comid, SetComid] = useState(getCookie('usercomp'));
-    const [branchid, SetBranchid] = useState(getCookie('userbranchid'));
+    const [branchid, SetBranchid] = useState(getCookie('branchid'));
     const [username, SetUsername] = useState(getCookie('username'));
     const [entrydate, SetEntrydate] = useState(Date.now());
     const [entrytype, SetEntrytype] = useState("R");
@@ -54,7 +54,7 @@ export default function ReceivedCash({...props}) {
 
         try {
  
-            const res = await fetch(`${apiUrl}/api/cashreceive`, {
+            const res = await fetch('/api/cashreceive', {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(formvalues)
@@ -120,9 +120,7 @@ export default function ReceivedCash({...props}) {
                     <div className="bg-slate-500 px-5 text-white">
                         {username}
                         <button className="float-right" type="button" onClick={() => (document.getElementById('recv_modal')).close()}>                             
-                        <div className="leafygreen-ui-xhlipt">                            
-                            <svg class="leafygreen-ui-1st74h4" height="16" width="16" role="img" aria-label="X Icon" viewBox="0 0 16 16"><path fill-rule="evenodd" clip-rule="evenodd" d="M12.2028 3.40381C11.8123 3.01329 11.1791 3.01329 10.7886 3.40381L8.3137 5.87869L5.83883 3.40381C5.44831 3.01329 4.81514 3.01329 4.42462 3.40381L3.71751 4.11092C3.32699 4.50144 3.32699 5.13461 3.71751 5.52513L6.19238 8.00001L3.71751 10.4749C3.32699 10.8654 3.32699 11.4986 3.71751 11.8891L4.42462 12.5962C4.81514 12.9867 5.44831 12.9867 5.83883 12.5962L8.3137 10.1213L10.7886 12.5962C11.1791 12.9867 11.8123 12.9867 12.2028 12.5962L12.9099 11.8891C13.3004 11.4986 13.3004 10.8654 12.9099 10.4749L10.435 8.00001L12.9099 5.52513C13.3004 5.13461 13.3004 4.50144 12.9099 4.11092L12.2028 3.40381Z" fill="currentColor"></path></svg>                        
-                        </div>
+                            <h1>X</h1>
                         </button>
                     </div>
                     <section className="bg-white dark:bg-gray-900">
@@ -132,7 +130,7 @@ export default function ReceivedCash({...props}) {
                             <form onSubmit={handleSubmit}>
                                 <div className="grid gap-4 sm:grid-cols-2 sm:gap-6 mb-5">
                                     <div className="sm:col-span-2">
-                                        <label htmlfor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Entry Title</label>
+                                        <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Entry Title</label>
                                         <input type="text" 
                                                name="recvtitle" 
                                                id="recvtitle" 
@@ -144,7 +142,7 @@ export default function ReceivedCash({...props}) {
                                                />
                                     </div>
                                     <div className="w-full">
-                                        <label htmlfor="coldate" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Collection Date</label>
+                                        <label htmlFor="coldate" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Collection Date</label>
                                         <input type="date" 
                                                name="coldate" 
                                                id="coldate" 
@@ -155,7 +153,7 @@ export default function ReceivedCash({...props}) {
                                                />
                                     </div>
                                     <div className="w-full">
-                                        <label htmlfor="amount" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Amount Received</label>
+                                        <label htmlFor="amount" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Amount Received</label>
                                         <input type="number" 
                                                name="amount" 
                                                id="amount" 
@@ -166,7 +164,7 @@ export default function ReceivedCash({...props}) {
                                                />
                                     </div>
                                     <div>
-                                        <label htmlfor="category" className="w-full max-w-xs">Collection Purpose</label>
+                                        <label htmlFor="category" className="w-full max-w-xs">Collection Purpose</label>
                                     
                                         <select data-te-select-init data-te-select-clear-button="true" className="w-full max-w-xs" id="category" name="category" required onChange={(e) => SetCategory(e.target.value)}>
                                             {
@@ -189,7 +187,7 @@ export default function ReceivedCash({...props}) {
                                         </select> */}
                                     </div>
                                     <div>
-                                        <label htmlfor="receiveby" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Received By</label>
+                                        <label htmlFor="receiveby" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Received By</label>
                                         <input type="text" 
                                                name="receiveby" 
                                                id="receiveby" 
@@ -200,7 +198,7 @@ export default function ReceivedCash({...props}) {
                                                />
                                     </div>
                                     <div className="sm:col-span-2">
-                                        <label htmlfor="description" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
+                                        <label htmlFor="description" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
                                         <textarea id="description" name="description" 
                                                   rows="5" 
                                                   className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" 

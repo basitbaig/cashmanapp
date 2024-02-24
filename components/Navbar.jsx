@@ -60,6 +60,8 @@ export default function Navbar({username, userrole, firstlogin}) {
     
       <IssueCash {...Issuheadlist} />
 
+      {/* <Link className="bg-white p-2" href={'/issueCash'}>Issue Cash</Link> */}
+
       
 
       {/* <Link className="bg-white p-2" href={'/receivecash'}>Receive Cash</Link>

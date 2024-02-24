@@ -17,13 +17,15 @@ export async function POST(request) {
         
         {
             body.branchid == 19 ?
-            balancedata = await db.collection('financecashbalance').find({}).toArray()
+            balancedata = await db.collection('financecashbalance').find().toArray()
             :
             balancedata = await db.collection('branchcashbalance').find({ _id:parseInt(body.branchid)}).toArray()
         } 
        
         //Object.values(balancedata)
        return NextResponse.json(balancedata);
+
+        
 
     }
     catch (error) {

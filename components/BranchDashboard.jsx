@@ -77,7 +77,7 @@ export default function BranchDashboard() {
 
       <div className="bg-gray-200 min-h-screen">
 
-        <div class="max-w-6xl mx-auto px-8 py-8">
+        <div className="max-w-6xl mx-auto px-8 py-8">
         
           <button className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-700" onClick={toggle}>{showMe?"Hide Pending Entries":"Show Pending Entries"}</button>
 

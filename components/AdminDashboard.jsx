@@ -82,10 +82,12 @@ export default function AdminDashboard() {
 
  
       <div className="flex bg-gray-200 min-h-screen">
-
+        
         <div className="w-1/4 mt-11">
           <ShowAllBranchBalance />
         </div>
+       
+
 
         <div className="mt-5">
 
@@ -97,20 +99,24 @@ export default function AdminDashboard() {
           
           </div>
 
-          {callbranchid != 0 ?
-            <ShowBranchBalance branchid={callbranchid} />
-            :
-            <ShowBranchBalance branchid={decodeURIComponent(branchid)} />
-          }
 
           <div className="mt-11">
-            <div className="flex ">
+            <div>
               <select className="w-full max-w-xs text-black" name="ubranchid" required onChange={handleBranch}>
                 {
                   branchlist.map((opts, id) => <option key={id} value={opts.id}>{opts.branchname}</option>)
                 }
               </select>
+
+              <div className="float-right">
+                {callbranchid != 0 ?
+                <ShowBranchBalance branchid={callbranchid} />
+                :
+                <ShowBranchBalance branchid={decodeURIComponent(branchid)} />
+              }
+            </div>              
             </div>
+
             {callbranchid != 0 ?
               <ShowBranchDashboard branchid={callbranchid} />
               :

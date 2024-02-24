@@ -26,14 +26,14 @@ export const getLoginUser = async ({email,password}) => {
 }
 
 export const getBranchCash = async ({branchid}) => {
-  const apiUrl = process.env.API_URL;
+  //const apiUrl = process.env.API_URL;
     try {     
       
-        const res = await fetch(`${apiUrl}/api/branchcash`, {
+        const res = await fetch('/api/branchcash', {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ branchid })
-        }, { cache: 'force-cache' });
+        });
 
         const data = await res.json();
 
@@ -48,15 +48,15 @@ export const getBranchCash = async ({branchid}) => {
 export const getCashTypes = async (entrytype) => {
   const apiUrl = process.env.API_URL;
   try {
-    const res = await fetch(`${apiUrl}/api/getcashexphead`, {
+    const res = await fetch('/api/getcashexphead', {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(entrytype)
-    }, { cache: 'force-cache' }).then(response => response.json());
+    });
 
-
+  
     if (!res.ok) {
-      throw new Error("Balance List Not Found!!");
+      throw new Error("Cash Type Not Found!!");
     }
 
     return res.json();
@@ -70,11 +70,11 @@ export const getBranchList = async (comid) => {
   const apiUrl = process.env.API_URL;
     try {
 
-        const res = await fetch(`${apiUrl}/api/getbranchlist`, {
+        const res = await fetch('/api/getbranchlist', {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(comid)
-        }, { cache: 'force-cache' }).then(response=> response.json());
+        });
         
 
         if (!res.ok) {
@@ -107,12 +107,13 @@ export const getAllBranchBalance = async () => {
   const apiUrl = process.env.API_URL;
 
   //console.log(`${apiUrl}/api/cashbalanceall`);
+//, { cache: 'no-store' }
 
   try {
-    const res = await fetch(`${apiUrl}/api/cashbalanceall`, {
+    const res = await fetch('/api/cashbalanceall', {
       method: "POST",
       headers: { "Content-Type": "application/json" }
-    }, { cache: 'no-store' });
+    });
 
     if (!res.ok) {
       throw new Error("Balance List Not Found!!");
@@ -131,11 +132,11 @@ export const pendingCash = async ({branchid}) => {
 
     try {    
 
-        const res = await fetch(`${apiUrl}/api/pendingcash`, {
+        const res = await fetch('/api/pendingcash', {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ branchid })
-        }, { cache: 'no-store' });
+        });
 
         if (!res.ok) {
           throw new Error("No Pending Entries Found!!");
@@ -153,10 +154,10 @@ export const pendingCash = async ({branchid}) => {
 export const userInfo = async () => {
   const apiUrl = process.env.API_URL;
   try {     
-      const res = await fetch(`${apiUrl}/api/userinfo`, {
+      const res = await fetch('/api/userinfo', {
           method: "GET",
           headers: { "Content-Type": "application/json" }
-      }, { cache: 'no-store' });
+      });
 
       if (!res.ok) {
         throw new Error("No Pending Entries Found!!");
@@ -174,11 +175,11 @@ export const userInfo = async () => {
 export async function findTransaction({transactionid}){
   const apiUrl = process.env.API_URL;
   try {
-    const res = await fetch(`${apiUrl}/api/getpendingentry`, {
+    const res = await fetch('/api/getpendingentry', {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ transactionid })
-    }, { cache: 'no-store' });
+    });
 
 
     if (!res.ok) {

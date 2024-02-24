@@ -8,15 +8,14 @@ async function BranchHandBalance({branchid}) {
       }
  
         const apiUrl = process.env.API_URL;
-        const res = await fetch(`${apiUrl}/api/cashbalance`, {
+
+        const res = await fetch('/api/cashbalance', {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ branchid })
           });
     
-          const {data} = await res.json();
-
-          //const branchbalance = data.balancedata;
+          const data = await res.json();
 
           return (
             <>
@@ -34,7 +33,7 @@ async function BranchHandBalance({branchid}) {
 }
  
 
-export default async function ShowBranchBalance ({branchid}) {
+export default function ShowBranchBalance ({branchid}) {
 
     // const [branchbalance, Setbranchbalance]=useState([]);
       

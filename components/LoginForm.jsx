@@ -53,7 +53,7 @@ export default function LoginForm() {
         // console.log('---Email and Password At Login Page-----');
         // console.log(email);
  
-        const { userdata } =  await getLoginUser({email,password});
+        const userdata =  await getLoginUser({email,password});
 
         try {
 
@@ -80,12 +80,10 @@ export default function LoginForm() {
 
             const userinfo = getCookies();
 
-            console.log(userinfo);
-
+     
             const checkusertype = decodeURIComponent(userinfo?.usertype);
 
-            console.log(checkusertype);
-                
+      
             router.replace(checkusertype === "Branch" ? 'branchdashboard' : 'dashboard' );
 
 

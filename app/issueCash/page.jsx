@@ -1,26 +1,17 @@
 "use client";
- 
+
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useFormState, useFormStatus } from "react-dom"
-import { useState, useEffect, useRef } from "react";
+import IssueCash from  "@/components/IssueCash";
+import { getCashTypes } from '@/model/getdata'
 import { getCookie, getCookies } from 'cookies-next';
 import toast, { Toaster } from 'react-hot-toast';
+
+export default function CashIssue() {
+
  
-
-
-export default function IssueCash({...props}) {
-
-  // const [state, formAction] = useFormState(cashIssue, {
-  //   message: '',
-
-  // })
-
-  const { pending } = useFormStatus()
-
-  const ref = useRef()
-  let inputRef = useRef(null)
- 
-  const router = useRouter();
+  const [Issuheadlist, SetIssuheadlist]=useState([]);
 
   const [comid, SetComid] = useState(getCookie('comid'));
   const [branchid, SetBranchid] = useState(getCookie('branchid'));
@@ -31,23 +22,18 @@ export default function IssueCash({...props}) {
   const [description, SetDescription] = useState("");
   const [totalamount, SetTotalamount] = useState("");
   const [remarks, SetRemarks] = useState("");
+
+  const { pending } = useFormStatus()
+
+  const CallDataTypes = async () => {
+    SetIssuheadlist(await getCashTypes("I"));
+  }
+ 
+  useEffect(() => {
+    
+    CallDataTypes();
   
-
-  //const headlist = Object.entries({...props});
-
-  const headlist = [...Object.values(props)];
-  
-  // useEffect(() => {
-  //     if (state.message.indexOf('Created entry') === 0) {
-  //         (document.getElementById('my_modal_3') as any).close();
-  //         ref.current?.reset()
-  //         toast(state.message)
-  //     }
-  //     else if (state.message) {
-  //         toast(state.message)
-
-  //     }
-  // }, [state.message])
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -58,7 +44,8 @@ export default function IssueCash({...props}) {
 
     try {
 
- 
+      console.log(formvalues);
+
       const res = await fetch('/api/cashissue', {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -75,7 +62,11 @@ export default function IssueCash({...props}) {
         {
           branchid==19 ? router.replace("/dashboard") : router.push("/branchdashboard");    
         }
- 
+        
+        setTimeout(() => {
+          (handleRedirect());
+        }, 1000);
+
       } else {
         const errorMesg = await res.json();
         setError(errorMesg.message);
@@ -89,21 +80,6 @@ export default function IssueCash({...props}) {
     }
 
   }
-
-  const showToastMessage = (msg, typ) => {
-    typ = "error" ?
-      toast.error({ msg }, {
-        position: toast.POSITION.TOP_RIGHT,
-      }) :
-      toast.success({ msg }, {
-        position: toast.POSITION.TOP_RIGHT,
-      });
-  }
-
-  // const handleRedirect = () => {
-   
-    
-  // }
 
 
 
@@ -131,7 +107,7 @@ export default function IssueCash({...props}) {
               <form onSubmit={handleSubmit}>
                 <div className="grid gap-4 sm:grid-cols-2 sm:gap-6 mb-5">
                   <div className="sm:col-span-2">
-                    <label htmlFor="issutitle" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Entry Title</label>
+                    <label htmlfor="issutitle" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Entry Title</label>
                     <input type="text"
                       name="issutitle"
                       id="issutitle"
@@ -143,7 +119,7 @@ export default function IssueCash({...props}) {
                     />
                   </div>
                   <div className="w-full">
-                    <label htmlFor="isudate" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Disbursement Date</label>
+                    <label htmlfor="isudate" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Disbursement Date</label>
                     <input type="date"
                       name="isudate"
                       id="isudate"
@@ -154,7 +130,7 @@ export default function IssueCash({...props}) {
                     />
                   </div>
                   <div className="w-full">
-                    <label htmlFor="amount" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Amount Issued</label>
+                    <label htmlfor="amount" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Amount Issued</label>
                     <input type="number"
                       name="amount"
                       id="amount"
@@ -165,11 +141,11 @@ export default function IssueCash({...props}) {
                     />
                   </div>
                   <div>
-                    <label htmlFor="category" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Disbursement Purpose</label>
+                    <label htmlfor="category" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Disbursement Purpose</label>
                  
                     <select data-te-select-init data-te-select-clear-button="true" className="w-full max-w-xs" id="category" name="category" required onChange={(e) => SetCategory(e.target.value)}>
                       {
-                        headlist.map((opts, _id) => <option key={_id} value={opts.cashexphead}>{opts.cashexphead}</option>)
+                        Issuheadlist.map((opts, _id) => <option key={_id} value={opts.cashexphead}>{opts.cashexphead}</option>)
                       }
                     </select>                 
                  
@@ -191,7 +167,7 @@ export default function IssueCash({...props}) {
 
                   </div>
                   <div>
-                    <label htmlFor="issueby" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Received By</label>
+                    <label htmlfor="issueby" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Received By</label>
                     <input type="text"
                       name="issueby"
                       id="issueby"
@@ -202,7 +178,7 @@ export default function IssueCash({...props}) {
                     />
                   </div>
                   <div className="sm:col-span-2">
-                    <label htmlFor="description" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
+                    <label htmlfor="description" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
                     <textarea id="description" name="description"
                       rows="5"
                       className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
@@ -245,20 +221,3 @@ export default function IssueCash({...props}) {
 
   )
 }
-
-
-// const getCashTypes = async ({entrytype}) => {
- 
-//   const res = await fetch('/api/getcashexphead', {
-//     method: "POST",
-//     headers: { "Content-Type": "application/json" },
-//     body: JSON.stringify({entrytype})
-//   }).then(response=> response.json());
-
-//   const data = await res;
- 
-//   return data;
-
-//   return res;
-
-// }

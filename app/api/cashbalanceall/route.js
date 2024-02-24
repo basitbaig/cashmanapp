@@ -15,11 +15,11 @@ export async function POST(request) {
 
         const db = mongoose.connection;
 
-        balancedata = await db.collection('branchcashbalance').find({}).toArray()
-
-        return NextResponse.json(Object.values(balancedata));
+        balancedata = await db.collection('branchcashbalance').find().toArray()
 
         //return NextResponse.json(Object.values(balancedata));
+
+        return NextResponse.json(balancedata);
  
     }
     catch (error) {

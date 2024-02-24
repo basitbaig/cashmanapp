@@ -4,7 +4,7 @@ import PostPending from '@/components/PostPending';
 export default async function ShowPendingCash({branchid}) {
 
     //const [pendingcash, Setpendingcash] = useState([]);
-    const {pendingcash} = await pendingCash({branchid});
+    const pendingcash = await pendingCash({branchid});
  
     let grosstotal = 0;
 

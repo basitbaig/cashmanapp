@@ -6,14 +6,14 @@ export async function POST(request) {
    
     try {
    
-        const { username,exphead, headtype } = await request.json();
+        const body = await request.json();
  
         await connectMongoDB();
  
         await CashExphead.create({ 
-            cashexphead:exphead, 
-            headtype:headtype,
-            createby:username 
+            cashexphead:body.exphead, 
+            headtype:body.headtype,
+            createby:body.username 
         });
  
         return NextResponse.json({message: "New Cash/Expense Head Created"},{status: 201});

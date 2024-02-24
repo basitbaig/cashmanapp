@@ -6,52 +6,60 @@ import { NextResponse, NextRequest } from "next/server";
 export async function POST(request) {
    
     try {
+
+        const body = await request.json();
+
+        console.log('---ISsue Cash API-----')
+        console.log(body);
    
-        const { comid, branchid, username,entrydate,entrytype,category,description,totalamount,remarks } = await request.json();
+        //const { comid, branchid, username,entrydate,entrytype,category,description,totalamount,remarks } = await request.json();
   
+        console.log(body.branchid);
+
+
         let ispending = Boolean(0);
         let isposted = Boolean(0);
      
          {  //entrytype === "R" && (isposted = !!0);
-            entrytype === "R" && (isposted = Boolean(1));
+            body.entrytype === "R" && (isposted = Boolean(1));
          }
          {
-            entrytype === "I" && (ispending = Boolean(1));
+            body.entrytype === "I" && (ispending = Boolean(1));
          }
  
         await connectMongoDB();
 
         {
-            loginbranch == 19 ?
+            body.branchid == 19 ?
             await Financecashbook.create({ 
-                comid:parseInt(comid), 
-                branchid:parseInt(branchid), 
-                username:username, 
-                entrydate:entrydate, 
-                entrytype:entrytype, 
+                comid:parseInt(body.comid), 
+                branchid:parseInt(body.branchid), 
+                username:body.username, 
+                entrydate:body.entrydate, 
+                entrytype:body.entrytype, 
                 issuetobranch:null,
                 recevfrombranch:null,
-                category:category,
-                description:description,
-                totalamount:parseInt(totalamount),
-                remarks:remarks,
-                isposted: isposted,
+                category:body.category,
+                description:body.description,
+                totalamount:parseInt(body.totalamount),
+                remarks:body.remarks,
+                isposted:isposted,
                 ispending:ispending,
                 iscancel:null
             }) :
             await Branchcashbook.create({ 
-                comid:parseInt(comid), 
-                branchid:parseInt(branchid), 
-                username:username, 
-                entrydate:entrydate, 
-                entrytype:entrytype, 
+                comid:parseInt(body.comid), 
+                branchid:parseInt(body.branchid), 
+                username:body.username, 
+                entrydate:body.entrydate, 
+                entrytype:body.entrytype, 
                 issuetobranch:null,
                 recevfrombranch:null,
-                category:category,
-                description:description,
-                totalamount:parseInt(totalamount),
-                remarks:remarks,
-                isposted: isposted,
+                category:body.category,
+                description:body.description,
+                totalamount:parseInt(body.totalamount),
+                remarks:body.remarks,
+                isposted:isposted,
                 ispending:ispending,
                 iscancel:null
             })
