@@ -5,7 +5,7 @@ import Link from "next/link";
 import { getCookie, getCookies } from 'cookies-next';
 import { userInfo } from "@/model/getdata";
 
-export default async function Userinfo() {
+export default function Userinfo() {
     
     const username = getCookie('username');
     const branchid = getCookie('branchid');
@@ -13,7 +13,7 @@ export default async function Userinfo() {
     const userrole = getCookie('userrole');
     const firstlogin = getCookie('firstlogin');
 
-    const userlist = await userInfo();
+    const userlist = userInfo();
 
   return (
     
