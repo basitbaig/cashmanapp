@@ -1,12 +1,12 @@
 
 import AdminDashboard  from "@/components/AdminDashboard";
  
-export default function Dashboard() {
+export default function adminDashboard() {
  
   return (
-    <>
-    <AdminDashboard  />
-    </>
+    <div>
+       <AdminDashboard  />
+    </div>
   )
 }
 

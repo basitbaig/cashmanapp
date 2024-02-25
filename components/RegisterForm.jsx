@@ -92,7 +92,7 @@ export default function RegisterForm() {
             setPending(true);
             let email = formvalues.email;
 
-            const rescheckemail = await fetch(`${apiUrl}/api/checkuser`, {
+            const rescheckemail = await fetch('/api/checkuser', {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ email })
@@ -107,7 +107,7 @@ export default function RegisterForm() {
                 return;
             }
 
-            const res = await fetch(`${apiUrl}/api/register`, {
+            const res = await fetch('/api/register', {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(formvalues)

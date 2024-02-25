@@ -54,7 +54,7 @@ export default function ReceivedCash({...props}) {
 
         try {
  
-            const res = await fetch('/api/cashreceive', {
+            const res = await fetch(process.env.API_URL +'/api/cashreceive', {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(formvalues)

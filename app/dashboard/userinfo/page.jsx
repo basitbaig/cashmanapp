@@ -1,9 +1,15 @@
 import Userinfo from "@/components/Userinfo";
+import { userInfo } from "@/model/getdata";
+ 
 
-export default function page() {
+export default async function page() {
+
+  const userlist = await userInfo();
+
+  
   return (
     <div>
-      <Userinfo /> 
+      <Userinfo {...userlist} /> 
     </div>    
   );
 }

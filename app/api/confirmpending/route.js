@@ -12,29 +12,21 @@ export async function POST(request) {
 
         const transid = body.transid;
 
-        console.log('---API Body Call----')
-        console.log(body.transid);
-
-        
         await connectMongoDB();
 
         const ObjectId = require('mongodb').ObjectId;
 
         let query = {_id: new ObjectId(transid)};
 
-        console.log('---API Call For Confirm----')
-        console.log(query);
+        const res = await Branchcashbook.findOneAndUpdate(query, { $set: { ispending: 'false' } }, {
+            returnNewDocument: true
+        }, function (error, result) {
+                // In this moment, you recive a result object or error
 
-        
-        // const res = await Branchcashbook.findOneAndUpdate(query, { $set: { ispending: 'false' } }, {
-        //     returnNewDocument: true
-        // }, function (error, result) {
-        //         // In this moment, you recive a result object or error
+                // ... Your code when have result ... //
 
-        //         // ... Your code when have result ... //
-
-        //         console.log(result);
-        //     });
+                console.log(result);
+            });
          
         return NextResponse.json({ message: "Confirm Posting" }, { status: 201 });
 

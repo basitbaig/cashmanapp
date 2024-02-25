@@ -29,7 +29,7 @@ export const getBranchCash = async ({branchid}) => {
   //const apiUrl = process.env.API_URL;
     try {     
       
-        const res = await fetch('/api/branchcash', {
+        const res = await fetch(process.env.API_URL +'/api/branchcash', {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ branchid })
@@ -48,7 +48,7 @@ export const getBranchCash = async ({branchid}) => {
 export const getCashTypes = async (entrytype) => {
   const apiUrl = process.env.API_URL;
   try {
-    const res = await fetch('/api/getcashexphead', {
+    const res = await fetch(process.env.API_URL +'/api/getcashexphead', {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(entrytype)
@@ -70,7 +70,7 @@ export const getBranchList = async (comid) => {
   const apiUrl = process.env.API_URL;
     try {
 
-        const res = await fetch('/api/getbranchlist', {
+        const res = await fetch(process.env.API_URL +'/api/getbranchlist', {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(comid)
@@ -110,7 +110,7 @@ export const getAllBranchBalance = async () => {
 //, { cache: 'no-store' }
 
   try {
-    const res = await fetch('/api/cashbalanceall', {
+    const res = await fetch(process.env.API_URL +'/api/cashbalanceall', {
       method: "POST",
       headers: { "Content-Type": "application/json" }
     });
@@ -132,7 +132,7 @@ export const pendingCash = async ({branchid}) => {
 
     try {    
 
-        const res = await fetch('/api/pendingcash', {
+        const res = await fetch(process.env.API_URL +'/api/pendingcash', {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ branchid })
@@ -154,7 +154,7 @@ export const pendingCash = async ({branchid}) => {
 export const userInfo = async () => {
   const apiUrl = process.env.API_URL;
   try {     
-      const res = await fetch('/api/userinfo', {
+      const res = await fetch(process.env.API_URL +'/api/userinfo', {
           method: "GET",
           headers: { "Content-Type": "application/json" }
       });
@@ -175,7 +175,7 @@ export const userInfo = async () => {
 export async function findTransaction({transactionid}){
   const apiUrl = process.env.API_URL;
   try {
-    const res = await fetch('/api/getpendingentry', {
+    const res = await fetch(process.env.API_URL +'/api/getpendingentry', {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ transactionid })
@@ -221,7 +221,7 @@ const getFeeData = () => {
     const feedata = getFeeData();
   
     try {
-      const response = await fetch(`${apiUrl}/api/fetchandpostapi`, {
+      const response = await fetch(process.env.API_URL + '/api/fetchandpostapi', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

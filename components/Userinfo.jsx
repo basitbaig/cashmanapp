@@ -2,18 +2,21 @@
 
 import Navbar from "@/components/Navbar";
 import Link from "next/link";
-import { getCookie, getCookies } from 'cookies-next';
-import { userInfo } from "@/model/getdata";
 
-export default function Userinfo() {
+import { getCookie, getCookies } from 'cookies-next';
+
+
+export default function Userinfo({...props}) {
     
+ 
+
     const username = getCookie('username');
     const branchid = getCookie('branchid');
     const usertype = getCookie('usertype');
     const userrole = getCookie('userrole');
     const firstlogin = getCookie('firstlogin');
 
-    const userlist = userInfo();
+    const userlist = [...Object.values(props)];
 
   return (
     
