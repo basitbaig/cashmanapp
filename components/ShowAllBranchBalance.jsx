@@ -1,5 +1,29 @@
 
-import { getAllBranchBalance } from '@/model/getdata'
+//import { getAllBranchBalance } from '@/model/getdata'
+
+const getAllBranchBalance = async () => {
+    const apiUrl = process.env.API_URL;
+  
+    //console.log(`${apiUrl}/api/cashbalanceall`);
+  //, { cache: 'no-store' }
+  
+    try {
+      const res = await fetch('/api/cashbalanceall', {
+        method: "POST",
+        headers: { "Content-Type": "application/json" }
+      });
+  
+      if (!res.ok) {
+        throw new Error("Balance List Not Found!!");
+      }
+  
+      return res.json();
+  
+    } catch (error) {
+      throw new Error("Connection Issue With API Call");
+    }
+  
+  }
  
 
 export default async function ShowAllBranchBalance() {

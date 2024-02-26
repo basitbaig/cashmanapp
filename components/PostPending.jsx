@@ -3,9 +3,33 @@ import { cache } from 'react';
 import { useFormStatus } from "react-dom";
 import { useTransition } from "react";
 import { useState, useId } from "react";
-import { findTransaction } from "@/model/getdata";
+//import { findTransaction } from "@/model/getdata";
 import { IoClose } from "react-icons/io5";
 import toast, { Toaster } from 'react-hot-toast';
+
+async function findTransaction({transactionid}){
+  const apiUrl = process.env.API_URL;
+  try {
+    const res = await fetch('/api/getpendingentry', {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ transactionid })
+    });
+
+
+    if (!res.ok) {
+      throw new Error("No Pending Entries Found!!");
+    }
+
+    const data = await res.json();
+ 
+    return data;
+
+  } catch (error) {
+    throw new Error("Connection Issue With API Call");
+  }
+}
+ 
 
 export default function PostPending({ transid }) {
 
@@ -31,30 +55,33 @@ const [values, setValues] = useState(initialValues);       // set initial state
  
 const handleConfirm = async () => {
 
-  const res = await findTransaction({transactionid});
+  const {pendingEntry} = await findTransaction({transactionid});
 
   setValues(values => {
-    return { ...values, ...res }
+    return { ...values, ...pendingEntry }
   })
 
 }
 
   const handleSubmit = async (e) => {
+
     e.preventDefault();
 
     const apiUrl = process.env.API_URL;
 
     try {
- 
-      const res = await fetch(process.env.API_URL + '/api/confirmpending', {
-        method: "POST",
+    
+      const res = await fetch('/api/confirmpending', {
+        method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(transid)
+        body: JSON.stringify({transid})
       });
 
       if (res.ok) {
         // const form = e.target;
         toast("Transaction Confirm Sucessfully...");
+
+        {(document.getElementById(id)).close()}
 
       } else {
         toast("Transaction Failed, Please try again...");
@@ -62,6 +89,8 @@ const handleConfirm = async () => {
     } catch (error) {
       toast(error);
     }
+
+
   }
 
  

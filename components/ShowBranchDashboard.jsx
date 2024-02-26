@@ -1,6 +1,24 @@
+//import { getBranchCash } from '@/model/getdata'
 
+const getBranchCash = async ({branchid}) => {
+  //const apiUrl = process.env.API_URL;
+    try {     
+      
+        const res = await fetch('/api/branchcash', {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ branchid })
+        });
 
-import { getBranchCash } from '@/model/getdata'
+        const data = await res.json();
+
+        return data;
+
+    } catch (error) {
+      throw new Error(error);
+    }
+
+} 
 
 export default async function ShowBranchDashboard({branchid}) {
 
@@ -35,7 +53,7 @@ export default async function ShowBranchDashboard({branchid}) {
             ))} */}
         
             {/* <div className="px-0.2 mt-1"> */}
-            <div class="relative overflow-x-auto px-0.2 mt-2">
+            <div className="relative overflow-x-auto px-0.2 mt-2">
 
             <table className="table-fixed min-w-full text-left text-sm font-light">
               <thead className="border-b bg-neutral-800 font-medium text-white dark:border-neutral-500 dark:bg-neutral-900">

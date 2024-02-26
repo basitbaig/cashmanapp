@@ -97,7 +97,7 @@ export default function BranchDashboard() {
 
 
 
-           <div className="float-right {showMe ? mt-1 : mt-0}">
+         <div className="float-right {showMe ? mt-1 : mt-0}">
             <ShowBranchBalance branchid={decodeURIComponent(branchid)} />
           </div>
 

@@ -5,10 +5,32 @@ import Image from 'next/image';
 import  { useRouter }  from "next/navigation";
 // import { signIn, signOut } from "next-auth/react";
 // import { useSession } from "next-auth/react";
-import { getLoginUser } from "@/model/getdata";
+//import { getLoginUser } from "@/model/getdata";
 
 import { deleteCookie, setCookie, getCookies, hasCookie } from 'cookies-next';
 import Link from "next/link";
+
+const getLoginUser = async ({email,password}) => {
+  
+    try {
+      
+        const res = await fetch('/api/checklogin', {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },          
+            body: JSON.stringify({ email, password })
+          });
+    
+          if (!res.ok) {
+            throw new Error("Balance List Not Found!!");
+          }
+      
+          return res.json();
+        
+    } catch (error) {
+      throw new Error(error);
+    }
+          
+  }
  
 
 export default function LoginForm() {

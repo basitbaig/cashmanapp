@@ -1,5 +1,29 @@
-import { pendingCash } from '@/model/getdata'
+//import { pendingCash } from '@/model/getdata'
 import PostPending from '@/components/PostPending';
+
+const pendingCash = async ({branchid}) => {
+    const apiUrl = process.env.API_URL;
+  
+      try {    
+  
+          const res = await fetch('/api/pendingcash', {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ branchid })
+          });
+  
+          if (!res.ok) {
+            throw new Error("No Pending Entries Found!!");
+          }
+       
+          return res.json();
+  
+      } catch (error) {
+          throw new Error("Connection Issue With API Call");
+      }
+  
+  } 
+  
 
 export default async function ShowPendingCash({branchid}) {
 
