@@ -1,35 +1,40 @@
- 
-//import { getBranchBalance } from "@/model/getdata";
+"use client";
 
-async function BranchHandBalance({branchid}) {
+import { useState, useEffect } from "react"; 
+import { getBranchBalance } from "@/model/getdata";
+
+async function BranchHandBalance({ branchid }) {
+
+    const [cashbalance, SetcashBalance] = useState([]);
+
+    const CallCashBalance = async () => {
+        SetcashBalance(await getBranchBalance({ branchid }));
+    }
+
     
+
+    useEffect(() => {
+        CallCashBalance();
+    }, [branchid]);
+
     function formatNumber(num) {
         return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
-      }
- 
-        const apiUrl = process.env.API_URL;
+    }
 
-        const res = await fetch('/api/cashbalance', {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ branchid })
-          });
-    
-          const data = await res.json();
 
-          return (
-            <>
-                {data.map(item => (
-                    <div key={item._id}>
-                        <p className="text-lg bg-slate-600 text-white font-bold">
-                    Cash In Hand Balance: {formatNumber(item.balance)}
-                        </p>
-                    </div>
-                ))}
-            </>
-          )
-        
- 
+    return (
+        <>
+            {cashbalance.map(item => (
+                <div key={item._id}>
+                    <p className="text-lg bg-slate-600 text-white font-bold">
+                        Cash In Hand Balance: {formatNumber(item.balance)}
+                    </p>
+                </div>
+            ))}
+        </>
+    )
+
+
 }
  
 

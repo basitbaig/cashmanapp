@@ -10,6 +10,11 @@ import { usePathname } from "next/navigation";
 
 export default function ExpenseHead() {
 
+    const [username, SetUsername] = useState(getCookie('username'));
+    const [exphead, SetExpHead] = useState("");
+    const [headtype, SetHeadType] = useState("");
+    const [isLoading, setLoading] = useState(true)
+    
     const curpath = usePathname();
 
     const { pending } = useFormStatus()
@@ -20,12 +25,9 @@ export default function ExpenseHead() {
    
     const router = useRouter();
 
-    const [username, SetUsername] = useState(getCookie('username'));
-    const [exphead, SetExpHead] = useState("");
-    const [headtype, SetHeadType] = useState("");
 
     //const branchid = getCookie('userbranchid')
-
+   
     
 
     const handleSubmit = async (e) => {

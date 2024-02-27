@@ -34,9 +34,21 @@ export default function IssueCash({...props}) {
   
 
   //const headlist = Object.entries({...props});
+  //cashexphead:"Cash to Head Office"
 
   const headlist = [...Object.values(props)];
   
+  // var newheadlist = headlist.filter(function (el) {
+  //   return el.cashexphead === "Cash to Head Office" // Changed this so a home would match
+  // });
+ 
+
+  const newheadlist = branchid==19 ? headlist : headlist.filter( x => 
+    x.cashexphead == "Cash to Head Office"
+  );
+ 
+  //console.log(newheadlist[0].cashexphead);
+
   // useEffect(() => {
   //     if (state.message.indexOf('Created entry') === 0) {
   //         (document.getElementById('my_modal_3') as any).close();
@@ -167,11 +179,13 @@ export default function IssueCash({...props}) {
                   <div>
                     <label htmlFor="category" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Disbursement Purpose</label>
                  
+ 
                     <select data-te-select-init data-te-select-clear-button="true" className="w-full max-w-xs" id="category" name="category" required onChange={(e) => SetCategory(e.target.value)}>
                       {
-                        headlist.map((opts, _id) => <option key={_id} value={opts.cashexphead}>{opts.cashexphead}</option>)
+                        newheadlist.map((opts, _id) => <option key={_id} value={opts.cashexphead}>{opts.cashexphead}</option>)
                       }
-                    </select>                 
+                    </select>     
+                            
                  
                                                   
                     {/* <select id="category" name="category"

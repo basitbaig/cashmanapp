@@ -31,7 +31,7 @@ export default function AdminDashboard() {
   const firstlogin = getCookie('firstlogin');
  
   const [showMe, setShowMe] = useState(false);
-
+  const [callbranchid, SetCallBranchID] = useState(0);
   const [branchlist, Setbranchlist]=useState([]);
 
   function toggle(e){
@@ -40,8 +40,6 @@ export default function AdminDashboard() {
     setShowMe(!showMe);
   }
 
-  const [callbranchid, SetCallBranchID] = useState(0);
-  
   const callBranchList = async () => {
     Setbranchlist(await getBranchList("all"));
   }
@@ -56,12 +54,11 @@ export default function AdminDashboard() {
   }
 
 
-
   const handleBranch = (e) => {
     e.preventDefault();
  
     SetCallBranchID(e.target.value);
-
+ 
     // let utyp = e.target.value == 19 ? "Finance" : "Branch";
 
     // setUserType(utyp);
@@ -94,6 +91,8 @@ export default function AdminDashboard() {
 
         <div className="mt-5">
 
+          {/* animate-blinkingBg */}
+
           <button className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-700" onClick={toggle}>{showMe ? "Hide Pending Entries" : "Show Pending Entries"}</button>
 
           <div style={{ display: showMe ? "block" : "none" }}>
@@ -116,8 +115,9 @@ export default function AdminDashboard() {
                 <ShowBranchBalance branchid={callbranchid} />
                 :
                 <ShowBranchBalance branchid={decodeURIComponent(branchid)} />
-              }
-            </div>              
+                }
+              </div>    
+
             </div>
 
             {callbranchid != 0 ?
@@ -125,6 +125,7 @@ export default function AdminDashboard() {
               :
               <ShowBranchDashboard branchid={decodeURIComponent(branchid)} />
             }
+
           </div>
         </div>
 

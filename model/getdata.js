@@ -1,7 +1,21 @@
+//import useSWR from 'swr'
+ 
+//https://swr.vercel.app/docs/getting-started
 
-import { NextResponse } from "next/server";  
 
 //https://nextjs.org/docs/pages/building-your-application/deploying/production-checklist
+
+// const fetcher = (...args) => fetch(...args).then(res => res.json())
+
+// function useUser (id) {
+//   const { data, error, isLoading } = useSWR(`/api/user/${id}`, fetcher)
+ 
+//   return {
+//     user: data,
+//     isLoading,
+//     isError: error
+//   }
+// }
  
 export const getLoginUser = async ({email,password}) => {
   
@@ -33,7 +47,7 @@ export const getBranchCash = async ({branchid}) => {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ branchid })
-        });
+        },{ cache: 'no-store' });
 
         const data = await res.json();
 
@@ -44,6 +58,30 @@ export const getBranchCash = async ({branchid}) => {
     }
 
 } 
+
+export const getBranchBalance = async ({branchid}) => {
+
+      //  const fetcher = (...args) => fetch(...args).then((res) => res.json());
+      //  const { data, error } = useSWR('/api/cashbalance', fetcher)
+       // const apiUrl = process.env.API_URL;
+       try {   
+          const res = await fetch('/api/cashbalance', {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ branchid })
+            },{ cache: 'no-store' });
+      
+            const data = await res.json();
+
+            return data;
+
+      } catch (error) {
+        throw new Error(error);
+      }
+  
+
+
+}
  
 export const getCashTypes = async (entrytype) => {
   const apiUrl = process.env.API_URL;
@@ -154,7 +192,7 @@ export const pendingCash = async ({branchid}) => {
 export const userInfo = async () => {
   const apiUrl = process.env.API_URL;
   try {     
-      const res = await fetch(process.env.API_URL +'/api/userinfo', {
+      const res = await fetch(process.env.API_URL+'/api/userinfo', {
           method: "GET",
           headers: { "Content-Type": "application/json" }
       });

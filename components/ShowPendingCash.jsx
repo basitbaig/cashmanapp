@@ -1,34 +1,37 @@
-//import { pendingCash } from '@/model/getdata'
+"use client";
+
+import { useState, useEffect } from "react";
+import { pendingCash } from '@/model/getdata'
 import PostPending from '@/components/PostPending';
 
-const pendingCash = async ({branchid}) => {
-    const apiUrl = process.env.API_URL;
+// const pendingCash = async ({branchid}) => {
+//     const apiUrl = process.env.API_URL;
   
-      try {    
+//       try {    
   
-          const res = await fetch('/api/pendingcash', {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ branchid })
-          });
+//           const res = await fetch('/api/pendingcash', {
+//               method: "POST",
+//               headers: { "Content-Type": "application/json" },
+//               body: JSON.stringify({ branchid })
+//           });
   
-          if (!res.ok) {
-            throw new Error("No Pending Entries Found!!");
-          }
+//           if (!res.ok) {
+//             throw new Error("No Pending Entries Found!!");
+//           }
        
-          return res.json();
+//           return res.json();
   
-      } catch (error) {
-          throw new Error("Connection Issue With API Call");
-      }
+//       } catch (error) {
+//           throw new Error("Connection Issue With API Call");
+//       }
   
-  } 
+//   } 
   
 
-export default async function ShowPendingCash({branchid}) {
+export default function ShowPendingCash({branchid}) {
 
-    //const [pendingcash, Setpendingcash] = useState([]);
-    const pendingcash = await pendingCash({branchid});
+    const [pendingcash, Setpendingcash] = useState([]);
+    //const pendingcash = await pendingCash({branchid});
  
     let grosstotal = 0;
 
@@ -49,6 +52,17 @@ export default async function ShowPendingCash({branchid}) {
     
         return [day, month, year].join('-');
       }
+
+      const CallPendingCash = async () => {
+        Setpendingcash(await pendingCash({branchid}));
+    }
+     
+    useEffect(() => {
+    
+        CallPendingCash();
+      
+      }, []);        
+
 
     return (
 
@@ -107,7 +121,7 @@ export default async function ShowPendingCash({branchid}) {
                                 <th className="pl-5">Total Pending Cash</th>
                                 <td className="col-span-2"></td>
                                 <td className="col-span-2"></td>
-                               
+                                <td className="col-span-2"></td>
                                 <td className="whitespace-nowrap text-center text-green">
                                     {formatNumber(grosstotal)}
                                 </td>

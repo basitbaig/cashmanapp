@@ -1,11 +1,10 @@
 "use client";
 
-
 import Navbar from "@/components/Navbar";
 import ShowBranchBalance from "@/components/ShowBranchBalance";
 import ShowBranchDashboard from "@/components/ShowBranchDashboard";
 import ShowPendingCash from "@/components/ShowPendingCash";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 //import { useSession } from "next-auth/react";
 // import { getServerSession  } from "next-auth/next";
 // import { authOptions } from "@app/api/auth/[...nextauth]"; // ⚠️ Make sure this is the correct path
@@ -14,9 +13,26 @@ import { setCookie, getCookie, getCookies } from 'cookies-next';
 //https://www.appsloveworld.com/tag/reactjs-programs-examples
 
 
+// export async function getServerSideProps() {
+//   // Fetch data from external API
+//   const res = await fetch('https://api.github.com/repos/vercel/next.js')
+//   //const res = await fetch('feedata.json')
+//   const feevouchers = await res.json()
+
+//   console.log(feevouchers);
+//   // Pass data to the page via props
+//   return { props: { feevouchers } }
+// }
+
 export default function BranchDashboard() {
 
+  // const [feedata, SetfeeData]=useState({});
 
+  // SetfeeData({feevouchers});
+
+ 
+
+ 
   // const session = await getServerSession(authOptions);
 
   // const [callapi, SetCallApi] = useState(true);

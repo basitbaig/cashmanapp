@@ -64,8 +64,6 @@ export async function POST(request) {
         
     } catch (error) {
         
-        console.log('Error Step-4 - Try Block Error');
-
         return  NextResponse.json({message: "Error In Amount Receiving"},{status: 500});     
     }
 }

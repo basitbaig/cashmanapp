@@ -1,28 +1,23 @@
-//import { getBranchCash } from '@/model/getdata'
+"use client";
 
-const getBranchCash = async ({branchid}) => {
-  //const apiUrl = process.env.API_URL;
-    try {     
-      
-        const res = await fetch('/api/branchcash', {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ branchid })
-        });
+import { useState, useEffect } from "react";
+import { getBranchCash } from '@/model/getdata'
 
-        const data = await res.json();
+export default function ShowBranchDashboard({branchid}) {
 
-        return data;
+  const [branchdata, SetbranchData] = useState([]);
 
-    } catch (error) {
-      throw new Error(error);
-    }
+   
+    const CallBranchData = async () => {
+      SetbranchData(await getBranchCash({branchid}));
+  }
+   
+ 
 
-} 
+  useEffect(() => {  
+    CallBranchData(); 
+    }, [branchid]);   
 
-export default async function ShowBranchDashboard({branchid}) {
-
-    const branchdata = await getBranchCash({branchid}); 
 
     function formatNumber(num) {
         return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")

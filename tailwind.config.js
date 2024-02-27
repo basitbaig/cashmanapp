@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+import daisyui from 'daisyui'
 module.exports = {
   content: [
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
@@ -12,9 +13,19 @@ module.exports = {
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
+      keyframes: {
+        blinkingBg: {
+          '0%, 100%': { backgroundColor: '#ef4444' },
+          '50%': { backgroundColor: '#fee2e2' },
+        }
+      },
+      animation: {
+        blinkingBg: 'blinkingBg 2s ease-in-out infinite',
+      },
     },
   },
   plugins: [],
+  plugins: [daisyui],
 }
 
  

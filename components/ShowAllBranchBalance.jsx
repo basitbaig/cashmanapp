@@ -1,44 +1,27 @@
+"use client";
 
-//import { getAllBranchBalance } from '@/model/getdata'
+import { useState, useEffect } from "react";
+import { getAllBranchBalance } from '@/model/getdata'
 
-const getAllBranchBalance = async () => {
-    const apiUrl = process.env.API_URL;
-  
-    //console.log(`${apiUrl}/api/cashbalanceall`);
-  //, { cache: 'no-store' }
-  
-    try {
-      const res = await fetch('/api/cashbalanceall', {
-        method: "POST",
-        headers: { "Content-Type": "application/json" }
-      });
-  
-      if (!res.ok) {
-        throw new Error("Balance List Not Found!!");
-      }
-  
-      return res.json();
-  
-    } catch (error) {
-      throw new Error("Connection Issue With API Call");
-    }
-  
-  }
+export default function ShowAllBranchBalance() {
+
+    const [branchbalance,Setbranchbalance]=useState([]);
  
-
-export default async function ShowAllBranchBalance() {
-
-    //const [branchbalance,Setbranchbalance]=useState([]);
-
-    const  branchbalance  = await getAllBranchBalance(); 
-
     let grosstotal = 0;
      
-
     function formatNumber(num) {
         return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
     }
 
+    const CallAllBranchBalance = async () => {
+        Setbranchbalance(await getAllBranchBalance());
+    }
+     
+    useEffect(() => {
+    
+        CallAllBranchBalance();
+      
+      }, []);    
  
 
     return (

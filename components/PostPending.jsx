@@ -6,6 +6,7 @@ import { useState, useId } from "react";
 //import { findTransaction } from "@/model/getdata";
 import { IoClose } from "react-icons/io5";
 import toast, { Toaster } from 'react-hot-toast';
+import { getCookie, getCookies } from 'cookies-next';
 
 async function findTransaction({transactionid}){
   const apiUrl = process.env.API_URL;
@@ -79,6 +80,15 @@ const handleConfirm = async () => {
 
       if (res.ok) {
         // const form = e.target;
+        const username = getCookie('username');
+        const branchid = getCookie('branchid');
+        
+        const res = await fetch('/api/confirmpending', {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({transid,username,branchid})
+        });        
+
         toast("Transaction Confirm Sucessfully...");
 
         {(document.getElementById(id)).close()}

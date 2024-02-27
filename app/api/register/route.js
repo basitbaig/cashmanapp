@@ -9,7 +9,7 @@ export async function POST(request) {
           
         //const userdata = await req.json();
         
-        const active = Boolean(1);
+        const active = Boolean(0);
         const newuser = Boolean(1);
 
         const { email, name, password, ubranchid, ucomid, urole, utype} = await request.json();

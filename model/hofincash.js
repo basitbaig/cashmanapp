@@ -10,6 +10,8 @@ const fincashSchema = new mongoose.Schema(
         entrytype: {type: String},
         issuetobranch:{type: Number},
         recevfrombranch:{type: Number},
+        category:{type: String},
+        brhtransid: {type: String},
         description: {type: String},
         totalamount: {type: Number},
         remarks: {type: String},
