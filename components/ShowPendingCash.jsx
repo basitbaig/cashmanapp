@@ -4,30 +4,6 @@ import { useState, useEffect } from "react";
 import { pendingCash } from '@/model/getdata'
 import PostPending from '@/components/PostPending';
 
-// const pendingCash = async ({branchid}) => {
-//     const apiUrl = process.env.API_URL;
-  
-//       try {    
-  
-//           const res = await fetch('/api/pendingcash', {
-//               method: "POST",
-//               headers: { "Content-Type": "application/json" },
-//               body: JSON.stringify({ branchid })
-//           });
-  
-//           if (!res.ok) {
-//             throw new Error("No Pending Entries Found!!");
-//           }
-       
-//           return res.json();
-  
-//       } catch (error) {
-//           throw new Error("Connection Issue With API Call");
-//       }
-  
-//   } 
-  
-
 export default function ShowPendingCash({branchid}) {
 
     const [pendingcash, Setpendingcash] = useState([]);
@@ -53,7 +29,7 @@ export default function ShowPendingCash({branchid}) {
         return [day, month, year].join('-');
       }
 
-      const CallPendingCash = async () => {
+    const CallPendingCash = async () => {
         Setpendingcash(await pendingCash({branchid}));
     }
      

@@ -192,7 +192,7 @@ export const pendingCash = async ({branchid}) => {
 export const userInfo = async () => {
   const apiUrl = process.env.API_URL;
   try {     
-      const res = await fetch(process.env.API_URL+'/api/userinfo', {
+      const res = await fetch('/api/userinfo', {
           method: "GET",
           headers: { "Content-Type": "application/json" }
       });
