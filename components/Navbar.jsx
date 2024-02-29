@@ -4,12 +4,18 @@ import Link from "next/link";
 import DropDownAdmin from "./DropdownAdmin";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
-import { deleteCookie, deleteCookies } from 'cookies-next';
+import { deleteCookie, getCookies, getCookie } from 'cookies-next';
 import ReceivedCash from "./ReceivedCash";
 import IssueCash from  "./IssueCash";
 import { getCashTypes } from '@/model/getdata'
  
-export default function Navbar({username, userrole, firstlogin}) {
+export default function Navbar() {
+
+  const userinfo = getCookies();
+  
+  const username = getCookie('username');
+  const userrole = getCookie('userrole');
+  const firstlogin = getCookie('firstlogin');
  
   const isBoolean = typeof firstlogin === 'boolean';
 
@@ -55,10 +61,30 @@ export default function Navbar({username, userrole, firstlogin}) {
       <Link className="text-white font-bold text-3xl" href={'/dashboard'}>Cash Management</Link>
       
       {/* username={decodeURIComponent(userdata?.name)}  */}
+      <div className="float-right">
 
-      <ReceivedCash {...Recvheadlist} />
-    
-      <IssueCash {...Issuheadlist} />
+      
+      <ul className="flex flex-row top-2">
+        <li className="px-2">
+             <ReceivedCash {...Recvheadlist} />
+        </li>
+   
+        <li className="px-2">
+            <IssueCash {...Issuheadlist} />
+        </li>
+        <li className="px-2">
+          <div className="px-60">
+            <span>
+              {firstlogin === 'true' ? router.push('/updatepassword') : ""}
+            </span>
+            {userrole === "Admin" ? <DropDownAdmin /> : ""}
+          </div>
+        </li>
+      </ul>
+
+      
+      </div>
+      
 
       {/* <Link className="bg-white p-2" href={'/issueCash'}>Issue Cash</Link> */}
 
@@ -67,13 +93,7 @@ export default function Navbar({username, userrole, firstlogin}) {
       {/* <Link className="bg-white p-2" href={'/receivecash'}>Receive Cash</Link>
       <Link className="bg-white p-2" href={'/issuecash'}>Issue Cash</Link> */}
 
-      <div className="mr-20">
-        <span className="mr-20">
-            {firstlogin === 'true' ?  router.push('/updatepassword') : ""}
-        </span>
-        {userrole === "Admin" ? <DropDownAdmin /> : ""}
 
-      </div>
 
       <div className="ml-2">
         <span className="flex text-white">{username}</span>

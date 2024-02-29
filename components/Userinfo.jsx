@@ -1,15 +1,15 @@
 "use client";
 
-import Navbar from "@/components/Navbar";
-import Link from "next/link";
-
 import { getCookie, getCookies } from 'cookies-next';
-
-
+import {useState, useEffect } from 'react';
+import { IconContext } from "react-icons";
+import { TiUserDelete } from "react-icons/ti";
+import { BsTrash3 } from "react-icons/bs";
+import { GrUserNew } from "react-icons/gr";
+import { updateUser } from "@/model/getdata"
+ 
 export default function Userinfo({...props}) {
     
- 
-
     const username = getCookie('username');
     const branchid = getCookie('branchid');
     const usertype = getCookie('usertype');
@@ -18,17 +18,44 @@ export default function Userinfo({...props}) {
 
     const userlist = [...Object.values(props)];
 
+    const [userdata, SetuserData] = useState([]);
+
+    const CallUpdateUser = async (userid,action) => {
+
+      //<Link to={`#`} onClick={() => {if(window.confirm('Are you sure to delete this record?')){ this.deleteHandler(item.id)};}}> <i className="material-icons">Delete</i> </Link>
+      //console.log(userid,action)
+      
+      SetuserData(await updateUser({userid,action}))
+  }
+
+    function handleActive (userid,status) {
+      //e.preventDefault();
+ 
+      CallUpdateUser(userid,status == "false" ? "Active" : "InActive")
+ 
+    }
+
+    function handleDelete (userid) {
+      //e.preventDefault();
+      CallUpdateUser(userid,"Delete")
+  
+    };    
+
+    useEffect(() => {
+    
+      SetuserData(userlist);
+    
+    }, [userdata]);   
+
+
+
+
+
   return (
     
     <div className="md:container md:mx-auto">
 
-      <div className="flex flex-col gap-2">
-
-        <Navbar username={decodeURIComponent(username)} userrole={decodeURIComponent(userrole)} firstlogin={decodeURIComponent(firstlogin)} />
-
-      </div>
-
- 
+    
         <div className="relative overflow-x-auto mt-8">
  
           <table className="table-fixed min-w-full text-left text-sm font-light">
@@ -40,12 +67,13 @@ export default function Userinfo({...props}) {
                   <th className="px-4 py-2">User Role</th>
                   <th className="px-4 py-2">User Type</th>
                   <th className="px-4 py-2">Status</th>
+                  <th className="px-4 py-2">Action</th>
                 </tr>
               </thead>
 
               <tbody className="border-b dark:border-neutral-500">
                 {
-                  userlist.map((item) => {
+                  userdata.map((item) => {
                     
                     return <tr className="border-b dark:border-neutral-500" key={item._id}>
                       <td className="whitespace-nowrap  px-3 py-2">{item.branchname}</td>
@@ -55,19 +83,40 @@ export default function Userinfo({...props}) {
                       <td className="whitespace-nowrap  px-3 py-2">{item.usertype}</td>
                       <td>
                       {item.isactive ? "Active" : "InActive"}
-                        {/* <PostPending transid={item._id.toString()} /> */}
+                        {/* <PostPending transid={item._id.toString()} />
+                        
+                        */}
+                      </td>
+
+                      <td>                        
+                          <button onClick={() => handleActive(item._id,item.isactive)}>
+                          <IconContext.Provider value={{ color: 'navy', size: 22 }}>
+                            {item.isactive ? <TiUserDelete /> :  <GrUserNew />}                            
+                          </IconContext.Provider>                                                      
+                          </button>
+                          <span className="gap-5 px-5"></span>
+
+                          {/* handleDelete(item._id,item.isactive)} */}
+                         
+                          <button onClick={() => {if(window.confirm('Are you sure to delete this user?')){ handleDelete(item._id)};}}>
+                          <IconContext.Provider value={{ color: 'navy', size: 22 }}>
+                              <BsTrash3 />
+                          </IconContext.Provider>                                                      
+                          </button>
                       </td>
                     </tr>                                                        
                   })
                 }
-                {userlist.length === 0 && (
+                {userdata.length === 0 && (
                   <p className="text-center">No User Record.</p>
                 )}
 
               </tbody>
  
             </table>
-          
+
+         
+
         </div>
 
     </div>

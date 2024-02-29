@@ -195,7 +195,7 @@ export const userInfo = async () => {
       const res = await fetch('/api/userinfo', {
           method: "GET",
           headers: { "Content-Type": "application/json" }
-      });
+      },{ cache: 'no-store' });
 
       if (!res.ok) {
         throw new Error("No Pending Entries Found!!");
@@ -232,7 +232,43 @@ export async function findTransaction({transactionid}){
 }
  
  
+export async function updateUser({userid, action}){
+ 
+  try {
+         
+      const res = 
+        action=="DELETE" ? 
+          await fetch('/api/updateuser', {
+            method: "DELETE",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ userid, action })
+          })
+        :        
+          await fetch('/api/updateuser', {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ userid, action })
+          })
+        
+        if (!res.ok) {
+          throw new Error("User Record Not Updated!!");
+        }
+ 
+       return res.json();
 
+  } catch (error) {
+    throw new Error("Connection Issue With API Call");
+  }
+}
+
+
+
+// export async function DELETE(request) {
+//   const id = request.nextUrl.searchParams.get("id");
+//   await connectMongoDB();
+//   await Topic.findByIdAndDelete(id);
+//   return NextResponse.json({message: "Topic Deleted Successfully.."}, {status: 200});
+// }
 
 
 

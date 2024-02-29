@@ -76,7 +76,7 @@ export default function AdminDashboard() {
       <div className="flex flex-col gap-2">
         {/* <Navbar username={token.user?._doc?.name} userrole={token.user?._doc?.userrole} firstlogin={token.user?._doc?.firstlogin}/>             */}
 
-        <Navbar username={decodeURIComponent(username)} userrole={decodeURIComponent(userrole)} firstlogin={decodeURIComponent(firstlogin)} />
+        {/* <Navbar username={decodeURIComponent(username)} userrole={decodeURIComponent(userrole)} firstlogin={decodeURIComponent(firstlogin)} /> */}
 
       </div>
 

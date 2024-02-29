@@ -105,8 +105,9 @@ export default function LoginForm() {
      
             const checkusertype = decodeURIComponent(userinfo?.usertype);
 
-      
-            router.replace(checkusertype === "Branch" ? 'branchdashboard' : 'dashboard' );
+            router.replace('dashboard');
+
+            //router.replace(checkusertype === "Branch" ? 'branchdashboard' : 'dashboard' );
 
 
             toast("User Sucessfully Login...")

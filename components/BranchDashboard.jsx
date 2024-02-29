@@ -76,11 +76,11 @@ export default function BranchDashboard() {
 
 
 
-      <div className="flex flex-col gap-2">
+      {/* <div className="flex flex-col gap-2">
 
         <Navbar username={decodeURIComponent(username)} userrole={decodeURIComponent(userrole)} firstlogin={decodeURIComponent(firstlogin)} />
 
-      </div>
+      </div> */}
 
       {/* <div>
         <button

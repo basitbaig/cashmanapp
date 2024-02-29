@@ -1,8 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Userinfo from "@/components/Userinfo";
+//import Userinfo from "@/components/Userinfo";
 import { userInfo } from "@/model/getdata";
+import Userinfo from "@/components/UserInfo";
 
 
 export default function page() {

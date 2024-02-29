@@ -11,7 +11,7 @@ export async function GET() {
 
          let userlist=[];  
 
-         userlist = await db.collection('userinformation').find().toArray()
+         userlist = await db.collection('userslist').find().toArray()
  
         return NextResponse.json(userlist);
 
