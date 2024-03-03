@@ -8,6 +8,9 @@ export async function PUT(request) {
         const body = await request.json();
  
         await connectMongoDB();
+
+        console.log(body.userid,'---PUT---', body.action);
+
         const userid = body.userid;
 
         const ObjectId = require('mongodb').ObjectId;        
@@ -15,7 +18,7 @@ export async function PUT(request) {
     
         let query = {_id: new ObjectId(userid)};
 
-        body.action=="Active" ? 
+        body.action=="InActive" ? 
         await User.findByIdAndUpdate(query, { isactive: 'true' }) 
         :
         await User.findByIdAndUpdate(query, { isactive: 'false' })  
@@ -37,6 +40,9 @@ export async function DELETE(request) {
         const body = await request.json();
  
         await connectMongoDB();
+
+        console.log(body.userid,'---DELETE---', body.action);
+
         const userid = body.userid;
 
         const ObjectId = require('mongodb').ObjectId;        

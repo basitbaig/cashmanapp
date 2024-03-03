@@ -237,7 +237,7 @@ export async function updateUser({userid, action}){
   try {
          
       const res = 
-        action=="DELETE" ? 
+        action=="Delete" ? 
           await fetch('/api/updateuser', {
             method: "DELETE",
             headers: { "Content-Type": "application/json" },

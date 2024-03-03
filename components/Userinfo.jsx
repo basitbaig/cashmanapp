@@ -17,7 +17,9 @@ export default function Userinfo({...props}) {
     const firstlogin = getCookie('firstlogin');
 
     const userlist = [...Object.values(props)];
-
+ 
+     
+    const [state, setState] = useState('initial');
     const [userdata, SetuserData] = useState([]);
 
     const CallUpdateUser = async (userid,action) => {
@@ -30,8 +32,8 @@ export default function Userinfo({...props}) {
 
     function handleActive (userid,status) {
       //e.preventDefault();
- 
-      CallUpdateUser(userid,status == "false" ? "Active" : "InActive")
+      console.log(status);
+      CallUpdateUser(userid,status == false ? "InActive" : "Active")
  
     }
 
@@ -42,12 +44,27 @@ export default function Userinfo({...props}) {
     };    
 
     useEffect(() => {
-    
-      SetuserData(userlist);
-    
+
+      console.log(userdata.length);
+      if (userdata.length==0)
+      {
+        console.log('---Check Default user list----')
+        console.log(userdata);
+        SetuserData(userlist) 
+        console.log('---Check after use effect user data----')
+        console.log(userdata);
+      }
+
+     
+                
     }, [userdata]);   
 
-
+    //Filter array to create new array on condition
+    // setArtists(                                                                                                                                                                                                                                                                      
+    //   artists.filter(a =>
+    //     a.id !== artist.id
+    //   )
+    // );
 
 
 
