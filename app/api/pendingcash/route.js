@@ -17,8 +17,8 @@ export async function POST(request) {
         // pendinglist = await db.collection('cashexpheads').find({ headtype: body }).toArray();
  
         // return NextResponse.json(headlist);
-    
 
+     
          let pendinglist=[];
  
         { body.branchid==19 ?
@@ -28,7 +28,7 @@ export async function POST(request) {
         }
 
         // console.log('---API Call Area-----');
-        // console.log(pendinglist);
+        
         
         return NextResponse.json(pendinglist);
 

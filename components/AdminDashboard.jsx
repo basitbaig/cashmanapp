@@ -10,6 +10,7 @@ import ShowPendingCash from "@/components/ShowPendingCash";
 // import { useSession } from "next-auth/react";
 import { useState, useEffect } from "react";
 import { getBranchList } from '@/model/getdata'
+import { pendingCash } from '@/model/getdata'
 import { getCookie, getCookies } from 'cookies-next';
 
 
@@ -33,6 +34,9 @@ export default function AdminDashboard() {
   const [showMe, setShowMe] = useState(false);
   const [callbranchid, SetCallBranchID] = useState(0);
   const [branchlist, Setbranchlist]=useState([]);
+  const [pendingcash, Setpendingcash] = useState([]);
+
+  const [totalpending, Settotalpending]=useState(0);
 
   function toggle(e){
     e.preventDefault();
@@ -42,10 +46,26 @@ export default function AdminDashboard() {
 
   const callBranchList = async () => {
     Setbranchlist(await getBranchList("all"));
+
+    if (pendingcash.length==0)
+    {   
+      await CallPendingCash();      
+     
+    }
   }
 
+  const CallPendingCash = async () => {
+    
+    Setpendingcash(await pendingCash({branchid}));
+
+    Settotalpending(pendingcash.length)
+
+      console.log(pendingcash)
+      console.log(pendingcash.length)
+  }  
+
   useEffect(() => {    
-    callBranchList();
+    callBranchList();   
   }, []);
 
   //Make Coma Separated Number
@@ -93,8 +113,14 @@ export default function AdminDashboard() {
 
           {/* animate-blinkingBg */}
 
-          <button className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-700" onClick={toggle}>{showMe ? "Hide Pending Entries" : "Show Pending Entries"}</button>
-
+          <button type="button" className="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" onClick={toggle}>
+            {showMe ? "Hide Pending Entries" : "Show Pending Entries"}
+            <span className="inline-flex items-center justify-center w-4 h-4 ms-2 text-xs font-semibold text-blue-800 bg-blue-200 rounded-full">
+            <label>{totalpending}</label>
+            </span>
+          </button>          
+ 
+        
           <div style={{ display: showMe ? "block" : "none" }}>
         
             <ShowPendingCash branchid={decodeURIComponent(branchid)} />

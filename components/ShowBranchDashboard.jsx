@@ -7,13 +7,10 @@ export default function ShowBranchDashboard({branchid}) {
 
   const [branchdata, SetbranchData] = useState([]);
 
-   
     const CallBranchData = async () => {
       SetbranchData(await getBranchCash({branchid}));
   }
    
- 
-
   useEffect(() => {  
     CallBranchData(); 
     }, [branchid]);   

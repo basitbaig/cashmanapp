@@ -20,6 +20,8 @@ export async function POST(request) {
              :
              branchdata = await Branchcashbook.find({branchid: body.branchid}).select("entrydate entrytype category description totalamount remarks ispending").sort({ _id: -1 })        
         }
+
+     
  
         return NextResponse.json(branchdata);
 

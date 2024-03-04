@@ -57,30 +57,41 @@ export default function Navbar() {
  
   return (
 
-    <nav className="flex justify-between items-center bg-slate-500 px-8 py-3">
+    <nav className="flex justify-between items-center bg-slate-500 px-5 py-3">
+
       <Link className="text-white font-bold text-3xl" href={'/dashboard'}>Cash Management</Link>
       
       {/* username={decodeURIComponent(userdata?.name)}  */}
       <div className="float-right">
-
       
-      <ul className="flex flex-row top-2">
-        <li className="px-2">
-             <ReceivedCash {...Recvheadlist} />
-        </li>
-   
-        <li className="px-2">
+        <ul className="flex flex-row top-2">
+
+  
+
+          <li className="px-3">
+            <ReceivedCash {...Recvheadlist} />
+          </li>
+
+          <li className="px-3">
             <IssueCash {...Issuheadlist} />
-        </li>
-        <li className="px-2">
-          <div className="px-60">
-            <span>
-              {firstlogin === 'true' ? router.push('/updatepassword') : ""}
-            </span>
-            {userrole === "Admin" ? <DropDownAdmin /> : ""}
-          </div>
-        </li>
-      </ul>
+          </li>
+
+          <li className="px-2 py-2">
+            <Link className='rounded bg-blue-500 px-4 py-2.5 text-white hover:bg-blue-700' href={'/dashboard/reports'}>
+              Reports
+            </Link>
+          </li>
+
+          <li className="px-2">
+            <div className="px-60">
+              <span>
+                {firstlogin === 'true' ? router.push('/updatepassword') : ""}
+              </span>
+              {userrole === "Admin" ? <DropDownAdmin /> : ""}
+            </div>
+          </li>
+
+        </ul>
 
       
       </div>
