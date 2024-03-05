@@ -45,18 +45,10 @@ export default function Userinfo({...props}) {
 
     useEffect(() => {
 
-      console.log(userdata.length);
       if (userdata.length==0)
       {
-        console.log('---Check Default user list----')
-        console.log(userdata);
         SetuserData(userlist) 
-        console.log('---Check after use effect user data----')
-        console.log(userdata);
-      }
-
-     
-                
+      }                
     }, [userdata]);   
 
     //Filter array to create new array on condition
