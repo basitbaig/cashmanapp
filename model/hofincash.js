@@ -15,9 +15,10 @@ const fincashSchema = new mongoose.Schema(
         description: {type: String},
         totalamount: {type: Number},
         remarks: {type: String},
-        ispending: {type: Boolean},
-        isposted: {type: Boolean},
-        iscancel: {type: Boolean},        
+        ispending: {type: Boolean, default: false},
+        isreject: {type: Boolean, default: false},          
+        isposted: {type: Boolean, default: true},
+        iscancel: {type: Boolean, default: null}     
     },
     {
         timestamps: true,

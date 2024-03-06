@@ -71,7 +71,7 @@ export default function IssueCash({...props}) {
     try {
 
  
-      const res = await fetch(process.env.API_URL+'/api/cashissue', {
+      const res = await fetch('/api/cashissue', {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formvalues)
@@ -85,7 +85,7 @@ export default function IssueCash({...props}) {
 
         router.refresh();
         {
-          branchid==19 ? router.replace("/dashboard") : router.push("/branchdashboard");    
+          branchid==19 ? router.push("/dashboard") : router.push("/branchdashboard");    
         }
  
       } else {

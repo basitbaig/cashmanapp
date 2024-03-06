@@ -13,6 +13,12 @@ const cashexpheadSchema = new Schema(
             enum : ['R','I'],
             default: 'R'
         },
+        headmode: {
+            type: String,
+            required: true,
+            enum : ['H','B'],
+            default: 'H'
+        },        
         createby: {
             type: String
         }      

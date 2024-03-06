@@ -13,6 +13,7 @@ export async function POST(request) {
         await CashExphead.create({ 
             cashexphead:body.exphead, 
             headtype:body.headtype,
+            headmode:body.headmode,
             createby:body.username 
         });
  

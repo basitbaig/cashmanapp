@@ -103,7 +103,7 @@ export default function AdminDashboard() {
  
       <div className="flex bg-gray-200 min-h-screen">
         
-        <div className="w-1/4 mt-11">
+        <div className="w-1/4 mt-11 hidden lg:block">
           <ShowAllBranchBalance />
         </div>
        

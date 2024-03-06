@@ -16,10 +16,10 @@ export default function BranchList() {
     const router = useRouter();
 
     const [username, SetUsername] = useState(getCookie('username'));
-    const [branchid, SetBranchId] = useState("");
-    const [branchname, SetBranchName] = useState("");
+    const [branchid, SetBranchid] = useState("");
+    const [branchname, SetBranchname] = useState("");
     const [company, SetCompany] = useState("");
-    const [branchemail, SetBranchEmail] = useState("");
+    const [branchemail, SetBranchemail] = useState("");
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -28,7 +28,7 @@ export default function BranchList() {
         const apiUrl = process.env.API_URL;
         try {
 
-            const res = await fetch(process.env.API_URL + '/api/addupdatebranchlist', {
+            const res = await fetch('/api/addupdatebranchlist', {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(formvalues)
@@ -70,8 +70,13 @@ export default function BranchList() {
 
 
     return (
-        <div>
-            <button className="text-gray-900 bg-white border-none focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700"
+        <div
+            onKeyDown={e => e.stopPropagation()}
+            onClick={e => e.stopPropagation()}
+            onFocus={e => e.stopPropagation()}
+            onMouseOver={e => e.stopPropagation()}                
+        >
+            <button className="text-gray-900 bg-white border-none focus:outline-none hover:bg-gray-100  font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700"
                 onClick={() => (document.getElementById('branch_modal')).showModal()}
             >
                 New Branch Update
@@ -83,7 +88,7 @@ export default function BranchList() {
                 <div className="modal-box">
                     <h1>{username}</h1>
                     <section className="bg-white dark:bg-gray-900">
-                        <div className="py-8 px-2 mx-auto max-w-2xl lg:py-16">
+                        <div className="py-5 px-2 mx-auto max-w-2xl lg:py-5">
                             <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-white">New Branch Update</h2>
 
                             <form onSubmit={handleSubmit}>
@@ -98,8 +103,8 @@ export default function BranchList() {
                                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                             placeholder="BranchID"
                                             required
-                                            defaultvalue={branchid}
-                                            onChange={(e) => SetBranchId(e.target.value)}
+                                            value={branchid}
+                                            onChange={(e) => SetBranchid(e.target.value)}
                                         />
                                     </div>
 
@@ -114,7 +119,7 @@ export default function BranchList() {
                                             placeholder="Correct Branch Name as Per SimpliED Database"
                                             required
                                             value={branchname}
-                                            onChange={(e) => SetBranchName(e.target.value)}
+                                            onChange={(e) => SetBranchname(e.target.value)}
                                         />
                                     </div>
                                     <div>
@@ -134,7 +139,7 @@ export default function BranchList() {
                                             placeholder="Correct Branch Email as Per SimpliED Database"
                                             required
                                             value={branchemail}
-                                            onChange={(e) => SetBranchName(e.target.value)}
+                                            onChange={(e) => SetBranchemail(e.target.value)}
                                         />
                                     </div>
 

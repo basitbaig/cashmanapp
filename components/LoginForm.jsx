@@ -70,13 +70,14 @@ export default function LoginForm() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         //setPending(true);
-        //setError("");
+    
 
         // console.log('---Email and Password At Login Page-----');
         // console.log(email);
  
         const userdata =  await getLoginUser({email,password});
 
+ 
         try {
 
             // const res = await signIn("credentials", {
@@ -92,25 +93,39 @@ export default function LoginForm() {
             // const userdata =session?.token?._doc;
             // console.log(session?.token?._doc);
 
-            setCookie('comid', userdata?.user?.comid, { path: '/', });
-            setCookie('username', userdata?.user?.name, { path: '/', });
-            setCookie('email',userdata?.user?.email, { path: '/', });
-            setCookie('branchid', userdata?.user?.branchid, { path: '/', });
-            setCookie('usertype', userdata?.user?.usertype, { path: '/', });
-            setCookie('userrole', userdata?.user?.userrole, { path: '/', });
-            setCookie('firstlogin', userdata?.user?.firstlogin, { path: '/', });          
+            let checkuser = userdata?.user?.name;
 
-            const userinfo = getCookies();
+//            console.log(typeof checkuser == "undefined");
+ 
+            if (typeof checkuser == "undefined")
+            {
+    
+                setError("Invalid Credentials.....")
+                toast("Invalid User ID / Password..")
 
+                router.replace('/');
+            }
+            else{
+
+                setCookie('comid', userdata?.user?.comid, { path: '/', });
+                setCookie('username', userdata?.user?.name, { path: '/', });
+                setCookie('email',userdata?.user?.email, { path: '/', });
+                setCookie('branchid', userdata?.user?.branchid, { path: '/', });
+                setCookie('usertype', userdata?.user?.usertype, { path: '/', });
+                setCookie('userrole', userdata?.user?.userrole, { path: '/', });
+                setCookie('firstlogin', userdata?.user?.firstlogin, { path: '/', });          
+    
+                const userinfo = getCookies();
+    
+         
+                const checkusertype = decodeURIComponent(userinfo?.usertype);
+    
+                router.replace('dashboard');
+    
+                //router.replace(checkusertype === "Branch" ? 'branchdashboard' : 'dashboard' );    
+                toast("User Sucessfully Login...")
+            }
      
-            const checkusertype = decodeURIComponent(userinfo?.usertype);
-
-            router.replace('dashboard');
-
-            //router.replace(checkusertype === "Branch" ? 'branchdashboard' : 'dashboard' );
-
-
-            toast("User Sucessfully Login...")
  
             // setTimeout(() => {
             //     (handleRedirect());
@@ -118,21 +133,20 @@ export default function LoginForm() {
 
         } catch (error) {
             //toast(error);
-            console.log(error);
-            console.log("Please Click Again...")
+            console.log("At Try Cash Error : " + error)
         }
 
     }
 
-    const showToastMessage = (msg, typ) => {
-        typ = "error" ?
-            toast.error({ msg }, {
-                position: toast.POSITION.TOP_RIGHT,
-            }) :
-            toast.success({ msg }, {
-                position: toast.POSITION.TOP_RIGHT,
-            });
-    }
+    // const showToastMessage = (msg, typ) => {
+    //     typ = "error" ?
+    //         toast.error({ msg }, {
+    //             position: toast.POSITION.TOP_RIGHT,
+    //         }) :
+    //         toast.success({ msg }, {
+    //             position: toast.POSITION.TOP_RIGHT,
+    //         });
+    // }
 
     // useEffect(() => {
         
@@ -171,7 +185,7 @@ export default function LoginForm() {
 
                             <div className="shadow-lg p-5 rounded-lg mx-10 my-10">
 
-                            <form name="loginform" onSubmit={handleSubmit} className="flex flex-col gap-3">
+                            <form name="loginform" autoComplete="off" onSubmit={handleSubmit} className="flex flex-col gap-3">
                                 {/* <!-- Email input --> */}
                                 <input
                                         name="useremail"

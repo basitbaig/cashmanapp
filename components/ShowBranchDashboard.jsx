@@ -58,12 +58,13 @@ export default function ShowBranchDashboard({branchid}) {
                 </tr>
               </thead>
               {/* <APIData /> */}
+              {/* + '-' + data.entrytype */}
               <tbody className="border-b dark:border-neutral-500">
 
                 {
                   branchdata.map((data) => {
                     return <tr className="border-b dark:border-neutral-500" key={data.id}>
-                      <td className="whitespace-nowrap  px-3 py-2">{data.description + '-' + data.remarks + '-' + data.entrytype}</td>
+                      <td className="whitespace-nowrap  px-3 py-2">{data.description + '\n' + data.remarks }</td>
                       <td className="whitespace-nowrap  px-3 py-2">{data.category}</td>
                       <td className="whitespace-nowrap  px-3 py-2">{formatDate(data.entrydate)}</td>
                       <td className="whitespace-nowrap  text-center">{data.entrytype === "R" ? formatNumber(data.totalamount) : "0"}</td>

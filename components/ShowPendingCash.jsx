@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { pendingCash } from '@/model/getdata'
 import PostPending from '@/components/PostPending';
+import RejectPending from "./RejectPending";
 
 export default function ShowPendingCash({branchid}) {
 
@@ -81,7 +82,10 @@ export default function ShowPendingCash({branchid}) {
                                         <td className="whitespace-nowrap  px-3 py-2">{item.description}</td>
                                         <td className="whitespace-nowrap  text-center">{formatNumber(item.totalamount)}</td>
                                         <td>
-                                        <PostPending transid={item._id.toString()} />     
+                                           <PostPending transid={item._id.toString()} />     
+                                        </td>
+                                        <td>
+                                           <RejectPending transid={item._id.toString()} />   
                                         </td>
                                     </tr>
                                     //grosstotal = grosstotal + {parseInt(item.balance)};                                                            

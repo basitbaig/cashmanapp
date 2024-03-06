@@ -15,7 +15,7 @@ export async function POST(request) {
 
         const query = { email: email };
 
-        //console.log(email);
+        console.log(email);
 
         const res = await User.findOneAndUpdate(query, { $set: { password: hashedPassword, firstlogin: 'false' } }, {new: true})
          
@@ -30,6 +30,7 @@ export async function POST(request) {
         // });
 
         return NextResponse.json({ message: "Password Updated" }, { status: 201 });
+        
     } catch (error) {
         return NextResponse.json({ message: "Error In Password Update" }, { status: 500 });
     }

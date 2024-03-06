@@ -17,7 +17,7 @@ export async function PUT(request) {
 
     let query = {_id: new ObjectId(transid)};
 
-    await Branchcashbook.findByIdAndUpdate(query, { ispending: 'false' });
+    await Branchcashbook.findByIdAndUpdate(query, { ispending: 'false', isreject: 'false' });
 
 
     return NextResponse.json({message: "Transaction Confirm Succesfully..."}, {status: 200});

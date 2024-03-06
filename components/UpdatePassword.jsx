@@ -27,10 +27,10 @@ export default function UpdatePassword() {
 	// }, [])
 
 
-    const handleRedirect = () => {
-        router.refresh();
-        router.replace("dashboard");
-    }
+    // const handleRedirect = () => {
+    //     router.refresh();
+    //     router.replace("dashboard");
+    // }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -49,7 +49,7 @@ export default function UpdatePassword() {
             }
            const newpassemail = changeemail!=''?changeemail:userinfo?.email;
 
-            const res = await fetch(process.env.API_URL + '/api/updatepassword', {
+            const res = await fetch('/api/updatepassword', {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({email:newpassemail, password: newpassword})
@@ -61,9 +61,11 @@ export default function UpdatePassword() {
 
                 setCookie('userlogin', 'false', { path: '/', });
                 
-                setTimeout(() => {
-                    (handleRedirect());
-                }, 2000);
+                // setTimeout(() => {
+                //     (handleRedirect());
+                // }, 2000);
+                router.replace("/");
+
             } else {
                 toast("Password Updation Failed, Please try again...");
             }
@@ -110,7 +112,7 @@ export default function UpdatePassword() {
                         <div className="mb-12 md:mb-0 md:w-8/12 lg:w-5/12 xl:w-5/12">
 
                             <div className="shadow-lg p-5 rounded-lg mx-10 my-10 bg-slate-500 text-center text-white border-x-20 border-y-20 border-green-400">
-                               <span>Change Password for Email: {uemail} </span>
+                               <span>Change Password for Email: {decodeURIComponent(uemail)} </span>
                             </div>
 
                             <div className="shadow-lg p-5 rounded-lg mx-10 my-10 bg-slate-500 text-center text-white border-x-20 border-y-20 border-green-400">
@@ -122,7 +124,7 @@ export default function UpdatePassword() {
                                 <form name="updateform" onSubmit={handleSubmit} className="flex flex-col gap-3">
 
                                     {uemail ? (
-                                        <p>{uemail}</p>
+                                        <p>{decodeURIComponent(uemail)}</p>
                                        
                                     ) : (
                                         <input
@@ -171,7 +173,8 @@ export default function UpdatePassword() {
                                         <button className="bg-slate-500 text-white font-bold cursor-pointer my-5 px-6 py-2">
                                             Submit
                                         </button>
-                                        {/* <Toaster /> */}
+                                        
+                                        <Toaster /> 
 
                                     </div>
                                 </form>

@@ -10,10 +10,14 @@ export async function POST(request) {
  
         const db = mongoose.connection;
 
+        let htype = body.entrytype;
+        let hmode = body.entrymode;
+
+ 
         //const htype = JSON.parse(headtype);
         let headlist=[];
 
-        headlist = await db.collection('cashexpheads').find({ headtype: body }).toArray();
+        headlist = await db.collection('cashexpheads').find({ headtype: htype, headmode: hmode }).toArray();
  
         return NextResponse.json(headlist);
 

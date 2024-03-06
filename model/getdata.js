@@ -83,13 +83,13 @@ export const getBranchBalance = async ({branchid}) => {
 
 }
  
-export const getCashTypes = async (entrytype) => {
-  const apiUrl = process.env.API_URL;
+export const getCashTypes = async (entrytype,entrymode) => {
+ 
   try {
     const res = await fetch('/api/getcashexphead', {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(entrytype)
+      body: JSON.stringify({entrytype, entrymode})
     });
 
   

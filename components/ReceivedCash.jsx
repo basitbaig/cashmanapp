@@ -4,6 +4,7 @@
 import { useRouter } from "next/navigation";
 import { useFormState, useFormStatus } from "react-dom"
 import { useState, useEffect, useRef } from "react";
+
 import { getCookie, getCookies } from 'cookies-next';
 import toast, { Toaster } from 'react-hot-toast';
 import { revalidatePath } from "next/cache"
@@ -27,7 +28,7 @@ export default function ReceivedCash({ ...props }) {
 
     const router = useRouter();
 
-    const [comid, SetComid] = useState(getCookie('usercomp'));
+    const [comid, SetComid] = useState(getCookie('comid'));
     const [branchid, SetBranchid] = useState(getCookie('branchid'));
     const [username, SetUsername] = useState(getCookie('username'));
     const [entrydate, SetEntrydate] = useState(Date.now());
@@ -54,19 +55,23 @@ export default function ReceivedCash({ ...props }) {
 
         try {
 
-            const res = await fetch(process.env.API_URL + '/api/cashreceive', {
+            const res = await fetch('/api/cashreceive', {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(formvalues)
             });
 
             if (res.ok) {
-                revalidatePath('/' + curpath)
+
+                // revalidatePath('/' + curpath)
                 toast("Cash Sucessfully Received...")
 
-                setTimeout(() => {
-                    (handleRedirect());
-                }, 1000);
+                document.getElementById('recv_modal').close();
+
+                router.refresh();
+                {
+                    branchid==19 ? router.push("/dashboard") : router.push("/branchdashboard");    
+                }
 
                 // {() => (document.getElementById('recv_modal')).close()}
 

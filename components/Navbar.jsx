@@ -13,6 +13,7 @@ export default function Navbar() {
 
   const userinfo = getCookies();
   
+  const branchid = getCookie('branchid');
   const username = getCookie('username');
   const userrole = getCookie('userrole');
   const firstlogin = getCookie('firstlogin');
@@ -25,9 +26,12 @@ export default function Navbar() {
   const router = useRouter()
 
   const CallDataTypes = async () => {
-    SetRecvheadlist(await getCashTypes("R"));
 
-    SetIssuheadlist(await getCashTypes("I"));
+    let hmode = branchid==19 ? "H": "B";
+
+    SetRecvheadlist(await getCashTypes("R",hmode));
+
+    SetIssuheadlist(await getCashTypes("I",hmode));
   }
  
   useEffect(() => {
