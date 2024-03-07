@@ -179,7 +179,7 @@ export const pendingCash = async ({branchid}) => {
         if (!res.ok) {
           throw new Error("No Pending Entries Found!!");
         }
-     
+ 
         return res.json();
 
     } catch (error) {
@@ -261,6 +261,26 @@ export async function updateUser({userid, action}){
   }
 }
 
+export async function cancelTransaction({transid, branchid}){
+ 
+  try {
+         
+      const res = await fetch('/api/canceltransaction', {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ transid, branchid })
+          })
+        
+        if (!res.ok) {
+          throw new Error("Transaction Record Not Found!!");
+        }
+ 
+       return res.json();
+
+  } catch (error) {
+    throw new Error("Connection Issue With API Call");
+  }
+}
 
 
 // export async function DELETE(request) {

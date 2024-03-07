@@ -2,18 +2,31 @@
 
 import { useState, useEffect } from "react";
 import { getBranchCash } from '@/model/getdata'
+import {cancelTransaction} from '@/model/getdata'
+import { IconContext } from "react-icons";
+import { Tooltip } from 'react-tooltip' 
+import { GiCancel } from "react-icons/gi";
 
 export default function ShowBranchDashboard({branchid}) {
 
   const [branchdata, SetbranchData] = useState([]);
 
-    const CallBranchData = async () => {
+  const CallBranchData = async () => {
       SetbranchData(await getBranchCash({branchid}));
   }
    
   useEffect(() => {  
     CallBranchData(); 
     }, [branchid]);   
+
+  const CallCancelTransaction = async (transid) => {
+    await cancelTransaction({ transid, branchid })
+  }
+
+  function handleCancel(transid) {
+    //e.preventDefault();
+    CallCancelTransaction(transid)
+  };    
 
 
     function formatNumber(num) {
@@ -36,6 +49,12 @@ export default function ShowBranchDashboard({branchid}) {
 
     return (
         <div>
+
+          <Tooltip
+                    id="cancelbutton-tooltip"
+                    place="top"
+                    content="Cancel This Transaction"
+                  />
             {/* {branchbalance.map(item => (
                 <div key={item._id}>
                     <p className="text-lg decoration-indigo-500 bg-indigo-700 text-white font-bold">
@@ -55,6 +74,7 @@ export default function ShowBranchDashboard({branchid}) {
                   <th className="px-4 py-2">Transaction Date</th>
                   <th className="px-4 py-2">Amount Received</th>
                   <th className="px-4 py-2">Amount Issued</th>
+                  <th className="px-5 py-1">Action</th>
                 </tr>
               </thead>
               {/* <APIData /> */}
@@ -63,12 +83,25 @@ export default function ShowBranchDashboard({branchid}) {
 
                 {
                   branchdata.map((data) => {
-                    return <tr className="border-b dark:border-neutral-500" key={data.id}>
+                    return <tr className="border-b dark:border-neutral-500" key={data._id}>
                       <td className="whitespace-nowrap  px-3 py-2">{data.description + '\n' + data.remarks }</td>
                       <td className="whitespace-nowrap  px-3 py-2">{data.category}</td>
                       <td className="whitespace-nowrap  px-3 py-2">{formatDate(data.entrydate)}</td>
                       <td className="whitespace-nowrap  text-center">{data.entrytype === "R" ? formatNumber(data.totalamount) : "0"}</td>
                       <td className="whitespace-nowrap  text-center">{data.entrytype === "I" ? formatNumber(data.totalamount) : "0"}</td>
+                      <td className="whitespace-nowrap  px-7 py-2">
+
+                      <button onClick={() => {if(window.confirm('Are you sure to cancel this transaction?')){ handleCancel(data._id)};}} data-tooltip-id="cancelbutton-tooltip">
+                          <IconContext.Provider value={{ color: 'red', size: 22 }}>
+                              <GiCancel />
+                          </IconContext.Provider>                                                      
+                      </button>
+
+
+
+                        {/* <CancelTransaction transid={data._id.toString()} branchid={branchid} />   */}
+
+                     </td>                                      
                     </tr>
                   })
                 }

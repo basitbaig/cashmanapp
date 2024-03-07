@@ -32,6 +32,8 @@ const getLoginUser = async ({email,password}) => {
           
   }
  
+ 
+
 
 export default function LoginForm() {
     //File system object
@@ -49,22 +51,28 @@ export default function LoginForm() {
         setPassword("");
     }    
     
- 
     const removeCookie = () => {
-
-        deleteCookie('userdata', { path: '/', });
-
-        signOut();
-
-        // deleteCookie('usercomp', { path: '/', });
-        // deleteCookie('username', { path: '/', });
-        // deleteCookie('useremail', { path: '/', });
-        // deleteCookie('userbranchid', { path: '/', });
-        // deleteCookie('usertype', { path: '/', });
-        // deleteCookie('userlogin', { path: '/', });
+        //deleteCookies('userdata', { path: '/', });
+        {
+          hasCookie('username') &&
+          deleteCookie('comid', { path: '/', });
+          deleteCookie('username',  { path: '/', });
+          deleteCookie('email', { path: '/', });
+          deleteCookie('branchid',  { path: '/', });
+          deleteCookie('usertype',{ path: '/', });
+          deleteCookie('userrole',{ path: '/', });
+          deleteCookie('firstlogin', { path: '/', }); 
     
+          console.log('Cookies Removed....');
+      }
+       
         router.replace('/');
     };
+    
+ 
+    useEffect(() => {    
+        removeCookie();  
+      }, []);
 
      
     const handleSubmit = async (e) => {

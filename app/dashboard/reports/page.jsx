@@ -2,7 +2,7 @@
 export default function page() {
     return (
 
-      <div>
+      <div className="content-center text-center">
         Report Page
       </div>
 

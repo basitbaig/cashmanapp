@@ -45,27 +45,35 @@ export default function BranchDashboard() {
 
   const [showMe, setShowMe] = useState(false);
   const [pendingcash, Setpendingcash] = useState([]);
-  const [totalpending, Settotalpending]=useState(0);
 
+  let pendingcount="";
+
+  const [totalpending, SetTotalpending]=useState(0);
+  
 
   const CallPendingCash = async () => {
     
-    Setpendingcash(await pendingCash({branchid}));
+    const pendData = await pendingCash({branchid});
 
-    Settotalpending(pendingcash.length)
-
-      console.log(pendingcash)
-      console.log(pendingcash.length)
+    pendingcount=pendData.length;
+    
+    SetPendingTag();
+    
   }  
 
+  function SetPendingTag() {    
+    SetTotalpending(pendingcount);  
+  }
+
+
   function toggle(e){
-    e.preventDefault();
-    
+    e.preventDefault();    
     setShowMe(!showMe);
   }
 
-  useEffect(() => {    
+  useEffect(() => {         
     CallPendingCash();   
+    
   }, []);
 
   //Format Data as per Customize Style
@@ -111,7 +119,7 @@ export default function BranchDashboard() {
 
       <div className="bg-gray-200 min-h-screen">
 
-        <div className="max-w-6xl mx-auto px-8 py-8">
+        <div className="max-w-8xl mx-auto px-8 py-8">
  
           <button type="button" className="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" onClick={toggle}>
             {showMe ? "Hide Pending Entries" : "Show Pending Entries"}

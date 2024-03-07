@@ -5,6 +5,7 @@ import { useFormState, useFormStatus } from "react-dom"
 import { useState, useEffect, useRef } from "react";
 import { getCookie, getCookies } from 'cookies-next';
 import toast, { Toaster } from 'react-hot-toast';
+import { BsConeStriped } from "react-icons/bs";
  
 
 
@@ -70,7 +71,17 @@ export default function IssueCash({...props}) {
 
     try {
 
- 
+      console.log('--Printing Form Values for Cateogry Selcted')
+      
+       
+      if (formvalues.category=="")
+      {
+        console.log(formvalues.category=="");
+        
+        SetCategory(newheadlist[0].cashexphead);
+      }
+
+  
       const res = await fetch('/api/cashissue', {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -83,10 +94,13 @@ export default function IssueCash({...props}) {
 
         document.getElementById('issue_modal').close();
 
-        router.refresh();
-        {
-          branchid==19 ? router.push("/dashboard") : router.push("/branchdashboard");    
-        }
+        
+        router.push("/dashboard");   
+        //router.refresh();
+        //router.replace("/dashboard")
+        //router.reload();
+        //router.push("/dashboard").then(() => router.reload());
+        
  
       } else {
         const errorMesg = await res.json();

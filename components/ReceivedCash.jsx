@@ -69,10 +69,14 @@ export default function ReceivedCash({ ...props }) {
                 document.getElementById('recv_modal').close();
 
                 router.refresh();
-                {
-                    branchid==19 ? router.push("/dashboard") : router.push("/branchdashboard");    
-                }
+                router.push("/dashboard");  
+                //router.replace("/dashboard")
+                //router.reload();
+                //router.push("/dashboard").then(() => router.reload());
+                
+                //router.replace("/product?id=2").then(() => router.reload());
 
+                //branchid==19 ? router.replace("/dashboard") : router.replace("/branchdashboard"); 
                 // {() => (document.getElementById('recv_modal')).close()}
 
 

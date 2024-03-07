@@ -11,8 +11,6 @@ async function BranchHandBalance({ branchid }) {
         SetcashBalance(await getBranchBalance({ branchid }));
     }
 
-    
-
     useEffect(() => {
         CallCashBalance();
     }, [branchid]);

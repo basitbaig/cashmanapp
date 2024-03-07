@@ -39,8 +39,7 @@ export default function Userinfo({...props}) {
 
     function handleDelete (userid) {
       //e.preventDefault();
-      CallUpdateUser(userid,"Delete")
-  
+      CallUpdateUser(userid,"Delete")  
     };    
 
     useEffect(() => {
@@ -112,6 +111,8 @@ export default function Userinfo({...props}) {
                               <BsTrash3 />
                           </IconContext.Provider>                                                      
                           </button>
+
+
                       </td>
                     </tr>                                                        
                   })

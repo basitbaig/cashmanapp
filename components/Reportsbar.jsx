@@ -25,6 +25,14 @@ export default function Reportsbar() {
                             </span>
                         </a>
                     </li>
+
+                    <li className="relative mt-9">
+                      <Link className="text-md px-8 py-8 " href={'../dashboard'}>
+                         <span className="font-bold text-blue-600">Dashboard</span>
+                      </Link>
+                  </li> 
+
+
                   <li className="relative mt-9">
                       <Link className="text-md px-8 py-8" href={'/dashboard/reports/cashledger'}>
                          Cash Ledger Report
@@ -39,7 +47,9 @@ export default function Reportsbar() {
                       <Link className="text-md px-8 py-8 " href={'/dashboard/reports/cashissue'}>
                          Cash Issue Info
                       </Link>
-                  </li>                  
+                  </li>            
+
+        
                      
                 </ul>
             </nav>

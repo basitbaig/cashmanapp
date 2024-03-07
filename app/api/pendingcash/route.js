@@ -27,9 +27,7 @@ export async function POST(request) {
             pendinglist = await db.collection('pendingissuecash').find({ branchid:parseInt(body.branchid) }).toArray()       
         }
 
-        // console.log('---API Call Area-----');
-        
-        
+  
         return NextResponse.json(pendinglist);
 
        

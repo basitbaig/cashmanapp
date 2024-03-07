@@ -40,6 +40,7 @@ export default function Navbar() {
   
   }, []);
  
+ 
 
       // removing cookies
     const removeCookie = () => {

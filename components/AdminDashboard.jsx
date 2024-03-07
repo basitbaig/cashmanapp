@@ -33,10 +33,11 @@ export default function AdminDashboard() {
  
   const [showMe, setShowMe] = useState(false);
   const [callbranchid, SetCallBranchID] = useState(0);
-  const [branchlist, Setbranchlist]=useState([]);
-  const [pendingcash, Setpendingcash] = useState([]);
-
-  const [totalpending, Settotalpending]=useState(0);
+  const [branchlist, Setbranchlist]=useState([]);  
+  
+  const [totalpending, SetTotalpending]=useState(0);
+  
+  let pendingcount="";
 
   function toggle(e){
     e.preventDefault();
@@ -47,25 +48,30 @@ export default function AdminDashboard() {
   const callBranchList = async () => {
     Setbranchlist(await getBranchList("all"));
 
-    if (pendingcash.length==0)
+    if (totalpending=="")
     {   
-      await CallPendingCash();      
-     
+      CallPendingCash();           
     }
   }
 
   const CallPendingCash = async () => {
+  
+    const pendData = await pendingCash({branchid})
+
+    pendingcount=pendData.length;   
     
-    Setpendingcash(await pendingCash({branchid}));
-
-    Settotalpending(pendingcash.length)
-
-      console.log(pendingcash)
-      console.log(pendingcash.length)
+    SetPendingTag();
+ 
   }  
 
+  function SetPendingTag() {    
+    SetTotalpending(pendingcount);  
+  }
+
+
   useEffect(() => {    
-    callBranchList();   
+    callBranchList(); 
+ 
   }, []);
 
   //Make Coma Separated Number
@@ -93,12 +99,13 @@ export default function AdminDashboard() {
 
     <div className="md:container md:mx-auto">
 
-      <div className="flex flex-col gap-2">
-        {/* <Navbar username={token.user?._doc?.name} userrole={token.user?._doc?.userrole} firstlogin={token.user?._doc?.firstlogin}/>             */}
+     {/* <div className="flex flex-col gap-2">
+         <Navbar username={token.user?._doc?.name} userrole={token.user?._doc?.userrole} firstlogin={token.user?._doc?.firstlogin}/>             
 
-        {/* <Navbar username={decodeURIComponent(username)} userrole={decodeURIComponent(userrole)} firstlogin={decodeURIComponent(firstlogin)} /> */}
+       <Navbar username={decodeURIComponent(username)} userrole={decodeURIComponent(userrole)} firstlogin={decodeURIComponent(firstlogin)} /> 
 
       </div>
+    */}
 
  
       <div className="flex bg-gray-200 min-h-screen">
@@ -115,7 +122,7 @@ export default function AdminDashboard() {
 
           <button type="button" className="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" onClick={toggle}>
             {showMe ? "Hide Pending Entries" : "Show Pending Entries"}
-            <span className="inline-flex items-center justify-center w-4 h-4 ms-2 text-xs font-semibold text-blue-800 bg-blue-200 rounded-full">
+            <span className="inline-flex items-center justify-center w-4 h-4 ms-2 text-xs font-semibold text-white bg-blue-800 rounded-full">
             <label>{totalpending}</label>
             </span>
           </button>          

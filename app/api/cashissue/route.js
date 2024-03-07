@@ -9,9 +9,7 @@ export async function POST(request) {
 
         const body = await request.json();
       
-        console.log(body);
-   
-        //const { comid, branchid, username,entrydate,entrytype,category,description,totalamount,remarks } = await request.json();
+            //const { comid, branchid, username,entrydate,entrytype,category,description,totalamount,remarks } = await request.json();
         // let ispending = body.branchid==19 ? Boolean(0) : body.entrytype === "R" ? Boolean(0) : Boolean(1);
 
         let ispending = body.branchid==19 ? Boolean(0) : Boolean(1);
