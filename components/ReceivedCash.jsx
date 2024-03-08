@@ -42,6 +42,11 @@ export default function ReceivedCash({ ...props }) {
 
     const headlist = [...Object.values(props)];
 
+    function refreshMyPage()
+    {
+      window.location.reload();
+    }
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -70,6 +75,8 @@ export default function ReceivedCash({ ...props }) {
 
                 router.refresh();
                 router.push("/dashboard");  
+
+                refreshMyPage();
                 //router.replace("/dashboard")
                 //router.reload();
                 //router.push("/dashboard").then(() => router.reload());

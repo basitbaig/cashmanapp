@@ -45,9 +45,12 @@ export default function IssueCash({...props}) {
  
 
   const newheadlist = branchid==19 ? headlist : headlist.filter( x => 
-    x.cashexphead == "Cash to Head Office"
+   x.cashexphead == "Cash to Head Office"
   );
  
+  // useEffect(() => {
+  //   SetCategory(newheadlist[0].cashexphead)
+  // }, [])
   //console.log(newheadlist[0].cashexphead);
 
   // useEffect(() => {
@@ -62,6 +65,11 @@ export default function IssueCash({...props}) {
   //     }
   // }, [state.message])
 
+  function refreshMyPage()
+  {
+    window.location.reload();
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -70,18 +78,7 @@ export default function IssueCash({...props}) {
     const formvalues = { comid, branchid, username, entrydate, entrytype, category, description, totalamount, remarks };
 
     try {
-
-      console.log('--Printing Form Values for Cateogry Selcted')
-      
-       
-      if (formvalues.category=="")
-      {
-        console.log(formvalues.category=="");
-        
-        SetCategory(newheadlist[0].cashexphead);
-      }
-
-  
+ 
       const res = await fetch('/api/cashissue', {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -95,7 +92,10 @@ export default function IssueCash({...props}) {
         document.getElementById('issue_modal').close();
 
         
-        router.push("/dashboard");   
+        //router.push("/dashboard");   
+
+        refreshMyPage();
+
         //router.refresh();
         //router.replace("/dashboard")
         //router.reload();
@@ -192,13 +192,26 @@ export default function IssueCash({...props}) {
                   </div>
                   <div>
                     <label htmlFor="category" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Disbursement Purpose</label>
-                 
+
+                    {branchid == 19 ?
+                      <select data-te-select-init data-te-select-clear-button="true" className="w-full max-w-xs" id="category" name="category" required onChange={(e) => SetCategory(e.target.value)}>
+                        {
+                          newheadlist.map((opts, _id) => <option key={_id} value={opts.cashexphead}>{opts.cashexphead}</option>)
+                        }
+                      </select>
+                      :
+                      <input type="text"
+                        name="category"
+                        id="category"
+                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                        required
+                        value="Cash to Head Office"
+                        onChange={(e) => SetCategory(e.target.value)}
+
+                      />
+                    }
  
-                    <select data-te-select-init data-te-select-clear-button="true" className="w-full max-w-xs" id="category" name="category" required onChange={(e) => SetCategory(e.target.value)}>
-                      {
-                        newheadlist.map((opts, _id) => <option key={_id} value={opts.cashexphead}>{opts.cashexphead}</option>)
-                      }
-                    </select>     
+                      
                             
                  
                                                   

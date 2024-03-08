@@ -27,25 +27,26 @@ export default function Reportsbar() {
                     </li>
 
                     <li className="relative mt-9">
-                      <Link className="text-md px-8 py-8 " href={'../dashboard'}>
+                      <Link className="text-md px-8 py-8 " href={'/dashboard'}>
                          <span className="font-bold text-blue-600">Dashboard</span>
                       </Link>
                   </li> 
 
+                  
 
                   <li className="relative mt-9">
-                      <Link className="text-md px-8 py-8" href={'/dashboard/reports/cashledger'}>
+                      <Link className="text-md px-8 py-8" href={{ pathname: '/dashboard/reports/reportmain', query: { rptname: 'cashledger' }}}>
                          Cash Ledger Report
                       </Link>
                   </li>
                   <li className="relative mt-9">
-                      <Link className="text-md px-8 py-8 " href={'/dashboard/reports/cashreceive'}>
-                         Cash Receive Info
+                      <Link className="text-md px-8 py-8 " href={{ pathname: '/dashboard/reports/reportmain', query: { rptname: 'branchledger' }}}>
+                         Branch Wise Ledger
                       </Link>
                   </li>
                   <li className="relative mt-9">
-                      <Link className="text-md px-8 py-8 " href={'/dashboard/reports/cashissue'}>
-                         Cash Issue Info
+                      <Link className="text-md px-8 py-8 " href={{ pathname: '/dashboard/reports/reportmain', query: { rptname: 'headledger' }}}>
+                         Head Wise Report
                       </Link>
                   </li>            
 
@@ -59,3 +60,73 @@ export default function Reportsbar() {
 }
 
  
+//Getting Started with the KendoReact Data Grid
+// npm install --save @progress/kendo-react-grid @progress/kendo-data-query @progress/kendo-react-data-tools @progress/kendo-react-inputs @progress/kendo-react-intl @progress/kendo-react-dropdowns @progress/kendo-react-dateinputs @progress/kendo-drawing @progress/kendo-react-animation @progress/kendo-licensing @progress/kendo-react-buttons @progress/kendo-react-treeview @progress/kendo-react-popup @progress/kendo-svg-icons
+
+// ES2015 module syntax
+//import { Grid, GridColumn as Column } from "@progress/kendo-react-grid";
+//import products from "./products.json";
+
+// CommonJS format
+//const { Grid, GridColumn as Column } = require('@progress/kendo-react-grid');
+//const { products} = require('./products.json');
+
+//npm install --save @progress/kendo-theme-default
+
+
+//import '@progress/kendo-theme-default/dist/all.css';
+
+
+//npm install jquery
+//npm install @progress/telerik-react-report-viewer
+
+
+// Import the viewer into the page.
+// Initialize the viewer component:
+
+// const speakerObjects = JSON.stringify(this.props.data.data);
+// return (
+// <TelerikReportViewer
+// ref={el => this.viewer = el}
+// serviceUrl="http://localhost:59655/api/reports/"
+// reportSource={{
+// report: 'Speakers Report.trdp',
+// parameters: {
+// 'DataParameter': speakerObjects
+// }
+// }}
+// viewerContainerStyle={{
+// position: 'absolute',
+// height: '90%',
+// width: '55%',
+// top: '6%',
+// overflow: 'hidden',
+// clear: 'both',
+// fontFamily: 'ms sans serif'
+// }}
+// scaleMode="SPECIFIC"
+// scale={1.2}
+// enableAccessibility={false} />
+
+
+// componentDidUpdate() {
+//     const reportdata = JSON.stringify(this.props.data.data);
+//     const rs = {
+//     report: 'Speakers Report.trdp',
+//     parameters: { DataParameter: reportdata }
+//     };
+//     this.viewer.setReportSource(rs);
+//     };
+
+
+ //https://github.com/telerik/kendo-react/tree/master/examples/coffee-warehouse-nextjs
+
+ //https://kendo-react-coffee-warehouse.vercel.app/warehouse/dashboard
+
+
+
+ //https://www.youtube.com/watch?v=xPIp77h8Vqw
+
+
+
+ //https://developer.mescius.com/activereportsjs/docs/GettingStarted/QuickStart-ARJS-Designer-Component/nextjs

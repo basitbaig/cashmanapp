@@ -115,7 +115,7 @@ export default function RegisterForm() {
 
             if (res.ok) {
                 setPending(false);
-                toast("User Sucessfully Registered...")
+                toast("User Successfully Registered...")
                 setTimeout(() => {
                     (handleRedirect());
                 }, 2000);
@@ -226,12 +226,18 @@ export default function RegisterForm() {
                                         <option value="2">Junior Campus Defence</option>
                                         <option value="27">Junior Campus North Nazimabad</option>
                                     </select> */}
-
-                                    <select   className="w-full max-w-xs"  name="urole" required onChange={(e) => setUserRole(e.target.value)}>
-                                        <option value="0">Select User Role</option>
-                                        <option value="Admin">Admin</option>
-                                        <option value="User">User</option>
-                                    </select>
+                                    {ubranchid == 19 ?
+                                        <select className="w-full max-w-xs" name="urole" required onChange={(e) => setUserRole(e.target.value)}>
+                                            <option value="0">Select User Role</option>
+                                            <option value="Admin">Admin</option>
+                                            <option value="User">User</option>
+                                        </select>
+                                        :
+                                        <select className="w-full max-w-xs" name="urole" required onChange={(e) => setUserRole(e.target.value)}>
+                                            <option value="0">Select User Role</option>
+                                            <option value="User">User</option>
+                                        </select>
+                                    }
 
 
                                     {/* <!-- Login button --> */}
