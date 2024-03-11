@@ -40,7 +40,7 @@ export const getLoginUser = async ({email,password}) => {
 }
 
 export const getBranchCash = async ({branchid}) => {
-  //const apiUrl = process.env.API_URL;
+  
     try {     
       
         const res = await fetch('/api/branchcash', {
@@ -51,6 +51,7 @@ export const getBranchCash = async ({branchid}) => {
 
         const data = await res.json();
 
+        
         return data;
 
     } catch (error) {

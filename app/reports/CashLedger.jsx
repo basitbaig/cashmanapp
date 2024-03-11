@@ -1,23 +1,42 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { getBranchList } from '@/model/getdata'
+import { getBranchCash } from '@/model/getdata'
+import { getCookie } from 'cookies-next';
+import { GiConsoleController } from 'react-icons/gi';
+export default function CashLedger() {
 
+  //const cashdata = [...Object.values(props)];
 
-export default function CashLedger({ ...props }) {
-
-  const branchdata = [...Object.values(props)];
-
-  console.log('---Get Branch data at Cash Ledger Component----')
-  console.log(branchdata);
+  //let branchdata =JSON.parse(JSON.stringify(cashdata))
+ 
+  let branchid = getCookie('branchid');
 
   const [loader, setLoader] = useState(false);
 
   const [cashledger, SetcashLedger] = useState([]);
-
+  const [callbranchid, SetCallBranchID] = useState(0);
   const [startdateFilter, setStartDateFilter] = useState(null)
   const [enddateFilter, setEndDateFilter] = useState(null)
+  const [branchlist, Setbranchlist]=useState([]);  
+  const [branchdata, Setbranchdata]=useState([]);
 
+  const callBranchList = async () => {
+    Setbranchlist(await getBranchList("all"));
+  }
 
+  const CallBranchData = async () => {    
+    console.log(branchid);
+    console.log(callbranchid);
+
+     branchid = callbranchid != 0 ? callbranchid : branchid;
+
+      const res = await getBranchCash({branchid});  
+
+      Setbranchdata(res);   
+  }
+ 
   function formatNumber(num) {
     return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
   }
@@ -36,17 +55,57 @@ export default function CashLedger({ ...props }) {
     return [day, month, year].join('-');
   }
 
+  const handleBranch = (e) => {
+    e.preventDefault();
+    SetCallBranchID(e.target.value);
+}
+
+  function fnExcelReport() {
+    var tab_text = "<table border='2px'><tr bgcolor='#87AFC6'>";
+    var j = 0;
+    var tab = document.getElementById('headerTable'); // id of table
+
+    for (j = 0; j < tab.rows.length; j++) {
+      tab_text = tab_text + tab.rows[j].innerHTML + "</tr>";
+      //tab_text=tab_text+"</tr>";
+    }
+
+    tab_text = tab_text + "</table>";
+    tab_text = tab_text.replace(/<A[^>]*>|<\/A>/g, "");//remove if u want links in your table
+    tab_text = tab_text.replace(/<img[^>]*>/gi, ""); // remove if u want images in your table
+    tab_text = tab_text.replace(/<input[^>]*>|<\/input>/gi, ""); // reomves input params
+
+    var msie = window.navigator.userAgent.indexOf("MSIE ");
+
+    // If Internet Explorer
+    if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) {
+      txtArea1.document.open("txt/html", "replace");
+      txtArea1.document.write(tab_text);
+      txtArea1.document.close();
+      txtArea1.focus();
+
+      sa = txtArea1.document.execCommand("SaveAs", true, "Say Thanks to Sumit.xls");
+    } else {
+      // other browser not tested on IE 11
+      sa = window.open('data:application/vnd.ms-excel,' + encodeURIComponent(tab_text));
+    }
+
+    return sa;
+  }
+
   function getReportData() {
 
     //   data.series = data.series.filter((item: any) =>
     //   item.date.getTime() >= fromDate.getTime() && item.date.getTime() <= toDate.getTime()
-    // );   
+    // );  
+    CallBranchData();
+ 
+ 
+    // let fromdate = new Date("2024-03-01");
+    // let todate = new Date("2024-03-07");
 
-    let fromdate = new Date("2024-03-01");
-    let todate = new Date("2024-03-07");
-
-    setStartDateFilter(fromdate);
-    setEndDateFilter(todate);
+    // setStartDateFilter(fromdate);
+    // setEndDateFilter(todate);
 
 
     const data = branchdata.filter(row => {
@@ -61,21 +120,15 @@ export default function CashLedger({ ...props }) {
       //if filterPass comes back `false` the row is filtered out
       return filterPass
     })
-
-
+    
     SetcashLedger(data);
-
-    console.log(cashledger);
-
   }
 
-  useEffect(() => {
-
-    if (cashledger.length == 0) {
-      getReportData();
-
-    }
-  }, [cashledger]);
+  useEffect(() => {    
+     
+     branchid==19 && callBranchList();
+ 
+  }, []);
 
   return (
     <div>
@@ -113,8 +166,18 @@ export default function CashLedger({ ...props }) {
 
               </div>
 
+              {branchid == 19 &&
+                <div>
+                  <select className="w-full max-w-xs text-black" name="ubranchid" required onChange={handleBranch}>
+                    {
+                      branchlist.map((opts, id) => <option key={id} value={opts.id}>{opts.branchname}</option>)
+                    }
+                  </select>
+                </div>
+              }
+
               <button
-                className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-700"
+                className="mt-8 rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-700" 
                 type="button"
                 onClick={getReportData}
               >
@@ -131,23 +194,39 @@ export default function CashLedger({ ...props }) {
               <div className="report-logo">
                 {/* <img alt="logo" src={logo} /> */}
               </div>
-              <h5>Cash Ledger Report</h5>
 
-              <table>
-                <tbody>
-                  {
-                    cashledger.map(row =>
-                      <tr>
-                        <td>row.remarks</td>
-                        <td>row.description</td>
-                        <td>row.entrydate</td>
-                        <td>row.totalamount</td>
-                      </tr>
-                    )
+              <iframe id="txtArea1" style={{display:"none"}}></iframe>
+             
+              <button id="btnExport" onClick={fnExcelReport}> EXCEL </button>
+              
+              <table id="headerTable" className="table-fixed min-w-full text-left text-sm font-light">
+              <thead className="border-b bg-neutral-800 font-medium text-white dark:border-neutral-500 dark:bg-neutral-900">
+                <tr className="border-b dark:border-neutral-500">
+                  <th className="px-4 py-2">Transaction Date</th>
+                  <th className="px-4 py-2">Transaction Details</th>
+                  <th className="px-4 py-2">Amount Received</th>
+                  <th className="px-4 py-2">Amount Issued</th>
+                </tr>
+              </thead>
+              {/* <APIData /> */}
+              {/* + '-' + data.entrytype */}
+              <tbody className="border-b dark:border-neutral-500">
 
-                  }
-                </tbody>
-              </table>
+                {
+                  cashledger.map((data) => {
+                    return <tr className="border-b dark:border-neutral-500" key={data._id}>
+                      <td className="whitespace-nowrap  px-3 py-2">{formatDate(data.entrydate)}</td>
+                      <td className="whitespace-nowrap  px-3 py-2">{data.category + '\n' + data.description + '\n' + data.remarks }</td>
+                      <td className="whitespace-nowrap  text-center">{data.entrytype === "R" ? formatNumber(data.totalamount) : "0"}</td>
+                      <td className="whitespace-nowrap  text-center">{data.entrytype === "I" ? formatNumber(data.totalamount) : "0"}</td>                                                        
+                    </tr>
+                  })
+                }
+                {cashledger.length === 0 && (
+                  <p className="text-center">There is no Cash Collection.</p>
+                )}
+              </tbody>
+            </table>
 
             </div>
           </div>
@@ -163,6 +242,8 @@ export default function CashLedger({ ...props }) {
 
 //https://nextui.org/docs/components/table
 
+
+//https://datatables.net/extensions/buttons/examples/html5/simple.html
 
 
 {/* <tbody>

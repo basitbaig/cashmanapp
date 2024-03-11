@@ -45,7 +45,7 @@ export async function POST(request) {
                 username:body.username, 
                 entrydate:body.entrydate, 
                 entrytype:body.entrytype, 
-                category:body.category,
+                category:body.category=='' ? "Cash To Head Office" : body.category,
                 description:body.description,
                 totalamount:parseInt(body.totalamount),
                 remarks:body.remarks,

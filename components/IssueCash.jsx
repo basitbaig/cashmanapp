@@ -6,6 +6,7 @@ import { useState, useEffect, useRef } from "react";
 import { getCookie, getCookies } from 'cookies-next';
 import toast, { Toaster } from 'react-hot-toast';
 import { BsConeStriped } from "react-icons/bs";
+import { GiConsoleController } from "react-icons/gi";
  
 
 
@@ -73,9 +74,21 @@ export default function IssueCash({...props}) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const apiUrl = process.env.API_URL;
+    let cashhead;
+    
+   
+
+    if (category =='') {
+
+      cashhead = newheadlist[0].cashexphead;
+
+      SetCategory(cashhead)
  
+    } 
+ 
+
     const formvalues = { comid, branchid, username, entrydate, entrytype, category, description, totalamount, remarks };
+
 
     try {
  
@@ -94,7 +107,7 @@ export default function IssueCash({...props}) {
         
         //router.push("/dashboard");   
 
-        refreshMyPage();
+       // refreshMyPage();
 
         //router.refresh();
         //router.replace("/dashboard")
@@ -205,9 +218,7 @@ export default function IssueCash({...props}) {
                         id="category"
                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                         required
-                        value="Cash to Head Office"
-                        onChange={(e) => SetCategory(e.target.value)}
-
+                        defaultValue="Cash to Head Office"                 
                       />
                     }
  

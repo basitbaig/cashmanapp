@@ -1,11 +1,7 @@
 "use client";
 
-import { getCookie } from 'cookies-next';
-import { useState, useEffect } from "react";
-import { getBranchCash } from '@/model/getdata'
 import CashLedger from "@/app/reports/CashLedger";
 import { useSearchParams } from 'next/navigation';
-import { GiConsoleController } from 'react-icons/gi';
 
 export default function page() {
 
@@ -15,29 +11,11 @@ export default function page() {
 
     const reportName = searchParams.get('rptname');
 
-    const branchid = getCookie('branchid');
-
-    let branchdata=[]
-
-    const CallBranchData = async () => {         
-        branchdata = await getBranchCash({ branchid });  
-        console.log('---Get Branch Data from API---')
-        console.log(branchdata);
-    }
-
-     
-    useEffect(() => {      
- 
-       CallBranchData();
- 
-    }, []); 
-
-    // 
     return (
-        <div>
+        <div className="content-center text-center">
 
-            {reportName=="cashledger" && 
-                branchdata.length >0 ? <CashLedger {...branchdata} /> : <h1>No Transaction Found..</h1>            
+            {
+              reportName=="cashledger" && <CashLedger />          
             }
 
             {reportName=="branchledger" &&             
