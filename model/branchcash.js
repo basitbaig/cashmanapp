@@ -15,7 +15,8 @@ const branchcashSchema = new mongoose.Schema(
         totalamount: {type: Number},
         remarks: {type: String},
         ispending: {type: Boolean, default: true},
-        isreject: {type: Boolean, default: false},        
+        isreject: {type: Boolean, default: false},    
+        rejectreason: {type: String, default: null},    
         isposted: {type: Boolean, default: false},
         iscancel: {type: Boolean, default: null}       
     },

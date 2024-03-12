@@ -37,6 +37,7 @@ export default function RejectPending({ transid }) {
  //https://react-icons.github.io/react-icons/search/#q=close
 
   const [transactionid, SettransactionId]=useState(transid);
+  const [rejectreason, SetrejectReason]=useState("");
   
   const id = useId();
 
@@ -49,7 +50,8 @@ export default function RejectPending({ transid }) {
   const initialValues = {                   // type all the fields you need
     branchname: '',
     description: '',
-    totalamount: ''
+    totalamount: '',
+    rejectreason:''
 };
 
 const [values, setValues] = useState(initialValues);       // set initial state
@@ -75,7 +77,7 @@ const handleConfirm = async () => {
       const res = await fetch('/api/rejectpending', {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({transid})
+        body: JSON.stringify({transid,rejectreason})
       });
 
       if (res.ok) {
@@ -134,16 +136,7 @@ const handleConfirm = async () => {
 
                   <input type="text" name="trid" defaultValue={transid} className="font-bold text-green-500" />
                   <div className="form-control w-full max-w-xs py-4"> 
-                    <label className="inline-block">Branch Name:<h1 className="font-bold text-blue-800 underline">{values.branchname}</h1></label>
-                    
-                    {/* <input
-                      type="text"
-                      id="branchname"
-                      name="branchname"
-                      className="input input-bordered w-full max-w-xs"
-                      value={values.branchname}
-                      readOnly
-                    /> */}
+                    <label className="inline-block">Branch Name:<h1 className="font-bold text-blue-800 underline">{values.branchname}</h1></label>                                        
                   </div>
                   <div className="form-control w-full max-w-xs py-4">
                     <label htmlFor="image">Description</label>
@@ -167,6 +160,18 @@ const handleConfirm = async () => {
                       readOnly
                     /> */}
                   </div>
+                  <div className="form-control w-full max-w-xs py-4">
+                    <label htmlFor="image">Reason</label>
+                     <input
+                      type="text"
+                      id="rejectreason"
+                      name="rejectreason"
+                      placeholder="Mention Rejection Reason"
+                      value={rejectreason}
+                      onChange={(e) => SetrejectReason(e.target.value)}
+                      required
+                    /> 
+                  </div>                  
 
                   <button
                     className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-700"

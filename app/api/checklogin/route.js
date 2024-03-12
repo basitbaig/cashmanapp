@@ -23,11 +23,14 @@ export async function POST(request) {
             return NextResponse.json({"Error":"Invalid Email / Password"});
         }
 
+       // console.log('---User Found-----');
+       // console.log({user});
        
        // const user = await User.findOne({email}).select("name email comid branchid userrole usertype firstlogin");
         return NextResponse.json({user});
 
-    } catch (error) {
+    } catch (error) {        
         console.log(error);
+        return new NextResponse("Error in getting user" + error.message, {status:500});
     }
 }

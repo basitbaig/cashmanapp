@@ -1,14 +1,35 @@
 import mongoose from "mongoose"
 
 export const connectMongoDB = async () => {
-    try {
-        await mongoose.connect(process.env.MONGODB_URI);
-        //console.log("Database Connected Successfully....");
+    const DatabaseURI = process.env.MONGODB_URI
+    const connectionState = mongoose.connection.readyState;
+
+        if (connectionState === 1) {
+            console.log('Already Connected!!');
+            return;
+        }
+
+        if (connectionState === 2) {
+            console.log('Connecting...');
+            return;
+        }
+    
+    try {        
+        await mongoose.connect(DatabaseURI);
+        console.log("Database Connected Successfully....");
     } catch (error) {
         console.error("Error Connection MongoDB Database..", error);
+        throw new Error("Error in Connecting Database");
     }
 
 }
+
+// await mongoose.connect(MONGODB_URI!, {
+//     dbName: "cashmandb",
+//     bufferCommands: false
+// })
+
+
 
 // export async function getServerSideProps() {
 //     try {

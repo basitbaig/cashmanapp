@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { getBranchList } from '@/model/getdata'
 import { getBranchCash } from '@/model/getdata'
 import { getCookie } from 'cookies-next';
+import {firstBy} from "thenby";
 import { GiConsoleController } from 'react-icons/gi';
 export default function CashLedger() {
 
@@ -21,6 +22,8 @@ export default function CashLedger() {
   const [enddateFilter, setEndDateFilter] = useState(null)
   const [branchlist, Setbranchlist]=useState([]);  
   const [branchdata, Setbranchdata]=useState([]);
+
+  let balance = 0;
 
   const callBranchList = async () => {
     Setbranchlist(await getBranchList("all"));
@@ -120,6 +123,15 @@ export default function CashLedger() {
       //if filterPass comes back `false` the row is filtered out
       return filterPass
     })
+
+    let sortedDates = data.sort(firstBy(function(a, b) {
+      return new Date(a.entrydate) - new Date(b.entrydate);
+    }).thenBy("entrytype", "desc"));
+
+    
+    //const sortedDates = data?.map(data => { return { ...data, date: new Date(data.entrydate) } }).sort((b, a) => b.entrydate - a.entrydate)
+
+  console.log(sortedDates);
     
     SetcashLedger(data);
   }
@@ -204,8 +216,9 @@ export default function CashLedger() {
                 <tr className="border-b dark:border-neutral-500">
                   <th className="px-4 py-2">Transaction Date</th>
                   <th className="px-4 py-2">Transaction Details</th>
-                  <th className="px-4 py-2">Amount Received</th>
-                  <th className="px-4 py-2">Amount Issued</th>
+                  <th className="px-4 py-2">Received</th>
+                  <th className="px-4 py-2">Issued</th>
+                  <th className="px-4 py-2">Balance</th>
                 </tr>
               </thead>
               {/* <APIData /> */}
@@ -214,11 +227,15 @@ export default function CashLedger() {
 
                 {
                   cashledger.map((data) => {
+                    {data.entrytype === "R" ? balance += Number(data.totalamount) : balance -= Number(data.totalamount)}
+                    
                     return <tr className="border-b dark:border-neutral-500" key={data._id}>
                       <td className="whitespace-nowrap  px-3 py-2">{formatDate(data.entrydate)}</td>
                       <td className="whitespace-nowrap  px-3 py-2">{data.category + '\n' + data.description + '\n' + data.remarks }</td>
                       <td className="whitespace-nowrap  text-center">{data.entrytype === "R" ? formatNumber(data.totalamount) : "0"}</td>
                       <td className="whitespace-nowrap  text-center">{data.entrytype === "I" ? formatNumber(data.totalamount) : "0"}</td>                                                        
+                      <td className="whitespace-nowrap  text-center">{formatNumber(balance)}</td>   
+
                     </tr>
                   })
                 }

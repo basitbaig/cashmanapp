@@ -16,7 +16,7 @@ export async function PUT(request) {
 
     let query = {_id: new ObjectId(transid)};
 
-    await Branchcashbook.findByIdAndUpdate(query, { isreject: 'true' });
+    await Branchcashbook.findByIdAndUpdate(query, { isreject: 'true', ispending: 'false', rejectreason: body.rejectreason });
 
 
     return NextResponse.json({message: "Transaction Reject Succesfully..."}, {status: 200});

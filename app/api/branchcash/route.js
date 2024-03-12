@@ -18,7 +18,7 @@ export async function POST(request) {
         { body.branchid==19 ?
              branchdata = await Financecashbook.find({branchid: body.branchid, iscancel: null}).select("_id entrydate entrytype category description totalamount remarks ispending iscancel").sort({ _id: -1 })
              :
-             branchdata = await Branchcashbook.find({branchid: body.branchid, iscancel: null}).select("_id entrydate entrytype category description totalamount remarks ispending iscancel").sort({ _id: -1 })        
+             branchdata = await Branchcashbook.find({branchid: body.branchid, iscancel: null}).select("_id entrydate entrytype category description totalamount remarks ispending isreject iscancel").sort({ _id: -1 })        
         }
 
      

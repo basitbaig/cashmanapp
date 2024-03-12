@@ -21,12 +21,13 @@ const getLoginUser = async ({email,password}) => {
           });
     
           if (!res.ok) {
-            throw new Error("Balance List Not Found!!");
+            throw new Error("User Not Found / Invalid Credentials!!");
           }
       
           return res.json();
         
     } catch (error) {
+
       throw new Error(error);
     }
           
@@ -128,7 +129,7 @@ export default function LoginForm() {
          
                 const checkusertype = decodeURIComponent(userinfo?.usertype);
     
-                router.replace('dashboard');
+                router.push('dashboard');
     
                 //router.replace(checkusertype === "Branch" ? 'branchdashboard' : 'dashboard' );    
                 toast("User Sucessfully Login...")
