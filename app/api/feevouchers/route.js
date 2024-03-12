@@ -19,11 +19,11 @@ const POST = async (request) => {
         const feeData = new FeeVoucher(body);
         await feeData.save();
         
-        return new NextResponse(JSON.stringify({message:"Fee Voucher Data Successfully Received From SimplyED"},feeData),{status:201});
+        return new NextResponse(JSON.stringify({message:"Fee Voucher Data Successfully Received From SimpliED"},feeData),{status:201});
 
 
     } catch (error) {
-        return new NextResponse(JSON.stringify({message:"Error in Fetching Voucher Data From SimplyED"},feeData),{status:500});
+        return new NextResponse(JSON.stringify({message:"Error in Fetching Voucher Data From SimpliED"},feeData),{status:500});
 
     }
 }
