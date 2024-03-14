@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { getBranchList } from '@/model/getdata'
-import { getBranchCash } from '@/model/getdata'
+import { getReportCash } from '@/model/getdata'
 import { getCookie } from 'cookies-next';
 import {firstBy} from "thenby";
 import { GiConsoleController } from 'react-icons/gi';
@@ -30,14 +30,15 @@ export default function CashLedger() {
   }
 
   const CallBranchData = async () => {    
-    console.log(branchid);
-    console.log(callbranchid);
 
-     branchid = callbranchid != 0 ? callbranchid : branchid;
+      branchid = callbranchid != 0 ? callbranchid : branchid;
 
-      const res = await getBranchCash({branchid});  
+      const report="ledger";
 
+      const res = await getReportCash({branchid,report});  
+ 
       Setbranchdata(res);   
+ 
   }
  
   function formatNumber(num) {
@@ -101,7 +102,7 @@ export default function CashLedger() {
     //   data.series = data.series.filter((item: any) =>
     //   item.date.getTime() >= fromDate.getTime() && item.date.getTime() <= toDate.getTime()
     // );  
-    CallBranchData();
+  
  
  
     // let fromdate = new Date("2024-03-01");
@@ -110,37 +111,36 @@ export default function CashLedger() {
     // setStartDateFilter(fromdate);
     // setEndDateFilter(todate);
 
+    console.log(branchdata);
+
 
     const data = branchdata.filter(row => {
       let filterPass = true
-      const date = new Date(row.entrydate)
+      const date = formatDate(new Date(row.entrydate))
       if (startdateFilter) {
-        filterPass = filterPass && (date >= new Date(startdateFilter))
+        filterPass = filterPass && (date >= formatDate(new Date(startdateFilter)))
       }
       if (enddateFilter) {
-        filterPass = filterPass && (date <= new Date(enddateFilter))
+        filterPass = filterPass && (date <= formatDate(new Date(enddateFilter)))
       }
       //if filterPass comes back `false` the row is filtered out
       return filterPass
-    })
-
-    let sortedDates = data.sort(firstBy(function(a, b) {
-      return new Date(a.entrydate) - new Date(b.entrydate);
+    }).sort(firstBy(function(a, b) {
+      return new Date(a.entrydate) - new Date(b.entrydate)
     }).thenBy("entrytype", "desc"));
-
     
     //const sortedDates = data?.map(data => { return { ...data, date: new Date(data.entrydate) } }).sort((b, a) => b.entrydate - a.entrydate)
-
-  console.log(sortedDates);
-    
+ 
     SetcashLedger(data);
   }
 
   useEffect(() => {    
      
      branchid==19 && callBranchList();
+
+     CallBranchData();
  
-  }, []);
+  }, [branchdata]);
 
   return (
     <div>

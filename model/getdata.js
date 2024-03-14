@@ -57,7 +57,6 @@ export const getBranchCash = async ({branchid}) => {
     } catch (error) {
       throw new Error(error);
     }
-
 } 
 
 export const getBranchBalance = async ({branchid}) => {
@@ -283,6 +282,26 @@ export async function cancelTransaction({transid, branchid}){
   }
 }
 
+
+export const getReportCash = async ({branchid, report}) => {
+  
+  try {     
+    
+      const res = await fetch('/api/branchcash', {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ branchid, report })
+      },{ cache: 'no-store' });
+
+      const data = await res.json();
+
+      
+      return data;
+
+  } catch (error) {
+    throw new Error(error);
+  }
+} 
 
 // export async function DELETE(request) {
 //   const id = request.nextUrl.searchParams.get("id");

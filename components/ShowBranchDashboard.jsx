@@ -83,7 +83,7 @@ export default function ShowBranchDashboard({branchid}) {
 
                 {
                   branchdata.map((data) => {
-                    return <tr className={data.isreject ? "border-b text-red-700" : "border-b dark:border-neutral-500" } key={data._id}>
+                    return <tr className={data.isreject ? "border-b text-red-700" : data.isposted ? "border-b text-green-800" : "border-b dark:border-neutral-500" } key={data._id}>
                       <td className={data.isreject ? "animate-bounce w-6 h-6 px-3 py-2" : "whitespace-nowrap px-3 py-2"}>{data.description + '\n' + data.remarks }</td>
                       <td className="whitespace-nowrap  px-3 py-2">{data.category}</td>
                       <td className="whitespace-nowrap  px-3 py-2">{formatDate(data.entrydate)}</td>

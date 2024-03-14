@@ -17,8 +17,9 @@ export async function PUT(request) {
 
     let query = {_id: new ObjectId(transid)};
 
-    await Branchcashbook.findByIdAndUpdate(query, { ispending: 'false', isreject: 'false' });
+    await Branchcashbook.findByIdAndUpdate(query, { ispending: false, isreject: false, isposted: true });
 
+    console.log('---Pending Update Confirm at API');
 
     return NextResponse.json({message: "Transaction Confirm Succesfully..."}, {status: 200});
 
@@ -47,6 +48,9 @@ export async function POST(request) {
 
         let comid, branchid, username,entrydate,entrytype,category,description,totalamount,remarks;
 
+        console.log('---Get Data From Branch Entry to Insert into Finance Table');
+        
+
         data.map((item) => {
             comid=item.comid,
             branchid=item.branchid,
@@ -57,12 +61,12 @@ export async function POST(request) {
             remarks=item.remarks
         });
  
-        console.log(comid);
-        console.log(username);
-        console.log(category);
-        console.log(description);
-        console.log(totalamount);
-        console.log(remarks);
+        // console.log(comid);
+        // console.log(username);
+        // console.log(category);
+        // console.log(description);
+        // console.log(totalamount);
+        // console.log(remarks);
  
         let currentDate=new Date();
 
@@ -105,6 +109,8 @@ export async function POST(request) {
                iscancel:null
            })
         }
+
+        console.log('--Create Finance Entry From API--')
                  
          return NextResponse.json({message: "Amount Received"},{status: 201});
 

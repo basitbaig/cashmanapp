@@ -1,6 +1,6 @@
 "use client";
 
-import Navbar from "@/components/Navbar";
+ 
 import ShowBranchBalance from "@/components/ShowBranchBalance";
 import ShowAllBranchBalance from "@/components/ShowAllBranchBalance";
 import ShowBranchDashboard from "@/components/ShowBranchDashboard";
@@ -12,6 +12,7 @@ import { useState, useEffect } from "react";
 import { getBranchList } from '@/model/getdata'
 import { pendingCash } from '@/model/getdata'
 import { getCookie, getCookies } from 'cookies-next';
+import TestTypeWritter from "./TestTypeWritter";
 
 
 
@@ -106,7 +107,9 @@ export default function AdminDashboard() {
 
       </div>
     */}
+    {/* <TestTypeWritter /> */}
 
+    
  
       <div className="flex bg-gray-200 min-h-screen">
         
@@ -120,12 +123,13 @@ export default function AdminDashboard() {
 
           {/* animate-blinkingBg */}
 
-  
-          <button type="button" className="relative inline-flex items-center p-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" onClick={toggle}>
-          {showMe ? "Hide Pending Entries" : "Show Pending Entries"}
-            
-            <div className="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -end-2 dark:border-gray-900">{totalpending}</div>
-          </button>
+          {totalpending > 0 &&
+            <button type="button" className="relative inline-flex items-center p-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" onClick={toggle}>
+              {showMe ? "Hide Pending Entries" : "Show Pending Entries"}
+
+              <div className="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -end-2 dark:border-gray-900">{totalpending}</div>
+            </button>
+          }
 
         
           <div style={{ display: showMe ? "block" : "none" }}>

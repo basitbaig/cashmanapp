@@ -8,7 +8,7 @@ import { IoClose } from "react-icons/io5";
 import toast, { Toaster } from 'react-hot-toast';
 import { getCookie, getCookies } from 'cookies-next';
 
-async function findTransaction({transactionid}){
+async function findTransaction({ transactionid }) {
   const apiUrl = process.env.API_URL;
   try {
     const res = await fetch('/api/getpendingentry', {
@@ -23,21 +23,21 @@ async function findTransaction({transactionid}){
     }
 
     const data = await res.json();
- 
+
     return data;
 
   } catch (error) {
     throw new Error("Connection Issue With API Call");
   }
 }
- 
+
 
 export default function PostPending({ transid }) {
 
- //https://react-icons.github.io/react-icons/search/#q=close
+  //https://react-icons.github.io/react-icons/search/#q=close
 
-  const [transactionid, SettransactionId]=useState(transid);
-  
+  const [transactionid, SettransactionId] = useState(transid);
+
   const id = useId();
 
   const [isPending, startTransition] = useTransition();
@@ -50,19 +50,24 @@ export default function PostPending({ transid }) {
     branchname: '',
     description: '',
     totalamount: ''
-};
+  };
 
-const [values, setValues] = useState(initialValues);       // set initial state
- 
-const handleConfirm = async () => {
+  const [values, setValues] = useState(initialValues);       // set initial state
 
-  const {pendingEntry} = await findTransaction({transactionid});
+  const handleConfirm = async () => {
 
-  setValues(values => {
-    return { ...values, ...pendingEntry }
-  })
+    const { pendingEntry } = await findTransaction({ transactionid });
 
-}
+    setValues(values => {
+      return { ...values, ...pendingEntry }
+    })
+
+  }
+
+  function refreshMyPage()
+  {
+    window.location.reload();
+  }
 
   const handleSubmit = async (e) => {
 
@@ -71,44 +76,52 @@ const handleConfirm = async () => {
     const apiUrl = process.env.API_URL;
 
     try {
-    
+
       const res = await fetch('/api/confirmpending', {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({transid})
+        body: JSON.stringify({ transid })
       });
 
       if (res.ok) {
+
+        console.log('Branch Transaction Updated as Per Confirm Pending from Finanace');
         // const form = e.target;
         const username = getCookie('username');
         const branchid = getCookie('branchid');
-        
+
         const res = await fetch('/api/confirmpending', {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({transid,username,branchid})
-        });        
+          body: JSON.stringify({ transid, username, branchid })
+        });
+
+
+        console.log('Create Confirm Transaction into Finance Account')
 
         toast("Transaction Confirm Sucessfully...");
 
-        {(document.getElementById(id)).close()}
+        // { (document.getElementById(id)).close() }
+
+        refreshMyPage();
 
       } else {
         toast("Transaction Failed, Please try again...");
       }
     } catch (error) {
-      toast(error);
+
+      console.log(error);
     }
 
 
   }
 
- 
+
 
   return (
     <>
       <div>
-         <Toaster />
+        <Toaster />
 
         <form action={handleConfirm}>
 
@@ -119,7 +132,7 @@ const handleConfirm = async () => {
             {isPending ? "Call Confirm..." : "Confirm"}
 
           </button>
- 
+
         </form>
 
         <div>
@@ -129,22 +142,22 @@ const handleConfirm = async () => {
             <div className="modal-box">
 
               <div className="text-center">
-                   <h2 className="font-bold pm-4 w-full bg-gray-900 text-white">Confirm Pending</h2>
-                  <div className="bg-slate-500 text-white">
-                    <button className="flex float-right" type="button" onClick={() => (document.getElementById(id)).close()}>
-                      <IoClose />
-                    </button>
-                  </div>   
+                <h2 className="font-bold pm-4 w-full bg-gray-900 text-white">Confirm Pending</h2>
+                <div className="bg-slate-500 text-white">
+                  <button className="flex float-right" type="button" onClick={() => (document.getElementById(id)).close()}>
+                    <IoClose />
+                  </button>
+                </div>
               </div>
-              
+
 
               <div className="px-4 py-4 ml-10">
                 <form onSubmit={handleSubmit}>
 
                   <input type="text" name="trid" defaultValue={transid} className="font-bold text-green-500" />
-                  <div className="form-control w-full max-w-xs py-4"> 
+                  <div className="form-control w-full max-w-xs py-4">
                     <label className="inline-block">Branch Name:<h1 className="font-bold text-blue-800 underline">{values.branchname}</h1></label>
-                    
+
                     {/* <input
                       type="text"
                       id="branchname"
@@ -191,7 +204,7 @@ const handleConfirm = async () => {
                     disabled={pending}
                   >
                     Confirm To Post
-                  </button>                
+                  </button>
                 </form>
               </div>
 
@@ -199,7 +212,7 @@ const handleConfirm = async () => {
           </dialog>
         </div>
 
- 
+
       </div>
     </>
   )

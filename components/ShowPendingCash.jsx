@@ -38,7 +38,7 @@ export default function ShowPendingCash({branchid}) {
     
         CallPendingCash();
       
-      }, []);        
+      }, [pendingcash]);        
 
 
     return (

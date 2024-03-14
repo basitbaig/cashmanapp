@@ -29,7 +29,7 @@ export default function page() {
             {reportName=="headledger" &&              
                 <div className="grid justify-items-center py-3">
                     <div className="wrapper">
-                        <h1>Head Ledger Report</h1>
+                        <h1>Head Wise Ledger </h1>
                     </div>
                 </div>            
             }

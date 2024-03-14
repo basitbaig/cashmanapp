@@ -1,5 +1,6 @@
 "use client";
- 
+
+
 import { useRouter } from "next/navigation";
 import { useFormState, useFormStatus } from "react-dom"
 import { useState, useEffect, useRef } from "react";
@@ -7,7 +8,8 @@ import { getCookie, getCookies } from 'cookies-next';
 import toast, { Toaster } from 'react-hot-toast';
 import { BsConeStriped } from "react-icons/bs";
 import { GiConsoleController } from "react-icons/gi";
- 
+// import ReactDOM from 'react-dom';
+// import $ from 'jquery';
 
 
 export default function IssueCash({...props}) {
@@ -49,9 +51,18 @@ export default function IssueCash({...props}) {
    x.cashexphead == "Cash to Head Office"
   );
  
-  // useEffect(() => {
-  //   SetCategory(newheadlist[0].cashexphead)
-  // }, [])
+//  function SetSelectTop(){
+   
+//   $("#category").prepend("<option value='' selected='selected'>---Select Please---</option>");
+//  }
+   
+  useEffect(() => {
+    //SetCategory(newheadlist[0].cashexphead)
+    
+    
+  }, [])
+
+
   //console.log(newheadlist[0].cashexphead);
 
   // useEffect(() => {
@@ -107,11 +118,11 @@ export default function IssueCash({...props}) {
         
         //router.push("/dashboard");   
 
-       // refreshMyPage();
+       refreshMyPage();
 
         //router.refresh();
         //router.replace("/dashboard")
-        //router.reload();
+       // router.reload();
         //router.push("/dashboard").then(() => router.reload());
         
  
@@ -140,9 +151,9 @@ export default function IssueCash({...props}) {
   }
 
   // const handleRedirect = () => {
-   
-    
+      
   // }
+ 
 
 
 
@@ -205,10 +216,11 @@ export default function IssueCash({...props}) {
                   </div>
                   <div>
                     <label htmlFor="category" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Disbursement Purpose</label>
-
+                     
                     {branchid == 19 ?
                       <select data-te-select-init data-te-select-clear-button="true" className="w-full max-w-xs" id="category" name="category" required onChange={(e) => SetCategory(e.target.value)}>
-                        {
+                        <option value="0">Select Cash Head</option>
+                        {                          
                           newheadlist.map((opts, _id) => <option key={_id} value={opts.cashexphead}>{opts.cashexphead}</option>)
                         }
                       </select>

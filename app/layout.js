@@ -23,3 +23,8 @@ export default function RootLayout({ children }) {
     </html>
   );
 }
+
+
+
+
+//https://www.material-tailwind.com/docs/html/guide/next

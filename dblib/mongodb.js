@@ -5,7 +5,7 @@ export const connectMongoDB = async () => {
     const connectionState = mongoose.connection.readyState;
 
         if (connectionState === 1) {
-            console.log('Already Connected!!');
+            //console.log('Already Connected!!');
             return;
         }
 

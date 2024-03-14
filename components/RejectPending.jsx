@@ -8,7 +8,7 @@ import { IoClose } from "react-icons/io5";
 import toast, { Toaster } from 'react-hot-toast';
 import { getCookie, getCookies } from 'cookies-next';
 
-async function findTransaction({transactionid}){
+async function findTransaction({ transactionid }) {
   const apiUrl = process.env.API_URL;
   try {
     const res = await fetch('/api/getpendingentry', {
@@ -23,22 +23,22 @@ async function findTransaction({transactionid}){
     }
 
     const data = await res.json();
- 
+
     return data;
 
   } catch (error) {
     throw new Error("Connection Issue With API Call");
   }
 }
- 
+
 
 export default function RejectPending({ transid }) {
 
- //https://react-icons.github.io/react-icons/search/#q=close
+  //https://react-icons.github.io/react-icons/search/#q=close
 
-  const [transactionid, SettransactionId]=useState(transid);
-  const [rejectreason, SetrejectReason]=useState("");
-  
+  const [transactionid, SettransactionId] = useState(transid);
+  const [rejectreason, SetrejectReason] = useState("");
+
   const id = useId();
 
   const [isPending, startTransition] = useTransition();
@@ -51,20 +51,25 @@ export default function RejectPending({ transid }) {
     branchname: '',
     description: '',
     totalamount: '',
-    rejectreason:''
-};
+    rejectreason: ''
+  };
 
-const [values, setValues] = useState(initialValues);       // set initial state
- 
-const handleConfirm = async () => {
+  const [values, setValues] = useState(initialValues);       // set initial state
 
-  const {pendingEntry} = await findTransaction({transactionid});
+  const handleConfirm = async () => {
 
-  setValues(values => {
-    return { ...values, ...pendingEntry }
-  })
+    const { pendingEntry } = await findTransaction({ transactionid });
 
-}
+    setValues(values => {
+      return { ...values, ...pendingEntry }
+    })
+
+  }
+
+  function refreshMyPage()
+  {
+    window.location.reload();
+  }  
 
   const handleSubmit = async (e) => {
 
@@ -73,18 +78,20 @@ const handleConfirm = async () => {
     const apiUrl = process.env.API_URL;
 
     try {
-    
+
       const res = await fetch('/api/rejectpending', {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({transid,rejectreason})
+        body: JSON.stringify({ transid, rejectreason })
       });
 
       if (res.ok) {
- 
+
         toast("Transaction Rejected Sucessfully...");
 
-        {(document.getElementById(id)).close()}
+        // { (document.getElementById(id)).close() }
+
+        refreshMyPage();
 
       } else {
         toast("Transaction Failed, Please try again...");
@@ -96,12 +103,12 @@ const handleConfirm = async () => {
 
   }
 
- 
+
 
   return (
     <>
       <div>
-         <Toaster />
+        <Toaster />
 
         <form action={handleConfirm}>
 
@@ -112,7 +119,7 @@ const handleConfirm = async () => {
             {isPending ? "Call Reject..." : "Reject"}
 
           </button>
- 
+
         </form>
 
         <div>
@@ -122,21 +129,21 @@ const handleConfirm = async () => {
             <div className="modal-box">
 
               <div className="text-center">
-                   <h2 className="font-bold pm-4 w-full bg-gray-900 text-white">Confirm Rejection</h2>
-                  <div className="bg-slate-500 text-white">
-                    <button className="flex float-right" type="button" onClick={() => (document.getElementById(id)).close()}>
-                      <IoClose />
-                    </button>
-                  </div>   
+                <h2 className="font-bold pm-4 w-full bg-gray-900 text-white">Confirm Rejection</h2>
+                <div className="bg-slate-500 text-white">
+                  <button className="flex float-right" type="button" onClick={() => (document.getElementById(id)).close()}>
+                    <IoClose />
+                  </button>
+                </div>
               </div>
-              
+
 
               <div className="px-4 py-4 ml-10">
                 <form onSubmit={handleSubmit}>
 
                   <input type="text" name="trid" defaultValue={transid} className="font-bold text-green-500" />
-                  <div className="form-control w-full max-w-xs py-4"> 
-                    <label className="inline-block">Branch Name:<h1 className="font-bold text-blue-800 underline">{values.branchname}</h1></label>                                        
+                  <div className="form-control w-full max-w-xs py-4">
+                    <label className="inline-block">Branch Name:<h1 className="font-bold text-blue-800 underline">{values.branchname}</h1></label>
                   </div>
                   <div className="form-control w-full max-w-xs py-4">
                     <label htmlFor="image">Description</label>
@@ -162,7 +169,7 @@ const handleConfirm = async () => {
                   </div>
                   <div className="form-control w-full max-w-xs py-4">
                     <label htmlFor="image">Reason</label>
-                     <input
+                    <input
                       type="text"
                       id="rejectreason"
                       name="rejectreason"
@@ -170,8 +177,8 @@ const handleConfirm = async () => {
                       value={rejectreason}
                       onChange={(e) => SetrejectReason(e.target.value)}
                       required
-                    /> 
-                  </div>                  
+                    />
+                  </div>
 
                   <button
                     className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-700"
@@ -187,7 +194,7 @@ const handleConfirm = async () => {
                     disabled={pending}
                   >
                     Reject Confirm
-                  </button>                
+                  </button>
                 </form>
               </div>
 
@@ -195,7 +202,7 @@ const handleConfirm = async () => {
           </dialog>
         </div>
 
- 
+
       </div>
     </>
   )

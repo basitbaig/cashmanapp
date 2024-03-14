@@ -183,6 +183,7 @@ export default function ReceivedCash({ ...props }) {
                                         <label htmlFor="category" className="w-full max-w-xs">Collection Purpose</label>
 
                                         <select data-te-select-init data-te-select-clear-button="true" className="w-full max-w-xs" id="category" name="category" required onChange={(e) => SetCategory(e.target.value)}>
+                                        <option value="0">Select Cash Head</option>
                                             {
                                                 headlist.map((opts, _id) => <option key={_id} value={opts.cashexphead}>{opts.cashexphead}</option>)
                                             }

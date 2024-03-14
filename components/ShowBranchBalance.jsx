@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"; 
 import { getBranchBalance } from "@/model/getdata";
 
-async function BranchHandBalance({ branchid }) {
+export function BranchHandBalance({ branchid })  {
 
     const [cashbalance, SetcashBalance] = useState([]);
 
@@ -13,7 +13,7 @@ async function BranchHandBalance({ branchid }) {
 
     useEffect(() => {
         CallCashBalance();
-    }, [branchid]);
+    }, [branchid, cashbalance]);
 
     function formatNumber(num) {
         return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
