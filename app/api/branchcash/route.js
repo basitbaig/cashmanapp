@@ -11,8 +11,7 @@ export async function POST(request) {
 
         await connectMongoDB();
 
-        console.log('--Check Ledger Report and Dashboard---')
-        console.log(body);
+      
 
         // const mybranch = JSON.parse(branchid);
         let branchdata;
@@ -24,14 +23,14 @@ export async function POST(request) {
 
        //{ $expr: {$eq: [{ $dateToString: {date: "$entrydate", format: "%Y-%m-%d"}},{ $dateToString: {date: new Date(), format: "%Y-%m-%d"}}]}}
 
-        let datequery = { $expr: {$eq: [{ $dateToString: {date: "$entrydate", format: "%Y-%m-%d"}},{ $dateToString: {date: new Date(), format: "%Y-%m-%d"}}]}}
+        let datequery = { branchid: body.branchid, iscancel: null, $expr: {$eq: [{ $dateToString: {date: "$entrydate", format: "%Y-%m-%d"}},{ $dateToString: {date: new Date(), format: "%Y-%m-%d"}}]}}
 
         {
             typeof body.report === "undefined" ?
                 body.branchid == 19 ?
-                    branchdata = await Financecashbook.find(datequery, { branchid: body.branchid, iscancel: null }).select("_id entrydate entrytype category description totalamount remarks ispending iscancel isposted").sort({ _id: -1 })
+                    branchdata = await Financecashbook.find(datequery).select("_id entrydate entrytype category description totalamount remarks ispending iscancel isposted").sort({ _id: -1 })
                     :
-                    branchdata = await Branchcashbook.find(datequery, { branchid: body.branchid, iscancel: null }).select("_id entrydate entrytype category description totalamount remarks ispending isreject iscancel isposted").sort({ _id: -1 })
+                    branchdata = await Branchcashbook.find(datequery).select("_id entrydate entrytype category description totalamount remarks ispending isreject iscancel isposted").sort({ _id: -1 })
             :   
             body.branchid == 19 ?
                     branchdata = await Financecashbook.find({ branchid: body.branchid, iscancel: null }).select("_id entrydate entrytype category description totalamount remarks ispending iscancel isposted").sort({ _id: -1 })

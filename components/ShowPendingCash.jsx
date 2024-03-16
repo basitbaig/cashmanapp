@@ -43,7 +43,7 @@ export default function ShowPendingCash({branchid}) {
 
     return (
 
-        <div>
+        <div className="mt-2">
              
             {/* {branchbalance.map(item => (
                 <div key={item._id}>
@@ -67,7 +67,8 @@ export default function ShowPendingCash({branchid}) {
                                 <th className="px-4 py-2">Entry Date</th>
                                 <th className="px-4 py-2">Description</th>
                                 <th className="px-4 py-2">Amount</th>
-                                <th className="px-4 py-2 col-span-2">Status</th>
+                                <th className="px-4 py-2">Confirm</th>
+                                <th className="px-4 py-2">Reject</th>
                             </tr>
                         </thead>
                  

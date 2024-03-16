@@ -112,58 +112,74 @@ export default function AdminDashboard() {
     
  
       <div className="flex bg-gray-200 min-h-screen">
-        
-        <div className="w-1/4 mt-11 hidden lg:block">
-          <ShowAllBranchBalance />
+
+        <div className="px-4 mt-10 w-full justify-center items-center min-h-screen hidden lg:block">
+
+          <div className="w-full bg-gray-400 p-2 rounded-md shadow-2xl hidden lg:block">
+
+            <div className="w-full mt-5 hidden lg:block">
+              <ShowAllBranchBalance />
+            </div>
+
+
+          </div>
         </div>
-       
 
 
         <div className="mt-5">
 
           {/* animate-blinkingBg */}
-
           {totalpending > 0 &&
-            <button type="button" className="relative inline-flex items-center p-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" onClick={toggle}>
-              {showMe ? "Hide Pending Entries" : "Show Pending Entries"}
+                <button type="button" className="relative inline-flex items-center p-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" onClick={toggle}>
+                  {showMe ? "Hide Pending Entries" : "Show Pending Entries"}
 
-              <div className="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -end-2 dark:border-gray-900">{totalpending}</div>
-            </button>
-          }
+                  <div className="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -end-2 dark:border-gray-900">{totalpending}</div>
+                </button>
+              }
 
-        
-          <div style={{ display: showMe ? "block" : "none" }}>
-        
-            <ShowPendingCash branchid={decodeURIComponent(branchid)} />
-          
-          </div>
+            
+              <div style={{ display: showMe ? "block" : "none" }}>
+            
+                <ShowPendingCash branchid={decodeURIComponent(branchid)} />
+              
+              </div>  
 
 
-          <div className="mt-11">
-            <div>
-              <select className="w-full max-w-xs text-black" name="ubranchid" required onChange={handleBranch}>
-                {
-                  branchlist.map((opts, id) => <option key={id} value={opts.id}>{opts.branchname}</option>)
-                }
-              </select>
+          <div className="flex flex-col w-full justify-between items-center min-h-screen ">
 
-              <div className="float-right">
+            <div className="flex flex-col w-full bg-slate-200 p-4 rounded-md shadow-2xl my-2">
+            
+              <div className="mt-11">
+                <div>
+                  <select className="w-full max-w-xs text-black" name="ubranchid" required onChange={handleBranch}>
+                    {
+                      branchlist.map((opts, id) => <option key={id} value={opts.id}>{opts.branchname}</option>)
+                    }
+                  </select>
+
+                  <div className="float-right">
+                    {callbranchid != 0 ?
+                      <ShowBranchBalance branchid={callbranchid} />
+                      :
+                      <ShowBranchBalance branchid={decodeURIComponent(branchid)} />
+                    }
+                  </div>
+
+                </div>
+
                 {callbranchid != 0 ?
-                <ShowBranchBalance branchid={callbranchid} />
-                :
-                <ShowBranchBalance branchid={decodeURIComponent(branchid)} />
+                  <ShowBranchDashboard branchid={callbranchid} />
+                  :
+                  <ShowBranchDashboard branchid={decodeURIComponent(branchid)} />
                 }
-              </div>    
+
+              </div>
 
             </div>
+          </div> 
 
-            {callbranchid != 0 ?
-              <ShowBranchDashboard branchid={callbranchid} />
-              :
-              <ShowBranchDashboard branchid={decodeURIComponent(branchid)} />
-            }
 
-          </div>
+
         </div>
 
       </div>

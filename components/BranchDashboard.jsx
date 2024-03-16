@@ -31,9 +31,9 @@ export default function BranchDashboard() {
 
   // SetfeeData({feevouchers});
 
- 
 
- 
+
+
   // const session = await getServerSession(authOptions);
 
   // const [callapi, SetCallApi] = useState(true);
@@ -46,39 +46,38 @@ export default function BranchDashboard() {
   const [showMe, setShowMe] = useState(false);
   const [pendingcash, Setpendingcash] = useState([]);
 
-  let pendingcount="";
+  let pendingcount = "";
 
-  const [totalpending, SetTotalpending]=useState(0);
-  
+  const [totalpending, SetTotalpending] = useState(0);
+
 
   const CallPendingCash = async () => {
-    
-    const pendData = await pendingCash({branchid});
 
-    pendingcount=pendData.length;
-    
+    const pendData = await pendingCash({ branchid });
+
+    pendingcount = pendData.length;
+
     SetPendingTag();
-    
-  }  
 
-  function SetPendingTag() {    
-    SetTotalpending(pendingcount);  
+  }
+
+  function SetPendingTag() {
+    SetTotalpending(pendingcount);
   }
 
 
-  function toggle(e){
-    e.preventDefault();    
+  function toggle(e) {
+    e.preventDefault();
     setShowMe(!showMe);
   }
 
-  function refreshMyPage()
-  {
+  function refreshMyPage() {
     window.location.reload();
   }
 
-  useEffect(() => {         
-    CallPendingCash();   
-    
+  useEffect(() => {
+    CallPendingCash();
+
   }, []);
 
   //Format Data as per Customize Style
@@ -125,7 +124,7 @@ export default function BranchDashboard() {
       <div className="bg-gray-200 min-h-screen">
 
         <div className="max-w-8xl mx-auto px-8 py-8">
- 
+
           {totalpending > 0 &&
             <button type="button" className="relative inline-flex items-center p-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" onClick={toggle}>
               {showMe ? "Hide Pending Entries" : "Show Pending Entries"}
@@ -136,10 +135,10 @@ export default function BranchDashboard() {
 
 
 
-          <div style={{display: showMe?"block":"none" }}>
+          <div style={{ display: showMe ? "block" : "none" }}>
             {/* <div className="w-1/4 mt-14"> */}
 
-            
+
             <ShowPendingCash branchid={decodeURIComponent(branchid)} />
 
 
@@ -150,16 +149,21 @@ export default function BranchDashboard() {
 
           {/* <div className="w-3/4"> */}
 
+          <div className="flex flex-col w-full justify-center items-center min-h-px ">
+
+            <div className="flex flex-col w-full bg-gray-400 p-4 rounded-md shadow-2xl my-4">
+
+              <div className="float-right {showMe ? mt-1 : mt-0}">
+                <ShowBranchBalance branchid={decodeURIComponent(branchid)} />
+              </div>
+
+              <div className="{showMe ? mt-11 : mt-0}">
+                <ShowBranchDashboard branchid={decodeURIComponent(branchid)} />
+              </div>
 
 
-         <div className="float-right {showMe ? mt-1 : mt-0}">
-            <ShowBranchBalance branchid={decodeURIComponent(branchid)} />
+            </div>
           </div>
-
-          <div className="{showMe ? mt-11 : mt-0}">
-            <ShowBranchDashboard branchid={decodeURIComponent(branchid)} />
-          </div> 
-
 
           {/* </div> */}
 

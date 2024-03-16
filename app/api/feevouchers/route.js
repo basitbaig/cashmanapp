@@ -33,3 +33,16 @@ export {GET, POST}
 
 
 ///https://www.youtube.com/watch?v=-j7qvs3zKqM
+
+
+
+// function sleep(time) {
+//     return new Promise((resolve) => {
+//       setTimeout(resolve, time)
+//     })
+//   }
+
+// await sleep(200)
+
+// await wait(4000)
+   

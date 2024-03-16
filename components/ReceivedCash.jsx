@@ -4,11 +4,9 @@
 import { useRouter } from "next/navigation";
 import { useFormState, useFormStatus } from "react-dom"
 import { useState, useEffect, useRef } from "react";
-
 import { getCookie, getCookies } from 'cookies-next';
 import toast, { Toaster } from 'react-hot-toast';
 import { revalidatePath } from "next/cache"
-
 import { usePathname } from "next/navigation";
 
 export default function ReceivedCash({ ...props }) {
@@ -73,12 +71,15 @@ export default function ReceivedCash({ ...props }) {
 
                 document.getElementById('recv_modal').close();
 
-                router.refresh();
-                router.push("/dashboard");  
+               // revalidatePath("/dashboard");
 
-                refreshMyPage();
+                // router.refresh();
+                // router.push("/dashboard");  
+
+                 refreshMyPage();
                 //router.replace("/dashboard")
                 //router.reload();
+                
                 //router.push("/dashboard").then(() => router.reload());
                 
                 //router.replace("/product?id=2").then(() => router.reload());
@@ -226,7 +227,7 @@ export default function ReceivedCash({ ...props }) {
                                     Back
                                 </button>
 
-                                <button type="submit" className="ml-60 rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-700">
+                                <button type="submit" className="ml-60 rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-700" aria-disabled={pending}>
                                     Submit
                                 </button>
 

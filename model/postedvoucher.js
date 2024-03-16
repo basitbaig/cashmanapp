@@ -1,6 +1,6 @@
 import { Schema, model, models } from "mongoose"
 
-const FeeVoucherSchema = new Schema({
+const PostedVoucherSchema = new Schema({
     comid: {type: Number, required: true},
     branchid: {type: Number, required: true},
     feebillid: {type: String, required: true},
@@ -15,6 +15,6 @@ const FeeVoucherSchema = new Schema({
     islock: {type: Boolean, default: false}
 });
 
-const FeeVoucher = models.FeeVoucher || model("FeeVoucher", FeeVoucherSchema);
+const PostedVoucher = models.PostedVoucher || model("PostedVoucher", PostedVoucherSchema);
 
-export default FeeVoucher;
+export default PostedVoucher;

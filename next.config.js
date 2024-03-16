@@ -11,6 +11,9 @@ const nextConfig = {
         // your project has ESLint errors.
         ignoreDuringBuilds: true,
       },
+      // ... rest of the configuration.
+      output: "standalone",
+      
 }
 
 module.exports = nextConfig

@@ -8,6 +8,7 @@ import { getCookie, getCookies } from 'cookies-next';
 import toast, { Toaster } from 'react-hot-toast';
 import { BsConeStriped } from "react-icons/bs";
 import { GiConsoleController } from "react-icons/gi";
+import { revalidatePath } from "next/cache"
 // import ReactDOM from 'react-dom';
 // import $ from 'jquery';
 
@@ -116,6 +117,8 @@ export default function IssueCash({...props}) {
         document.getElementById('issue_modal').close();
 
         
+        //revalidatePath("/");
+
         //router.push("/dashboard");   
 
        refreshMyPage();
