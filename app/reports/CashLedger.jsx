@@ -1,46 +1,71 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { getBranchList } from '@/model/getdata'
+import { useState, useEffect, useRef } from "react";
+import { getBranchList, getCashTypes } from '@/model/getdata'
 import { getReportCash } from '@/model/getdata'
 import { getCookie } from 'cookies-next';
-import {firstBy} from "thenby";
-import { GiConsoleController } from 'react-icons/gi';
+import { firstBy } from "thenby";
+import { RiFileExcel2Line } from "react-icons/ri";
+import { GrPrint } from "react-icons/gr";
+import { useReactToPrint } from 'react-to-print';
+
+
 export default function CashLedger() {
 
+  const contentToPrint = useRef(null);
+  const handlePrint = useReactToPrint({
+    documentTitle: "Print This Document",
+    onBeforePrint: () => console.log("before printing..."),
+    onAfterPrint: () => console.log("after printing..."),
+    removeAfterPrint: true,
+  });
   //const cashdata = [...Object.values(props)];
 
   //let branchdata =JSON.parse(JSON.stringify(cashdata))
- 
+
   let branchid = getCookie('branchid');
+  const reportbranchid = getCookie('branchid')
 
   const [loader, setLoader] = useState(false);
-
+  const [showMe, setShowMe] = useState('none');
   const [cashledger, SetcashLedger] = useState([]);
   const [callbranchid, SetCallBranchID] = useState(0);
+  const [branchname, Setbranchname] = useState(branchid==19 ? "Head Office - Finance" : "");
+  let selectbranch=branchid==19 ? "Head Office - Finance" : "";
+  const [callcashhead, SetCallCashHead] = useState("");
   const [startdateFilter, setStartDateFilter] = useState(null)
   const [enddateFilter, setEndDateFilter] = useState(null)
-  const [branchlist, Setbranchlist]=useState([]);  
-  const [branchdata, Setbranchdata]=useState([]);
+  const [branchlist, Setbranchlist] = useState([]);
+  const [headlist, Setheadlist] = useState([]);
+  const [branchdata, Setbranchdata] = useState([]);
 
   let balance = 0;
 
   const callBranchList = async () => {
-    Setbranchlist(await getBranchList("all"));
+    Setbranchlist(await getBranchList("all"));    
   }
 
-  const CallBranchData = async () => {    
+  const CallBranchData = async () => {
 
-      branchid = callbranchid != 0 ? callbranchid : branchid;
-
-      const report="ledger";
-
-      const res = await getReportCash({branchid,report});  
- 
-      Setbranchdata(res);   
- 
+    branchid = parseInt(callbranchid) != 0 ? callbranchid : branchid;
+    const report = "ledger";
+    const feehead = callcashhead == "Select Cash Head" ? "undefined" : callcashhead    
+    const res = await getReportCash({ branchid,feehead, report });
+    Setbranchdata(res);
+    //Setbranchname(selectbranch);   
   }
- 
+
+  const CallHeadList = async () => {
+    //branchid = parseInt(callbranchid) != 0 ? callbranchid : branchid;
+    let hmode = branchid==19 ? "H" : "B";
+    let htype = "undefined";
+    const res = await getCashTypes(htype,hmode)
+    Setheadlist(res);
+     
+  }
+
+
+
   function formatNumber(num) {
     return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
   }
@@ -61,8 +86,16 @@ export default function CashLedger() {
 
   const handleBranch = (e) => {
     e.preventDefault();
-    SetCallBranchID(e.target.value);
-}
+    SetCallBranchID(e.target.value);   
+    CallHeadList();
+    Setbranchname(e.target.options[e.target.selectedIndex].text)
+    selectbranch=e.target.options[e.target.selectedIndex].text
+  }
+
+  const handleCashHead = (e) => {
+    e.preventDefault();
+    SetCallCashHead(e.target.value);
+  }
 
   function fnExcelReport() {
     var tab_text = "<table border='2px'><tr bgcolor='#87AFC6'>";
@@ -102,16 +135,16 @@ export default function CashLedger() {
     //   data.series = data.series.filter((item: any) =>
     //   item.date.getTime() >= fromDate.getTime() && item.date.getTime() <= toDate.getTime()
     // );  
-  
- 
- 
+
+
+
     // let fromdate = new Date("2024-03-01");
     // let todate = new Date("2024-03-07");
 
     // setStartDateFilter(fromdate);
     // setEndDateFilter(todate);
 
-    console.log(branchdata);
+     
 
 
     const data = branchdata.filter(row => {
@@ -125,21 +158,24 @@ export default function CashLedger() {
       }
       //if filterPass comes back `false` the row is filtered out
       return filterPass
-    }).sort(firstBy(function(a, b) {
+    }).sort(firstBy(function (a, b) {
       return new Date(a.entrydate) - new Date(b.entrydate)
     }).thenBy("entrytype", "desc"));
-    
+
     //const sortedDates = data?.map(data => { return { ...data, date: new Date(data.entrydate) } }).sort((b, a) => b.entrydate - a.entrydate)
- 
+
     SetcashLedger(data);
+
+    setShowMe('inline');
+
   }
 
-  useEffect(() => {    
-     
-     branchid==19 && callBranchList();
+  useEffect(() => {
 
-     CallBranchData();
- 
+    parseInt(branchid) === 19 && callBranchList();
+    CallHeadList();
+    CallBranchData();
+
   }, [branchdata]);
 
   return (
@@ -178,18 +214,27 @@ export default function CashLedger() {
 
               </div>
 
-              {branchid == 19 &&
+              {parseInt(reportbranchid) === 19 &&
                 <div>
                   <select className="w-full max-w-xs text-black" name="ubranchid" required onChange={handleBranch}>
                     {
-                      branchlist.map((opts, id) => <option key={id} value={opts.id}>{opts.branchname}</option>)
+                      branchlist.map((opts, id) => <option key={id} value={opts.id} >{opts.branchname}</option>)
                     }
                   </select>
                 </div>
               }
 
+              {
+                <select data-te-select-init data-te-select-clear-button="true" className="w-full max-w-xs mt-3" id="category" name="category" required onChange={handleCashHead}>
+                <option value="Select Cash Head">Select Cash Head</option>
+                {                          
+                  headlist.map((opts, _id) => <option key={_id} value={opts.cashexphead}>{opts.cashexphead}</option>)
+                }
+              </select>
+              }
+              <br />
               <button
-                className="mt-8 rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-700" 
+                className="mt-8 rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-700"
                 type="button"
                 onClick={getReportData}
               >
@@ -202,48 +247,79 @@ export default function CashLedger() {
 
           <div className="border-x-slate-200">
 
-            <div className="ledger-report">
+            <div style={{display: showMe}}>
               <div className="report-logo">
                 {/* <img alt="logo" src={logo} /> */}
               </div>
 
-              <iframe id="txtArea1" style={{display:"none"}}></iframe>
-             
-              <button id="btnExport" onClick={fnExcelReport}> EXCEL </button>
-              
-              <table id="headerTable" className="table-fixed min-w-full text-left text-sm font-light">
-              <thead className="border-b bg-neutral-800 font-medium text-white dark:border-neutral-500 dark:bg-neutral-900">
-                <tr className="border-b dark:border-neutral-500">
-                  <th className="px-4 py-2">Transaction Date</th>
-                  <th className="px-4 py-2">Transaction Details</th>
-                  <th className="px-4 py-2">Received</th>
-                  <th className="px-4 py-2">Issued</th>
-                  <th className="px-4 py-2">Balance</th>
-                </tr>
-              </thead>
-              {/* <APIData /> */}
-              {/* + '-' + data.entrytype */}
-              <tbody className="border-b dark:border-neutral-500">
+              <iframe id="txtArea1" style={{ display: "none" }}></iframe>
 
-                {
-                  cashledger.map((data) => {
-                    {data.entrytype === "R" ? balance += Number(data.totalamount) : balance -= Number(data.totalamount)}
-                    
-                    return <tr className="border-b dark:border-neutral-500" key={data._id}>
-                      <td className="whitespace-nowrap  px-3 py-2">{formatDate(data.entrydate)}</td>
-                      <td className="whitespace-nowrap  px-3 py-2">{data.category + '\n' + data.description + '\n' + data.remarks }</td>
-                      <td className="whitespace-nowrap  text-center">{data.entrytype === "R" ? formatNumber(data.totalamount) : "0"}</td>
-                      <td className="whitespace-nowrap  text-center">{data.entrytype === "I" ? formatNumber(data.totalamount) : "0"}</td>                                                        
-                      <td className="whitespace-nowrap  text-center">{formatNumber(balance)}</td>   
+              <div className="flex flex-col w-full justify-between items-center min-h-screen ">
 
-                    </tr>
-                  })
-                }
-                {cashledger.length === 0 && (
-                  <p className="text-center">There is no Cash Collection.</p>
-                )}
-              </tbody>
-            </table>
+                <div className="flex flex-col w-full bg-slate-200 rounded-md shadow-2xl">
+
+                <div className="flex flex-row justify-end">
+                
+                  <button className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800" id="btnExport" onClick={fnExcelReport}><RiFileExcel2Line /> EXCEL </button>
+                  <span className="px-4 py-4"></span>
+                  <button className="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900" onClick={() => {
+                    handlePrint(null, () => contentToPrint.current);
+                  }}>
+                    <GrPrint />
+                    PRINT
+                  </button>
+                </div>
+
+                  {branchname}
+                  {branchid}
+                  {selectbranch}
+
+                  <div ref={contentToPrint}>
+                    <div className="mt-5 flex flex-col text-left px-8">
+                     
+                      <h1 className="font-bold text-2xl">Cash Ledger Report</h1>
+                      <h1 className="font-bold text-1xl text-blue-500">{branchid == 19 ? "Head Office - Finance" : branchname}</h1>
+                      <h3 className="mt-5">From:{startdateFilter}</h3>
+                      <h3>To: {enddateFilter}</h3>
+                    </div>
+                    <div className="py-1 ml-5 mr-16">
+                      <table id="headerTable" className="table-fixed min-w-full text-left text-sm font-light">
+                        <thead className="border-b bg-neutral-800 font-medium text-white dark:border-neutral-500 dark:bg-neutral-900">
+                          <tr className="border-b dark:border-neutral-500">
+                            <th className="px-4 py-2">Transaction Date</th>
+                            <th className="px-4 py-2">Transaction Details</th>
+                            <th className="px-4 py-2">Received</th>
+                            <th className="px-4 py-2">Issued</th>
+                            <th className="px-4 py-2">Balance</th>
+                          </tr>
+                        </thead>
+                        {/* <APIData /> */}
+                        {/* + '-' + data.entrytype */}
+                        <tbody className="border-b dark:border-neutral-500">
+
+                          {
+                            cashledger.map((data) => {
+                              { data.entrytype === "R" ? balance += Number(data.totalamount) : balance -= Number(data.totalamount) }
+
+                              return <tr className="border-b dark:border-neutral-500" key={data._id}>
+                                <td className="whitespace-nowrap  px-3 py-2">{formatDate(data.entrydate)}</td>
+                                <td className="whitespace-nowrap  px-3 py-2">{data.category + '\n' + data.description + '\n' + data.remarks}</td>
+                                <td className="whitespace-nowrap  text-center">{data.entrytype === "R" ? formatNumber(data.totalamount) : "0"}</td>
+                                <td className="whitespace-nowrap  text-center">{data.entrytype === "I" ? formatNumber(data.totalamount) : "0"}</td>
+                                <td className="whitespace-nowrap  text-center">{formatNumber(balance)}</td>
+
+                              </tr>
+                            })
+                          }
+                          {cashledger.length === 0 && (
+                            <p className="text-center">There is no Cash Collection.</p>
+                          )}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
             </div>
           </div>

@@ -12,7 +12,7 @@ const nextConfig = {
         ignoreDuringBuilds: true,
       },
       // ... rest of the configuration.
-      output: "standalone",
+      //output: "standalone",   //This is for Docker Image
       
 }
 

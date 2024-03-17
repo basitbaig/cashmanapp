@@ -23,22 +23,31 @@ export async function POST(request) {
 
        //{ $expr: {$eq: [{ $dateToString: {date: "$entrydate", format: "%Y-%m-%d"}},{ $dateToString: {date: new Date(), format: "%Y-%m-%d"}}]}}
 
-        let datequery = { branchid: body.branchid, iscancel: null, $expr: {$eq: [{ $dateToString: {date: "$entrydate", format: "%Y-%m-%d"}},{ $dateToString: {date: new Date(), format: "%Y-%m-%d"}}]}}
+        //let query = { branchid: body.branchid, iscancel: null, $expr: {$eq: [{ $dateToString: {date: "$entrydate", format: "%Y-%m-%d"}},{ $dateToString: {date: new Date(), format: "%Y-%m-%d"}}]}}
+
 
         {
-            typeof body.report === "undefined" ?
-                body.branchid == 19 ?
-                    branchdata = await Financecashbook.find(datequery).select("_id entrydate entrytype category description totalamount remarks ispending iscancel isposted").sort({ _id: -1 })
-                    :
-                    branchdata = await Branchcashbook.find(datequery).select("_id entrydate entrytype category description totalamount remarks ispending isreject iscancel isposted").sort({ _id: -1 })
-            :   
+            typeof body.report === "undefined" ?           
             body.branchid == 19 ?
-                    branchdata = await Financecashbook.find({ branchid: body.branchid, iscancel: null }).select("_id entrydate entrytype category description totalamount remarks ispending iscancel isposted").sort({ _id: -1 })
+                    branchdata = await Financecashbook.find({ branchid: body.branchid, iscancel: null, $expr: {$eq: [{ $dateToString: {date: "$entrydate", format: "%Y-%m-%d"}},{ $dateToString: {date: new Date(), format: "%Y-%m-%d"}}]}}).select("_id entrydate entrytype category description totalamount remarks ispending iscancel isposted").sort({ _id: -1 })
                     :
+                    branchdata = await Branchcashbook.find({ branchid: body.branchid, iscancel: null, $expr: {$eq: [{ $dateToString: {date: "$entrydate", format: "%Y-%m-%d"}},{ $dateToString: {date: new Date(), format: "%Y-%m-%d"}}]}}).select("_id entrydate entrytype category description totalamount remarks ispending isreject iscancel isposted").sort({ _id: -1 })          
+            :   
+            body.branchid == 19 ?               
+               body.feehead == "undefined" || body.feehead =="" ?
+                    branchdata = await Financecashbook.find({ branchid:body.branchid, iscancel: null }).select("_id entrydate entrytype category description totalamount remarks ispending iscancel isposted").sort({ _id: -1 })
+                    :
+                    branchdata = await Financecashbook.find({ branchid:body.branchid, category: body.feehead, iscancel: null }).select("_id entrydate entrytype category description totalamount remarks ispending iscancel isposted").sort({ _id: -1 })
+                :
+                body.feehead == "undefined" || body.feehead =="" ?
                     branchdata = await Branchcashbook.find({ branchid: body.branchid, iscancel: null }).select("_id entrydate entrytype category description totalamount remarks ispending isreject iscancel isposted").sort({ _id: -1 })
+                    :
+                    branchdata = await Branchcashbook.find({ branchid: body.branchid, category: body.feehead, iscancel: null }).select("_id entrydate entrytype category description totalamount remarks ispending isreject iscancel isposted").sort({ _id: -1 })
         }
+        
+      //  console.log(body.feehead)
+      //  console.log(branchdata)
 
- 
         return NextResponse.json(branchdata);
 
     } catch (error) {

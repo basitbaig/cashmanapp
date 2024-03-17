@@ -284,14 +284,14 @@ export async function cancelTransaction({transid, branchid}){
 }
 
 
-export const getReportCash = async ({branchid, report}) => {
+export const getReportCash = async ({branchid, feehead, report}) => {
   
   try {     
     
       const res = await fetch('/api/branchcash', {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ branchid, report })
+          body: JSON.stringify({ branchid,feehead,report })
       },{ cache: 'no-store' });
 
       const data = await res.json();

@@ -13,12 +13,16 @@ export async function POST(request) {
         let htype = body.entrytype;
         let hmode = body.entrymode;
 
- 
+     
         //const htype = JSON.parse(headtype);
         let headlist=[];
 
-        headlist = await db.collection('cashexpheads').find({ headtype: htype, headmode: hmode }).toArray();
- 
+        { body.entrytype == "undefined" ?           
+            headlist = await db.collection('cashexpheads').find({headmode: hmode }).toArray()
+          :
+            headlist = await db.collection('cashexpheads').find({ headtype: htype, headmode: hmode }).toArray();
+        }
+       
         return NextResponse.json(headlist);
 
     }

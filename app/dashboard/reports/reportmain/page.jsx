@@ -18,21 +18,29 @@ export default function page() {
               reportName=="cashledger" && <CashLedger />          
             }
 
-            {reportName=="branchledger" &&             
+            {reportName=="pendingcash" &&             
                 <div className="grid justify-items-center py-3">
                     <div className="wrapper">
-                        <h1>Branch Ledger Report</h1>
+                        <h1>Pending Cash Report</h1>
                     </div>
                 </div>
             }
 
-            {reportName=="headledger" &&              
+            {reportName=="rejectcash" &&              
                 <div className="grid justify-items-center py-3">
                     <div className="wrapper">
-                        <h1>Head Wise Ledger </h1>
+                        <h1>Reject Cash Report </h1>
                     </div>
                 </div>            
             }
+
+            {reportName=="cancelcash" &&              
+                <div className="grid justify-items-center py-3">
+                    <div className="wrapper">
+                        <h1>Cancel Cash Report </h1>
+                    </div>
+                </div>            
+            }            
                             
         </div>
     )
