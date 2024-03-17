@@ -56,8 +56,8 @@ export default function CashLedger() {
   }
 
   const CallHeadList = async () => {
-    //branchid = parseInt(callbranchid) != 0 ? callbranchid : branchid;
-    let hmode = branchid==19 ? "H" : "B";
+    branchid = callbranchid != 0 ? callbranchid : branchid;
+    let hmode = branchid==19 || branchid==0 ? "H" : "B";
     let htype = "undefined";
     const res = await getCashTypes(htype,hmode)
     Setheadlist(res);
@@ -87,9 +87,10 @@ export default function CashLedger() {
   const handleBranch = (e) => {
     e.preventDefault();
     SetCallBranchID(e.target.value);   
-    CallHeadList();
-    Setbranchname(e.target.options[e.target.selectedIndex].text)
+    
+    Setbranchname(e.target.value == 0 ? "Head Office - Finance" : e.target.options[e.target.selectedIndex].text)
     selectbranch=e.target.options[e.target.selectedIndex].text
+    CallHeadList();
   }
 
   const handleCashHead = (e) => {
@@ -172,7 +173,7 @@ export default function CashLedger() {
 
   useEffect(() => {
 
-    parseInt(branchid) === 19 && callBranchList();
+    branchid == 19 && callBranchList();
     CallHeadList();
     CallBranchData();
 
@@ -270,20 +271,20 @@ export default function CashLedger() {
                   </button>
                 </div>
 
-                  {branchname}
+                  {/* {branchname}
                   {branchid}
-                  {selectbranch}
+                  {selectbranch} */}
 
                   <div ref={contentToPrint}>
-                    <div className="mt-5 flex flex-col text-left px-8">
+                    <div className="mt-1 flex flex-col text-left px-8">
                      
                       <h1 className="font-bold text-2xl">Cash Ledger Report</h1>
-                      <h1 className="font-bold text-1xl text-blue-500">{branchid == 19 ? "Head Office - Finance" : branchname}</h1>
+                      <h1 className="font-bold text-1xl text-blue-800">{branchname}</h1>
                       <h3 className="mt-5">From:{startdateFilter}</h3>
                       <h3>To: {enddateFilter}</h3>
                     </div>
-                    <div className="py-1 ml-5 mr-16">
-                      <table id="headerTable" className="table-fixed min-w-full text-left text-sm font-light">
+                    <div className="mr-5 px-8">
+                      <table id="headerTable" className="table-fixed min-w-fit text-left text-sm font-light">
                         <thead className="border-b bg-neutral-800 font-medium text-white dark:border-neutral-500 dark:bg-neutral-900">
                           <tr className="border-b dark:border-neutral-500">
                             <th className="px-4 py-2">Transaction Date</th>
@@ -304,9 +305,9 @@ export default function CashLedger() {
                               return <tr className="border-b dark:border-neutral-500" key={data._id}>
                                 <td className="whitespace-nowrap  px-3 py-2">{formatDate(data.entrydate)}</td>
                                 <td className="whitespace-nowrap  px-3 py-2">{data.category + '\n' + data.description + '\n' + data.remarks}</td>
-                                <td className="whitespace-nowrap  text-center">{data.entrytype === "R" ? formatNumber(data.totalamount) : "0"}</td>
-                                <td className="whitespace-nowrap  text-center">{data.entrytype === "I" ? formatNumber(data.totalamount) : "0"}</td>
-                                <td className="whitespace-nowrap  text-center">{formatNumber(balance)}</td>
+                                <td className="whitespace-nowrap  text-right">{data.entrytype === "R" ? formatNumber(data.totalamount) : "0"}</td>
+                                <td className="whitespace-nowrap  text-right">{data.entrytype === "I" ? formatNumber(data.totalamount) : "0"}</td>
+                                <td className="whitespace-nowrap  text-right font-bold text-blue-800">{formatNumber(balance)}</td>
 
                               </tr>
                             })

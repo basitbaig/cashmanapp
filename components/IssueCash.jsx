@@ -116,12 +116,16 @@ export default function IssueCash({...props}) {
 
         document.getElementById('issue_modal').close();
 
-        
+        //setTimeout(() => {
+          // setActive(false);
+          // setMessage("");
+
+        //}, 3000);
         //revalidatePath("/");
 
         //router.push("/dashboard");   
 
-       refreshMyPage();
+       //refreshMyPage();
 
         //router.refresh();
         //router.replace("/dashboard")

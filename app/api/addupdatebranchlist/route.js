@@ -1,7 +1,7 @@
 import { connectMongoDB } from "@/dblib/mongodb";
 import Branchlist from "@/model/branchlist";
 import { NextResponse, NextRequest } from "next/server";
- 
+import mongoose from "mongoose"
 export async function POST(request) {
    
     try {
@@ -25,11 +25,11 @@ export async function POST(request) {
 
             return NextResponse.json({message: "New Branch Created"},{status: 201});
         }
+        
  
         return NextResponse.json({message: "Branch Updated"},{status: 201});
         
-    } catch (error) {
-        
+    } catch (error) {       
         return  NextResponse.json({message: "Error In Branch Creation"},{status: 500});     
     }
 }

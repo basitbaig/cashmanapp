@@ -2,7 +2,7 @@ import { connectMongoDB } from "@/dblib/mongodb";
 import Branchcashbook from "@/model/branchcash";
 import Financecashbook from "@/model/hofincash";
 import { NextResponse, NextRequest } from "next/server";
-
+import mongoose from "mongoose"
 
 export async function POST(request) {
     try {
@@ -10,8 +10,6 @@ export async function POST(request) {
         const body = await request.json();
 
         await connectMongoDB();
-
-      
 
         // const mybranch = JSON.parse(branchid);
         let branchdata;
@@ -45,12 +43,10 @@ export async function POST(request) {
                     branchdata = await Branchcashbook.find({ branchid: body.branchid, category: body.feehead, iscancel: null }).select("_id entrydate entrytype category description totalamount remarks ispending isreject iscancel isposted").sort({ _id: -1 })
         }
         
-      //  console.log(body.feehead)
-      //  console.log(branchdata)
-
         return NextResponse.json(branchdata);
 
     } catch (error) {
+       
         console.log(error);
     }
 }
