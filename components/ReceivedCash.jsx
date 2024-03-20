@@ -4,7 +4,7 @@
 import { useRouter } from "next/navigation";
 import { useFormState, useFormStatus } from "react-dom"
 import { useState, useEffect, useRef } from "react";
-import { getCookie, getCookies } from 'cookies-next';
+import { setCookie, getCookie, getCookies } from 'cookies-next';
 import toast, { Toaster } from 'react-hot-toast';
 import { revalidatePath } from "next/cache"
 import { usePathname } from "next/navigation";
@@ -15,6 +15,7 @@ export default function ReceivedCash({ ...props }) {
     //     message: '',
 
     // })
+ 
 
     const curpath = usePathname();
 
@@ -66,10 +67,13 @@ export default function ReceivedCash({ ...props }) {
 
             if (res.ok) {
 
+                setCookie('recordupdate','true')
                 // revalidatePath('/' + curpath)
                 toast("Cash Sucessfully Received...")
 
                 document.getElementById('recv_modal').close();
+
+               
 
                // revalidatePath("/dashboard");
 

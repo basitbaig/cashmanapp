@@ -1,23 +1,37 @@
-"use client";
+"use client"
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { getBranchCash } from '@/model/getdata'
 import { cancelTransaction } from '@/model/getdata'
 import { IconContext } from "react-icons";
 import { Tooltip } from 'react-tooltip'
 import { GiCancel } from "react-icons/gi";
+import { getCookie } from 'cookies-next';
 
 export default function ShowBranchDashboard({ branchid }) {
 
   const [branchdata, SetbranchData] = useState([]);
 
+  const [recordupdate, Setrecordupdate] = useState(getCookie('recordupdate'))
+  
   const CallBranchData = async () => {
     SetbranchData(await getBranchCash({ branchid }));
   }
 
+  // const showBranchData = useCallback(() => {
+      
+  //     CallBranchData();
+
+
+  // },[branchid,recordupdate])
+ 
+
+
   useEffect(() => {
+
     CallBranchData();
-  }, [branchid]);
+ 
+  }, [branchid,branchdata]);
 
   const CallCancelTransaction = async (transid) => {
     await cancelTransaction({ transid, branchid })

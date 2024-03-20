@@ -1,5 +1,5 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
+const nextConfig = {    
     images: {
         remotePatterns:[{
             hostname: "tecdn.b-cdn.net",
@@ -11,11 +11,12 @@ const nextConfig = {
         // your project has ESLint errors.
         ignoreDuringBuilds: true,
       },
+     
       // ... rest of the configuration.
       //output: "standalone",   //This is for Docker Image
       
 }
-
+ 
 module.exports = nextConfig
 
 

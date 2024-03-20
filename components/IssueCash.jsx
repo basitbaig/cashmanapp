@@ -4,7 +4,7 @@
 import { useRouter } from "next/navigation";
 import { useFormState, useFormStatus } from "react-dom"
 import { useState, useEffect, useRef } from "react";
-import { getCookie, getCookies } from 'cookies-next';
+import { setCookie, getCookie, getCookies } from 'cookies-next';
 import toast, { Toaster } from 'react-hot-toast';
 import { BsConeStriped } from "react-icons/bs";
 import { GiConsoleController } from "react-icons/gi";
@@ -19,6 +19,7 @@ export default function IssueCash({...props}) {
   //   message: '',
 
   // })
+ 
 
   const { pending } = useFormStatus()
 
@@ -49,7 +50,7 @@ export default function IssueCash({...props}) {
  
 
   const newheadlist = branchid==19 ? headlist : headlist.filter( x => 
-   x.cashexphead == "Cash to Head Office"
+   x.cashexphead == "Cash To Head Office"
   );
  
 //  function SetSelectTop(){
@@ -57,11 +58,9 @@ export default function IssueCash({...props}) {
 //   $("#category").prepend("<option value='' selected='selected'>---Select Please---</option>");
 //  }
    
-  useEffect(() => {
-    //SetCategory(newheadlist[0].cashexphead)
-    
-    
-  }, [])
+  // useEffect(() => {
+  //   SetCategory(newheadlist[0].cashexphead)    
+  // }, [])
 
 
   //console.log(newheadlist[0].cashexphead);
@@ -112,9 +111,14 @@ export default function IssueCash({...props}) {
 
 
       if (res.ok) {
+
+        setCookie('recordupdate','true')
+        
         toast("Cash Sucessfully Issued...")
 
         document.getElementById('issue_modal').close();
+
+       
 
         //setTimeout(() => {
           // setActive(false);
@@ -167,6 +171,7 @@ export default function IssueCash({...props}) {
   return (
 
     <div>
+
       <button className='rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-700'
         onClick={() => (document.getElementById('issue_modal')).showModal()}
       >
@@ -312,6 +317,7 @@ export default function IssueCash({...props}) {
 
         </div>
       </dialog>
+
     </div>
 
   )

@@ -11,7 +11,7 @@ import ShowPendingCash from "@/components/ShowPendingCash";
 import { useState, useEffect } from "react";
 import { getBranchList } from '@/model/getdata'
 import { pendingCash } from '@/model/getdata'
-import { getCookie, getCookies } from 'cookies-next';
+import { setCookie,getCookie, getCookies } from 'cookies-next';
 import TestTypeWritter from "./TestTypeWritter";
 
 
@@ -25,6 +25,8 @@ export default function AdminDashboard() {
 
 
   // const [callapi, SetCallApi] = useState(true);
+
+   
  
   const username = getCookie('username');
   const branchid = getCookie('branchid');
@@ -72,7 +74,7 @@ export default function AdminDashboard() {
 
   useEffect(() => {    
     callBranchList(); 
- 
+  
   }, []);
 
   //Make Coma Separated Number

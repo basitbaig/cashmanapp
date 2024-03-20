@@ -38,7 +38,9 @@ export default function CashLedger() {
   const [branchlist, Setbranchlist] = useState([]);
   const [headlist, Setheadlist] = useState([]);
   const [branchdata, Setbranchdata] = useState([]);
-
+  const [showbranchlist, Setbranchlist]=useState(false);
+  const [showheadlist, Setheadlist]=useState(false);
+  
   let balance = 0;
 
   const callBranchList = async () => {
@@ -215,6 +217,17 @@ export default function CashLedger() {
 
               </div>
 
+              <input
+                 type="checkbox"                 
+                 id="showBranchlist"
+                 onChange={() => {
+
+                 }}
+
+              />
+
+
+
               {parseInt(reportbranchid) === 19 &&
                 <div>
                   <select className="w-full max-w-xs text-black" name="ubranchid" required onChange={handleBranch}>
@@ -233,6 +246,9 @@ export default function CashLedger() {
                 }
               </select>
               }
+
+
+
               <br />
               <button
                 className="mt-8 rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-700"
@@ -335,6 +351,8 @@ export default function CashLedger() {
 
 
 //https://nextui.org/docs/components/table
+
+//https://www.youtube.com/watch?v=Lt4vy8hfc-s
 
 
 //https://datatables.net/extensions/buttons/examples/html5/simple.html

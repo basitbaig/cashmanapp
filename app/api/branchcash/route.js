@@ -33,18 +33,18 @@ export async function POST(request) {
             :   
             body.branchid == 19 ?               
                body.feehead == "undefined" || body.feehead =="" ?
-                    branchdata = await Financecashbook.find({ branchid:body.branchid, iscancel: null }).select("_id entrydate entrytype category description totalamount remarks ispending iscancel isposted").sort({ _id: -1 })
+                    branchdata = await Financecashbook.find({ branchid:body.branchid,ispending:false, iscancel: null }).select("_id entrydate entrytype category description totalamount remarks ispending iscancel isposted").sort({ _id: -1 })
                     :
-                    branchdata = await Financecashbook.find({ branchid:body.branchid, category: body.feehead, iscancel: null }).select("_id entrydate entrytype category description totalamount remarks ispending iscancel isposted").sort({ _id: -1 })
+                    branchdata = await Financecashbook.find({ branchid:body.branchid,ispending:false, category: body.feehead, iscancel: null }).select("_id entrydate entrytype category description totalamount remarks ispending iscancel isposted").sort({ _id: -1 })
                 :
                 body.feehead == "undefined" || body.feehead =="" ?
-                    branchdata = await Branchcashbook.find({ branchid: body.branchid, iscancel: null }).select("_id entrydate entrytype category description totalamount remarks ispending isreject iscancel isposted").sort({ _id: -1 })
+                    branchdata = await Branchcashbook.find({ branchid: body.branchid, ispending: false, iscancel: null }).select("_id entrydate entrytype category description totalamount remarks ispending isreject iscancel isposted").sort({ _id: -1 })
                     :
-                    branchdata = await Branchcashbook.find({ branchid: body.branchid, category: body.feehead, iscancel: null }).select("_id entrydate entrytype category description totalamount remarks ispending isreject iscancel isposted").sort({ _id: -1 })
+                    branchdata = await Branchcashbook.find({ branchid: body.branchid, ispending: false, category: body.feehead, iscancel: null }).select("_id entrydate entrytype category description totalamount remarks ispending isreject iscancel isposted").sort({ _id: -1 })
         }
         
         return NextResponse.json(branchdata);
-
+ 
     } catch (error) {
        
         console.log(error);
