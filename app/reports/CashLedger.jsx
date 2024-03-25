@@ -38,8 +38,8 @@ export default function CashLedger() {
   const [branchlist, Setbranchlist] = useState([]);
   const [headlist, Setheadlist] = useState([]);
   const [branchdata, Setbranchdata] = useState([]);
-  const [showbranchlist, Setbranchlist]=useState(false);
-  const [showheadlist, Setheadlist]=useState(false);
+  const [showbranchlist, Setshowbranchlist]=useState('none');
+  const [showheadlist, Setshowheadlist]=useState('none');
   
   let balance = 0;
 
@@ -217,37 +217,44 @@ export default function CashLedger() {
 
               </div>
 
-              <input
-                 type="checkbox"                 
-                 id="showBranchlist"
-                 onChange={() => {
+              <div className="flex mb-4">
+                {parseInt(reportbranchid) === 19 &&
+                  <div className="flex items-center me-4">
+                      <input id="showbranch-checkbox" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" onClick={(e) => {e.target.checked ? Setshowbranchlist('inline') : Setshowbranchlist('none') }} />
+                      <label for="showbranch-checkbox" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Show Branch List</label>
+                  </div>
+                }
+                <div className="flex items-center me-4">
+                    <input id="showhead-checkbox" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" onClick={(e) => {e.target.checked ? Setshowheadlist('inline') : Setshowheadlist('none') }} />
+                    <label for="showhead-checkbox" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Show Fee Head</label>
+                </div>
 
-                 }}
+              </div>              
+ 
+              <div style={{ display: showbranchlist }}>
 
-              />
+                {parseInt(reportbranchid) === 19 &&
+                  <div>
+                    <select className="w-full max-w-xs text-black" name="ubranchid" required onChange={handleBranch}>
+                      {
+                        branchlist.map((opts, id) => <option key={id} value={opts.id} >{opts.branchname}</option>)
+                      }
+                    </select>
+                  </div>
+                }
+                </div>
 
-
-
-              {parseInt(reportbranchid) === 19 &&
-                <div>
-                  <select className="w-full max-w-xs text-black" name="ubranchid" required onChange={handleBranch}>
+                <div style={{ display: showheadlist }}>
+                {
+                  <select data-te-select-init data-te-select-clear-button="true" className="w-full max-w-xs mt-3" id="category" name="category" required onChange={handleCashHead}>
+                    <option value="Select Cash Head">Select Cash Head</option>
                     {
-                      branchlist.map((opts, id) => <option key={id} value={opts.id} >{opts.branchname}</option>)
+                      headlist.map((opts, _id) => <option key={_id} value={opts.cashexphead}>{opts.cashexphead}</option>)
                     }
                   </select>
-                </div>
-              }
-
-              {
-                <select data-te-select-init data-te-select-clear-button="true" className="w-full max-w-xs mt-3" id="category" name="category" required onChange={handleCashHead}>
-                <option value="Select Cash Head">Select Cash Head</option>
-                {                          
-                  headlist.map((opts, _id) => <option key={_id} value={opts.cashexphead}>{opts.cashexphead}</option>)
                 }
-              </select>
-              }
 
-
+              </div>
 
               <br />
               <button

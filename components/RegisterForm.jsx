@@ -76,7 +76,7 @@ export default function RegisterForm() {
 
     const handleRedirect = () => {
         router.refresh();
-        router.push("/dashboard");
+        router.push("/");
     }
 
     const handleSubmit = async (e) => {
