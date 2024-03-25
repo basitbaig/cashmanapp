@@ -24,3 +24,7 @@ export default async function Home() {
 
 //Very Usefull NextJS 14 codes
 //https://medium.com/@codewithmarish/next-js-contact-form-tutorial-mongodb-integration-and-docker-setup-0a7ec9ef4f52
+
+
+//New Nextjs 14 Series
+//https://www.youtube.com/watch?v=ZjAqacIC_3c&list=PLC3y8-rFHvwjOKd6gdf4QtV1uYNiQnruI
