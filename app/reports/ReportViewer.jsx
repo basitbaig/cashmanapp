@@ -39,4 +39,4 @@ export default function ReportViewer({viewer}) {
   )
 }
 
- 
+ //https://docs.telerik.com/reporting/knowledge-base/window-is-not-defined-nextjs

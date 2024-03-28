@@ -1,6 +1,27 @@
 import { NextRequest, NextResponse} from 'next/server'
+import { getCookies } from 'cookies-next';
 export function middleware(req) {
-    //const nextUrl = req.nextUrl
+    
+  // const userinfo = getCookies();
+
+  // const checkusertype = decodeURIComponent(userinfo?.usertype);
+
+  // console.log('---Show Login User Type---')
+  // console.log(userinfo)
+  
+  // if (checkusertype == 'undefined')
+  // {
+  //   return NextResponse.rewrite(new URL('/', req.url))
+  // }
+  
+  
+  //const nextUrl = req.nextUrl
+
+  // if (nextUrl.pathname === '/dashboard' || !req.cookies.has('username')) {
+  //   if (!req.cookies.authToken) {
+  //     return NextResponse.rewrite(new URL('/', req.url))
+  //   }  
+  // }
 
     // if (nextUrl.pathname === '/dashboard') {
     //   if (req.cookies.authToken) {
@@ -18,13 +39,13 @@ export function middleware(req) {
 
      //Checking Cookies Exist...
 
-   //   if(!req.cookies.has('username')){
-   //      console.log('Session Closed');
-   //   }
+    //  if(!req.cookies.has('username')){
+    //     console.log('Session Closed');
+    //  }
      
      return NextResponse.next();
   }
 
-//   export const config = {
-//     matcher: '/',
-//   }
+  // export const config = {
+  //   matcher: ["/dashboard","/dashboard/userinfo","/dashboard/reports"], 
+  // }

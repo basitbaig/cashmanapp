@@ -7,6 +7,7 @@ import { IconContext } from "react-icons";
 import { Tooltip } from 'react-tooltip'
 import { GiCancel } from "react-icons/gi";
 import { getCookie } from 'cookies-next';
+import classNames from 'classnames';
 
 export default function ShowBranchDashboard({ branchid }) {
 
@@ -78,9 +79,10 @@ export default function ShowBranchDashboard({ branchid }) {
             ))} */}
 
       {/* <div className="px-0.2 mt-1"> */}
-      <div className="relative overflow-x-auto px-0.2 mt-2">
+      <div className={branchdata.length==0 ? "hidden" : "relative overflow-x-auto px-0.2 mt-2"}>
 
         <table className="table-fixed min-w-full text-left text-sm font-light">
+
           <thead className="border-b bg-neutral-800 font-medium text-white dark:border-neutral-500 dark:bg-neutral-900">
             <tr className="border-b dark:border-neutral-500">
               <th className="px-4 py-2">Transaction Details</th>

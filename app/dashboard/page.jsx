@@ -1,5 +1,6 @@
 "use client";
 //import { wait } from "@/lib/wait"
+import LoginForm from "@/components/LoginForm";
 import AdminDashboard  from "@/components/AdminDashboard";
 import BranchDashboard  from "@/components/BranchDashboard";
 import { useRouter } from "next/navigation";
@@ -11,17 +12,13 @@ export default function Dashboard() {
   const userinfo = getCookies();
 
   const checkusertype = decodeURIComponent(userinfo?.usertype);
-  
-  setCookie('recordupdate','false')
-  // if (checkusertype == 'undefined')
-  // {
-  //    router.replace('/');
-  // }
+
+ 
  
   return (
     <>
       {
-        checkusertype === "Branch" ? <BranchDashboard /> : <AdminDashboard  />
+        checkusertype === "Branch" ? <BranchDashboard /> : checkusertype === "Finance" ? <AdminDashboard  /> : <LoginForm />
       }
      
     </>

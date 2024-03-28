@@ -32,9 +32,31 @@ export default function Reportsbar() {
                       </Link>
                   </li> 
 
-                  
+
 
                   <li className="relative mt-9">
+                      <Link className="text-md px-8 py-8" href={{ pathname: '/dashboard/reports/cashledger' }}>
+                         Cash Ledger Report
+                      </Link>
+                  </li>
+                  <li className="relative mt-9">
+                      <Link className="text-md px-8 py-8 " href={{ pathname: '/dashboard/reports/pendingcash' }}>
+                         Pending Cash Report
+                      </Link>
+                  </li>
+                  <li className="relative mt-9">
+                      <Link className="text-md px-8 py-8 " href={{ pathname: '/dashboard/reports/rejectcash' }}>
+                         Reject Cash Report
+                      </Link>
+                  </li>       
+                  <li className="relative mt-9">
+                      <Link className="text-md px-8 py-8 " href={{ pathname: '/dashboard/reports/cancelcash' }}>
+                        Cancel Cash Report 
+                      </Link>
+                  </li>       
+                  
+
+                  {/* <li className="relative mt-9">
                       <Link className="text-md px-8 py-8" href={{ pathname: '/dashboard/reports/reportmain', query: { rptname: 'cashledger' }}}>
                          Cash Ledger Report
                       </Link>
@@ -53,7 +75,7 @@ export default function Reportsbar() {
                       <Link className="text-md px-8 py-8 " href={{ pathname: '/dashboard/reports/reportmain', query: { rptname: 'cancelcash' }}}>
                         Cancel Cash Report 
                       </Link>
-                  </li>                          
+                  </li>                           */}
 
         
                      

@@ -30,40 +30,40 @@ export default function CashLedger() {
   const [showMe, setShowMe] = useState('none');
   const [cashledger, SetcashLedger] = useState([]);
   const [callbranchid, SetCallBranchID] = useState(0);
-  const [branchname, Setbranchname] = useState(branchid==19 ? "Head Office - Finance" : "");
-  let selectbranch=branchid==19 ? "Head Office - Finance" : "";
+  const [branchname, Setbranchname] = useState(branchid == 19 ? "Head Office - Finance" : "");
+  let selectbranch = branchid == 19 ? "Head Office - Finance" : "";
   const [callcashhead, SetCallCashHead] = useState("");
   const [startdateFilter, setStartDateFilter] = useState(null)
   const [enddateFilter, setEndDateFilter] = useState(null)
   const [branchlist, Setbranchlist] = useState([]);
   const [headlist, Setheadlist] = useState([]);
   const [branchdata, Setbranchdata] = useState([]);
-  const [showbranchlist, Setshowbranchlist]=useState('none');
-  const [showheadlist, Setshowheadlist]=useState('none');
-  
+  const [showbranchlist, Setshowbranchlist] = useState('none');
+  const [showheadlist, Setshowheadlist] = useState('none');
+
   let balance = 0;
 
   const callBranchList = async () => {
-    Setbranchlist(await getBranchList("all"));    
+    Setbranchlist(await getBranchList("all"));
   }
 
   const CallBranchData = async () => {
 
     branchid = parseInt(callbranchid) != 0 ? callbranchid : branchid;
     const report = "ledger";
-    const feehead = callcashhead == "Select Cash Head" ? "undefined" : callcashhead    
-    const res = await getReportCash({ branchid,feehead, report });
+    const feehead = callcashhead == "Select Cash Head" ? "undefined" : callcashhead
+    const res = await getReportCash({ branchid, feehead, report });
     Setbranchdata(res);
     //Setbranchname(selectbranch);   
   }
 
   const CallHeadList = async () => {
     branchid = callbranchid != 0 ? callbranchid : branchid;
-    let hmode = branchid==19 || branchid==0 ? "H" : "B";
+    let hmode = branchid == 19 || branchid == 0 ? "H" : "B";
     let htype = "undefined";
-    const res = await getCashTypes(htype,hmode)
+    const res = await getCashTypes(htype, hmode)
     Setheadlist(res);
-     
+
   }
 
 
@@ -88,10 +88,10 @@ export default function CashLedger() {
 
   const handleBranch = (e) => {
     e.preventDefault();
-    SetCallBranchID(e.target.value);   
-    
+    SetCallBranchID(e.target.value);
+
     Setbranchname(e.target.value == 0 ? "Head Office - Finance" : e.target.options[e.target.selectedIndex].text)
-    selectbranch=e.target.options[e.target.selectedIndex].text
+    selectbranch = e.target.options[e.target.selectedIndex].text
     CallHeadList();
   }
 
@@ -147,7 +147,7 @@ export default function CashLedger() {
     // setStartDateFilter(fromdate);
     // setEndDateFilter(todate);
 
-     
+
 
 
     const data = branchdata.filter(row => {
@@ -220,17 +220,17 @@ export default function CashLedger() {
               <div className="flex mb-4">
                 {parseInt(reportbranchid) === 19 &&
                   <div className="flex items-center me-4">
-                      <input id="showbranch-checkbox" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" onClick={(e) => {e.target.checked ? Setshowbranchlist('inline') : Setshowbranchlist('none') }} />
-                      <label for="showbranch-checkbox" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Show Branch List</label>
+                    <input id="showbranch-checkbox" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" onClick={(e) => { e.target.checked ? Setshowbranchlist('inline') : Setshowbranchlist('none') }} />
+                    <label for="showbranch-checkbox" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Show Branch List</label>
                   </div>
                 }
                 <div className="flex items-center me-4">
-                    <input id="showhead-checkbox" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" onClick={(e) => {e.target.checked ? Setshowheadlist('inline') : Setshowheadlist('none') }} />
-                    <label for="showhead-checkbox" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Show Fee Head</label>
+                  <input id="showhead-checkbox" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" onClick={(e) => { e.target.checked ? Setshowheadlist('inline') : Setshowheadlist('none') }} />
+                  <label for="showhead-checkbox" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Show Fee Head</label>
                 </div>
 
-              </div>              
- 
+              </div>
+
               <div style={{ display: showbranchlist }}>
 
                 {parseInt(reportbranchid) === 19 &&
@@ -242,9 +242,9 @@ export default function CashLedger() {
                     </select>
                   </div>
                 }
-                </div>
+              </div>
 
-                <div style={{ display: showheadlist }}>
+              <div style={{ display: showheadlist }}>
                 {
                   <select data-te-select-init data-te-select-clear-button="true" className="w-full max-w-xs mt-3" id="category" name="category" required onChange={handleCashHead}>
                     <option value="Select Cash Head">Select Cash Head</option>
@@ -271,28 +271,30 @@ export default function CashLedger() {
 
           <div className="border-x-slate-200">
 
-            <div style={{display: showMe}}>
+            <div style={{ display: showMe }}>
               <div className="report-logo">
                 {/* <img alt="logo" src={logo} /> */}
               </div>
 
               <iframe id="txtArea1" style={{ display: "none" }}></iframe>
 
-              <div className="flex flex-col w-full justify-between items-center min-h-screen ">
+              <div className="border-solid border-yellow-500 px-5 ml-20">
+
+              <div className="flex flex-col w-full justify-between items-center min-h-screen px-5 ml-20">
 
                 <div className="flex flex-col w-full bg-slate-200 rounded-md shadow-2xl">
 
-                <div className="flex flex-row justify-end">
-                
-                  <button className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800" id="btnExport" onClick={fnExcelReport}><RiFileExcel2Line /> EXCEL </button>
-                  <span className="px-4 py-4"></span>
-                  <button className="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900" onClick={() => {
-                    handlePrint(null, () => contentToPrint.current);
-                  }}>
-                    <GrPrint />
-                    PRINT
-                  </button>
-                </div>
+                  <div className="flex flex-row justify-end">
+
+                    <button className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800" id="btnExport" onClick={fnExcelReport}><RiFileExcel2Line /> EXCEL </button>
+                    <span className="px-4 py-4"></span>
+                    <button className="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900" onClick={() => {
+                      handlePrint(null, () => contentToPrint.current);
+                    }}>
+                      <GrPrint />
+                      PRINT
+                    </button>
+                  </div>
 
                   {/* {branchname}
                   {branchid}
@@ -300,7 +302,7 @@ export default function CashLedger() {
 
                   <div ref={contentToPrint}>
                     <div className="mt-1 flex flex-col text-left px-8">
-                     
+
                       <h1 className="font-bold text-2xl">Cash Ledger Report</h1>
                       <h1 className="font-bold text-1xl text-blue-800">{branchname}</h1>
                       <h3 className="mt-5">From:{startdateFilter}</h3>
@@ -343,6 +345,8 @@ export default function CashLedger() {
                     </div>
                   </div>
                 </div>
+              </div>
+
               </div>
 
             </div>
