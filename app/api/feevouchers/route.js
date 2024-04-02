@@ -43,7 +43,7 @@ export async function POST(request) {
             entrydate: item.receivedate,
             entrytype: "R",
             description: item.challanid,
-            feedetail: {"billid":item.feebillid,"rollno":item.rollno,"student_name":item.studentname,"feemonths":item.feemonths,"challanid":item.challanid },
+            feedetail: {billid:item.feebillid,rollno:item.rollno,student_name:item.studentname,feemonths:item.feemonths,challanid:item.challanid },
             totalamount: parseInt(item.totalamount),
             remarks: item.description,
             isposted: isposted,
@@ -118,3 +118,17 @@ export async function POST(request) {
         // }, function(err, docs){
         //      console.log(docs);
         // });
+
+
+
+        // {
+        //     "comid":"1",
+        //     "branchid":"2",
+        //     "feebillid":"99229932",
+        //     "rollno":"12451",
+        //     "studentname":"Muhammad Kashan",
+        //     "feemonths":"Feb2024",
+        //     "challanid": "675421",
+        //     "totalamount":30000,
+        //     "receivedate": "2024-04-01"
+        // }

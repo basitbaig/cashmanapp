@@ -12,13 +12,6 @@ export default function page() {
   const router = useRouter();
   const userinfo = getCookies();
 
-  const checkusertype = decodeURIComponent(userinfo?.usertype);
-  
-  if (checkusertype == 'undefined')
-  {
-     router.replace('/');
-  }
-
   const [userlist, SetuserList] = useState([]);
 
   const CallUserList = async () => {
@@ -26,6 +19,10 @@ export default function page() {
   }
 
   useEffect(() => {
+    const checkusertype = decodeURIComponent(userinfo?.usertype);
+    if (checkusertype == 'undefined') {
+      router.replace('/');
+    }
     CallUserList();
   }, []);
 
