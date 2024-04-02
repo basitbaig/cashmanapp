@@ -34,7 +34,7 @@ export async function POST(request) {
         
         const newFeeData=await FeeVoucher.find({islock: true, isposted: false })
       
-        newFeeData.map((item) => {
+        newFeeData.map((item) => {          
             Branchcashbook.create({
             comid: parseInt(item.comid),
             branchid: parseInt(item.branchid),
@@ -42,14 +42,19 @@ export async function POST(request) {
             category: "School Fee Collection",
             entrydate: item.receivedate,
             entrytype: "R",
-            description: item.feebillid + "-" + item.rollno + "-" + item.studentname + "-" + item.feemonths + "-" + item.challanid,
+            description: item.challanid,
+            feedetail: {"billid":item.feebillid,"rollno":item.rollno,"student_name":item.studentname,"feemonths":item.feemonths,"challanid":item.challanid },
             totalamount: parseInt(item.totalamount),
             remarks: item.description,
             isposted: isposted,
             ispending: ispending,
             iscancel: null
         })
+        
+       
     });         
+
+    // const newfee = await Branchcashbook.findOne().sort({ _id: -1 }).limit(1)
 
     const filter = { isposted: false, islock: true }
     await FeeVoucher.updateMany(filter,  {isposted: true });

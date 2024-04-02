@@ -12,6 +12,7 @@ const branchcashSchema = new mongoose.Schema(
         recevfrombranch:{type: Number},
         category:{type: String},
         description: {type: String},
+        feedetail: {"billid":string,"rollno":string,"student_name":string,"feemonths":string,"challanid":string },
         totalamount: {type: Number},
         remarks: {type: String},
         ispending: {type: Boolean, default: true},
