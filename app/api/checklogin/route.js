@@ -1,4 +1,4 @@
-import { connectMongoDB } from "@/dblib/mongodb";
+import { connectMongoDB } from "@/dblib/dbmongo";
 import User from "@/model/user";
 import { NextResponse, NextRequest } from "next/server";
 import bcrypt from "bcryptjs";
@@ -8,25 +8,17 @@ export async function POST(request) {
         await connectMongoDB();
         const { email,password } = await request.json();
 
-        // console.log('---Email and Password At API-----');
-        // console.log(email);
-        // console.log(password);
-
         const user = await User.findOne({ email, isactive: true });
 
         if (!user) {
-            return NextResponse.json({"Error":"Invalid Email / Password"});
+            return NextResponse.json({"Error":"Invalid Email / User Is not Authorized to Login"});
         }
         const passwordsMatch = await bcrypt.compare(password, user.password);
 
         if (!passwordsMatch) {
-            return NextResponse.json({"Error":"Invalid Email / Password"});
+            return NextResponse.json({"Error":"Invalid Password"});
         }
-
-       // console.log('---User Found-----');
-       // console.log({user});
-       
-       // const user = await User.findOne({email}).select("name email comid branchid userrole usertype firstlogin");
+        
         return NextResponse.json({user});
 
     } catch (error) {        

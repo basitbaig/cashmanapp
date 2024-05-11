@@ -148,24 +148,12 @@ export default function RejectPending({ transid }) {
                   <div className="form-control w-full max-w-xs py-4">
                     <label htmlFor="image">Description</label>
                     <h5 className="font-bold text-blue-800 underline">{values.description}</h5>
-                    {/* <input
-                      type="text"
-                      id="description"
-                      name="description"
-                      value={values.description}
-                      readOnly
-                    /> */}
+ 
                   </div>
                   <div className="form-control w-full max-w-xs py-4">
                     <label htmlFor="price">Amount</label>
                     <h3 className="font-bold text-blue-800 underline">{values.totalamount}</h3>
-                    {/* <input
-                      type="number"
-                      id="totalamount"
-                      name="totalamount"
-                      value={values.totalamount}
-                      readOnly
-                    /> */}
+ 
                   </div>
                   <div className="form-control w-full max-w-xs py-4">
                     <label htmlFor="image">Reason</label>

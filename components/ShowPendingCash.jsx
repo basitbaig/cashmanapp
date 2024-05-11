@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { pendingCash } from '@/model/getdata'
+import { pendingCash } from '@/service/getdata'
 import PostPending from '@/components/PostPending';
 import RejectPending from "./RejectPending";
 
@@ -44,17 +44,6 @@ export default function ShowPendingCash({branchid}) {
     return (
 
         <div className="mt-2">
-             
-            {/* {branchbalance.map(item => (
-                <div key={item._id}>
-                    <p className="text-lg decoration-indigo-500 bg-indigo-700 text-white font-bold">
-                   Cash In Hand Balance: {formatNumber(item.balance)}
-                    </p>
-                </div>
-            ))} */}
-
-            {/* <div className="px-5"> */}
-
  
                 <div className="relative overflow-x-auto">
 

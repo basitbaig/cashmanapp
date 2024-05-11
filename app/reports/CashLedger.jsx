@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { getBranchList, getCashTypes } from '@/model/getdata'
-import { getReportCash } from '@/model/getdata'
+import { getBranchList, getCashTypes } from '@/service/getdata'
+import { getReportCash } from '@/service/getdata'
 import { getCookie } from 'cookies-next';
 import { firstBy } from "thenby";
 import { RiFileExcel2Line } from "react-icons/ri";
@@ -19,9 +19,7 @@ export default function CashLedger() {
     onAfterPrint: () => console.log("after printing..."),
     removeAfterPrint: true,
   });
-  //const cashdata = [...Object.values(props)];
 
-  //let branchdata =JSON.parse(JSON.stringify(cashdata))
 
   let branchid = getCookie('branchid');
   const reportbranchid = getCookie('branchid')
@@ -135,37 +133,35 @@ export default function CashLedger() {
 
   function getReportData() {
 
-    //   data.series = data.series.filter((item: any) =>
-    //   item.date.getTime() >= fromDate.getTime() && item.date.getTime() <= toDate.getTime()
-    // );  
+      //this.setState( { bookings : this.state.bookings.filter( book => new Date(book.FromDate).getTime() >= this.state.startDate.getTime() && new Date(book.FromDate).getTime() <= this.state.endDate.getTime())});
+     
 
-
-
-    // let fromdate = new Date("2024-03-01");
-    // let todate = new Date("2024-03-07");
-
-    // setStartDateFilter(fromdate);
-    // setEndDateFilter(todate);
-
-
-
-
-    const data = branchdata.filter(row => {
-      let filterPass = true
-      const date = formatDate(new Date(row.entrydate))
-      if (startdateFilter) {
-        filterPass = filterPass && (date >= formatDate(new Date(startdateFilter)))
-      }
-      if (enddateFilter) {
-        filterPass = filterPass && (date <= formatDate(new Date(enddateFilter)))
-      }
-      //if filterPass comes back `false` the row is filtered out
-      return filterPass
-    }).sort(firstBy(function (a, b) {
-      return new Date(a.entrydate) - new Date(b.entrydate)
+    const data = branchdata.filter(d => {
+       
+      var fdate = new Date(d.entrydate).getTime()
+ 
+      return (fdate >= new Date(startdateFilter).getTime() && fdate <= new Date(enddateFilter).getTime());
+     }).sort(firstBy(function (a, b) {
+      return new Date(a.entrydate).getTime() - new Date(b.entrydate).getTime()
     }).thenBy("entrytype", "desc"));
 
-    //const sortedDates = data?.map(data => { return { ...data, date: new Date(data.entrydate) } }).sort((b, a) => b.entrydate - a.entrydate)
+    // const data = branchdata.filter(row => {
+    //   let filterPass = true
+    //   const date = formatDate(new Date(row.entrydate))
+
+ 
+    //   if (startdateFilter) {
+    //     filterPass = filterPass && (date >= formatDate(new Date(startdateFilter)))
+    //   }
+    //   if (enddateFilter) {
+    //     filterPass = filterPass && (date <= formatDate(new Date(enddateFilter)))
+    //   }
+    //   //if filterPass comes back `false` the row is filtered out
+    //   return filterPass
+    // }).sort(firstBy(function (a, b) {
+    //   return new Date(a.entrydate) - new Date(b.entrydate)
+    // }).thenBy("entrytype", "desc"));
+
 
     SetcashLedger(data);
 
@@ -360,36 +356,7 @@ export default function CashLedger() {
 }
 
 
+//For Date Formatting in Next JS
+// https://date-fns.org/docs/Getting-Started
 
-//https://nextui.org/docs/components/table
-
-//https://www.youtube.com/watch?v=Lt4vy8hfc-s
-
-
-//https://datatables.net/extensions/buttons/examples/html5/simple.html
-
-
-{/* <tbody>
-{data
-  .filter(row => {
-    let filterPass = true
-    const date = new Date(row.dateYouWannaFilterWith)
-    if (dateFilter.startDate) {
-      filterPass = filterPass && (new Date(dateFilter.startDate) < date)
-    }
-    if (dateFilter.endDate) {
-      filterPass = filterPass && (new Date(dateFilter.endDate) > date)
-    }
-    //if filterPass comes back `false` the row is filtered out
-    return filterPass
-  })
-    .map(row =>
-      <tr>
-        <td>Your</td>
-        <td>Table</td>
-        <td>Row</td>
-        <td>Cells</td>
-      </tr>
-    )
-}
-</tbody > */}
+//npm install date-fns --save

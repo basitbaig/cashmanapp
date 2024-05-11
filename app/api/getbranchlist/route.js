@@ -1,10 +1,10 @@
-import { connectMongoDB } from "@/dblib/mongodb";
+import { connectMongoDB } from "@/dblib/dbmongo";
 import { NextResponse, NextRequest } from "next/server";
 import mongoose from "mongoose";
 
 export async function POST(request) {
     try {
-        //const { comid } = await request.json();
+      
 
         const  body  = await request.json();
 
@@ -12,7 +12,6 @@ export async function POST(request) {
  
         const db = mongoose.connection;
 
-        //const mycomp = JSON.parse(comid);
  
         let branchlist=[];
 

@@ -10,13 +10,7 @@ import { revalidatePath } from "next/cache"
 import { usePathname } from "next/navigation";
 
 export default function ReceivedCash({ ...props }) {
-
-    // const [state, formAction] = useFormState(cashReceive, {
-    //     message: '',
-
-    // })
  
-
     const curpath = usePathname();
 
     const { pending } = useFormStatus()
@@ -37,8 +31,7 @@ export default function ReceivedCash({ ...props }) {
     const [totalamount, SetTotalamount] = useState("");
     const [remarks, SetRemarks] = useState("");
 
-    //const headlist = Object.entries({...props});
-
+ 
     const headlist = [...Object.values(props)];
 
     function refreshMyPage()
@@ -49,10 +42,7 @@ export default function ReceivedCash({ ...props }) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        // const loginuser = decodeURIComponent(getCookie('username'));
-        // const loginbranch = decodeURIComponent(getCookie('userbranchid'));
-        // const logincomp = decodeURIComponent( getCookie('usercomp'))
+ 
         const apiUrl = process.env.API_URL;
 
         const formvalues = { comid, branchid, username, entrydate, entrytype, category, description, totalamount, remarks };
@@ -72,25 +62,6 @@ export default function ReceivedCash({ ...props }) {
                 toast("Cash Sucessfully Received...")
 
                 document.getElementById('recv_modal').close();
-
-               
-
-               // revalidatePath("/dashboard");
-
-                // router.refresh();
-                // router.push("/dashboard");  
-
-                // refreshMyPage();
-                //router.replace("/dashboard")
-                //router.reload();
-                
-                //router.push("/dashboard").then(() => router.reload());
-                
-                //router.replace("/product?id=2").then(() => router.reload());
-
-                //branchid==19 ? router.replace("/dashboard") : router.replace("/branchdashboard"); 
-                // {() => (document.getElementById('recv_modal')).close()}
-
 
             } else {
                 const errorMesg = await res.json();
@@ -218,11 +189,7 @@ export default function ReceivedCash({ ...props }) {
                                         </textarea>
                                     </div>
                                 </div>
-                                {/* className="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-primary-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800" */}
-
-                                {/* className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-700"> */}
-
-
+         
                                 <button
                                     className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-700"
                                     type="button"
@@ -251,22 +218,4 @@ export default function ReceivedCash({ ...props }) {
 }
 
 
-
-//https://www.linkedin.com/pulse/7-ways-convert-objects-array-javascript-awais-al-waisy/
-
-//https://www.samanthaming.com/tidbits/76-converting-object-to-array/
-
-
-
-/*     {                                   
-                                        <select id="category" name="category"
-                                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" 
-                                                required 
-                                                onChange={(e) => SetCategory(e.target.value)}>
-                                            <option value="0">Select purpose/event</option>
-                                            <option value="Field Trip">Office Expenses</option>
-                                            <option value="Field Trip">Field Trip</option>
-                                            <option value="Book Sale">Book Sale</option>
-                                            <option value="CAIE Fee">CAIE Fee</option>
-                                            <option value="Donation">Donation</option>
-                                        </select> } */
+ 

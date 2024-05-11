@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react"; 
-import { getBranchBalance } from "@/model/getdata";
+import { getBranchBalance } from "@/service/getdata";
 
 export function BranchHandBalance({ branchid })  {
 
@@ -37,10 +37,6 @@ export function BranchHandBalance({ branchid })  {
  
 
 export default function ShowBranchBalance ({branchid}) {
-
-    // const [branchbalance, Setbranchbalance]=useState([]);
-      
-    //const branchbalance = await getBranchBalance({branchid});  
  
     return (
         <div className="float-right mt-3">

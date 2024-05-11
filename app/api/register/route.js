@@ -1,4 +1,4 @@
-import { connectMongoDB } from "@/dblib/mongodb";
+import { connectMongoDB } from "@/dblib/dbmongo";
 import User from "@/model/user";
 import { NextResponse, NextRequest } from "next/server";
 import bcrypt from "bcryptjs";
@@ -6,19 +6,14 @@ import bcrypt from "bcryptjs";
 export async function POST(request) {
    
     try {
-          
-        //const userdata = await req.json();
-        
+ 
         const active = Boolean(0);
         const newuser = Boolean(1);
 
         const { email, name, password, ubranchid, ucomid, urole, utype} = await request.json();
-        //const {comid, branchid, username, useremail, upassword, userrole, usertype } = await req.json();
-
+ 
         const hashedPassword = await bcrypt.hash(password,10);
-        
-        //const fs = require('fs');
-        //fs.writeFile('user.json',JSON.stringify(userdata), finished);
+ 
          await connectMongoDB();
 
         await User.create({ name:name, email:email, password:hashedPassword, comid:ucomid, branchid:ubranchid, isactive:active.toString(), firstlogin:newuser.toString(), userrole:urole, usertype:utype})

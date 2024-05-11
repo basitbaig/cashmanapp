@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { useState, useEffect } from "react";
 import toast, { Toaster } from 'react-hot-toast';
 import { useRouter } from "next/navigation";
-import { getBranchList } from '@/model/getdata'
+import { getBranchList } from '@/service/getdata'
 
 export default function RegisterForm() {
 
@@ -25,8 +25,6 @@ export default function RegisterForm() {
  
     const [branchlist, SetBranchlist] = useState([]);
     
-    //[...Object.values(props)];
-
     const router = useRouter()
 
     const CallBranchList = async () => {
@@ -57,20 +55,11 @@ export default function RegisterForm() {
         const brhcomp = branchlist.find((bl) => bl.id == e.target.value);
 
         setComID(brhcomp.comid);
-
-        //showToastMessage(e.target.value, "branch");
-
-        // setValues(values => {
-        //     return { ...values, [e.target.name]: e.target.value }
-        // })
     }
 
     const handleRole = (e) => {
         e.preventDefault();
         showToastMessage(e.target.value, "user");
-        // setValues(values => {
-        //     return { ...values, [e.target.name]: e.target.value }
-        // })
     }
 
 
@@ -82,7 +71,6 @@ export default function RegisterForm() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // const {name, email, password, branchid, userrole} = [...formvalues];
         const apiUrl = process.env.API_URL;
 
         const formvalues = { ...values, ucomid, ubranchid, urole, utype };
@@ -99,9 +87,7 @@ export default function RegisterForm() {
             });
 
             const userfound = await rescheckemail.json();
-
-            //console.log(userfound);
-
+ 
             if (!userfound === null) {
                 toast("User Already exist With This Email ID.");
                 return;
@@ -210,22 +196,12 @@ export default function RegisterForm() {
                                         required
                                     />
 
-
-
                                     <select data-te-select-init data-te-select-clear-button="true" className="w-full max-w-xs" name="ubranchid" required onChange={handleBranch}>
                                         {
                                             branchlist.map((opts, id) => <option key={id} value={opts.id}>{opts.branchname}</option>)
                                         }
                                     </select>
 
-
-                                    {/* <select data-te-select-init data-te-select-clear-button="true" name="ubranchid" required onChange={(e) => setBranchID(e.target.value)}>
-                                        <option value="0">Select User Branch</option>
-                                        <option value="21">Elementary Shahrah-e-Faisal</option>
-                                        <option value="6">North Campus Junior</option>
-                                        <option value="2">Junior Campus Defence</option>
-                                        <option value="27">Junior Campus North Nazimabad</option>
-                                    </select> */}
                                     {ubranchid == 19 ?
                                         <select className="w-full max-w-xs" name="urole" required onChange={(e) => setUserRole(e.target.value)}>
                                             <option value="0">Select User Role</option>
@@ -242,10 +218,6 @@ export default function RegisterForm() {
 
                                     {/* <!-- Login button --> */}
                                     <div className="text-center lg:text-left">
-
-                                    {/* <Link className="bg-slate-500 text-white font-bold cursor-pointer my-5 px-6 py-2 " href={'/'}>
-                                       <span>Back</span>
-                                    </Link> */}
 
                                      <div className="float-right">   
                                           <button className="bg-slate-500 text-white font-bold cursor-pointer my-5 px-6 py-2">

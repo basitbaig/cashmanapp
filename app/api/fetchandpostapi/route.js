@@ -1,6 +1,6 @@
 // pages/api/fetchAndInsert.js
 import axios from 'axios';
-import { connectMongoDB } from "@/dblib/mongodb";
+import { connectMongoDB } from "@/dblib/dbmongo";
 import Apifeedata from "@/model/downloadapi";
 import Branchcashbook from "@/model/branchcash";
 import { NextResponse, NextRequest } from "next/server";
@@ -14,8 +14,7 @@ export async function POST(request, response) {
 
     await connectMongoDB();
  
-    //console.log(body.feedata);
-    // Create a new object with selected keys
+ 
     const newData = [{ 
       pkfeeid:1651176, 
       branchid:1, 
@@ -35,7 +34,6 @@ export async function POST(request, response) {
     receivedate:'2024-01-12'  
     }
   ]
-  //https://copyprogramming.com/howto/mongodb-mongoose-concatenate-two-values-before-get
  
     await Apifeedata.insertMany(newData);
 
@@ -43,11 +41,10 @@ export async function POST(request, response) {
 
     return NextResponse.json({ message: "User Registerd" }, { status: 201 });
 
-    // return res.status(200).json({ message: 'Data inserted into API Data Log successfully' });
-
+ 
   } catch (error) {
     return NextResponse.json({ message: "Error In User Registration" }, { status: 500 });
 
-    //return res.status(500).json({ error: 'Internal Server Error' });
+ 
   }
 }

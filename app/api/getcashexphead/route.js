@@ -1,4 +1,4 @@
-import { connectMongoDB } from "@/dblib/mongodb";
+import { connectMongoDB } from "@/dblib/dbmongo";
 import { NextResponse, NextRequest } from "next/server";
 import mongoose from "mongoose";
 
@@ -13,8 +13,7 @@ export async function POST(request) {
         let htype = body.entrytype;
         let hmode = body.entrymode;
 
-     
-        //const htype = JSON.parse(headtype);
+ 
         let headlist=[];
 
         { body.entrytype == "undefined" ?           

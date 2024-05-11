@@ -1,4 +1,4 @@
-import { connectMongoDB } from "@/dblib/mongodb";
+import { connectMongoDB } from "@/dblib/dbmongo";
 import Branchcashbook from "@/model/branchcash";
 import Financecashbook from "@/model/hofincash";
 import { NextResponse, NextRequest } from "next/server";
@@ -8,19 +8,9 @@ export async function POST(request) {
     try {
 
         const body = await request.json();
-      
-            //const { comid, branchid, username,entrydate,entrytype,category,description,totalamount,remarks } = await request.json();
-        // let ispending = body.branchid==19 ? Boolean(0) : body.entrytype === "R" ? Boolean(0) : Boolean(1);
-
+ 
         let ispending = body.branchid==19 ? Boolean(0) : Boolean(1);
         let isposted = body.branchid == 19 ? Boolean(1) : Boolean(0);
-     
-        //  {  //entrytype === "R" && (isposted = !!0);
-        //     body.entrytype === "R" && (isposted = Boolean(1));
-        //  }
-        //  {
-        //     body.entrytype === "I" && (ispending = Boolean(1));
-        //  }
  
         await connectMongoDB();
 
@@ -64,5 +54,4 @@ export async function POST(request) {
     }
 }
 
-// issuetobranch:null,
-// recevfrombranch:null,
+ 

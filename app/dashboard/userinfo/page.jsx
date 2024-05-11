@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 //import Userinfo from "@/components/Userinfo";
-import { userInfo } from "@/model/getdata";
+import { userInfo } from "@/service/getdata";
 import Userinfo from "@/components/Userinfo";
 import { useRouter } from "next/navigation";
 import { setCookie, getCookie,getCookies } from 'cookies-next';

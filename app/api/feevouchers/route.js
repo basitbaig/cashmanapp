@@ -1,4 +1,4 @@
-import { connectMongoDB } from "@/dblib/mongodb";
+import { connectMongoDB } from "@/dblib/dbmongo";
 import FeeVoucher from "@/model/feevoucher";
 import Branchcashbook from "@/model/branchcash";
 import { NextResponse, NextRequest } from "next/server";
@@ -7,8 +7,7 @@ import { Types } from "mongoose";
 const ObjectId = require("mongoose").Types.ObjectId;
 
 export async function GET() {
-    // const response = await fetch('https://jsonplaceholder.typicode.com/users');
-    // const parsedData = await response.json();
+ 
     await connectMongoDB();
     const parsedData = await FeeVoucher.find({islock: true, isposted: false});
 
@@ -54,8 +53,7 @@ export async function POST(request) {
        
     });         
 
-    // const newfee = await Branchcashbook.findOne().sort({ _id: -1 }).limit(1)
-
+ 
     const filter = { isposted: false, islock: true }
     await FeeVoucher.updateMany(filter,  {isposted: true });
 
@@ -66,7 +64,6 @@ export async function POST(request) {
                     }, 
                     status: 201,
                 });        
-    // return new NextResponse(JSON.stringify({message:"Fee Voucher Data Successfully Received From SimpliED"},{newFeeData}),{headers: { "Content-Type":"application/json",}, status: 201,});
     } catch (error) {
      return Response.json({newFeeData})
       
@@ -75,60 +72,4 @@ export async function POST(request) {
     }
 }
 
-
-//export {GET, POST}
-
-
-///https://www.youtube.com/watch?v=-j7qvs3zKqM
-
-
-
-// function sleep(time) {
-//     return new Promise((resolve) => {
-//       setTimeout(resolve, time)
-//     })
-//   }
-
-// await sleep(200)
-
-// await wait(4000)
-   
-
-      //Here We need to use this feeData Object and Insert record into Cashbookdb of Branch
-        // comid: {type: Number, required: true},
-        // branchid: {type: Number, required: true},
-        // feebillid: {type: String, required: true},
-        // rollno:{type: String, required: true},
-        // studentname:{type: String, required: true},
-        // feemonths: {type: String, required: true},
-        // challanid: {type: Number, required: true},
-        // totalamount: {type: Number, required: true},
-        // receivedate: {type: Date, required: true},
-        // description:{type: String},
-        // isposted: {type: Boolean, default: false},
-        // islock: {type: Boolean, default: false}
-
-
-        // model.find({
-        //     '_id': { $in: [
-        //         mongoose.Types.ObjectId('4ed3ede8844f0f351100000c'),
-        //         mongoose.Types.ObjectId('4ed3f117a844e0471100000d'), 
-        //         mongoose.Types.ObjectId('4ed3f18132f50c491100000e')
-        //     ]}
-        // }, function(err, docs){
-        //      console.log(docs);
-        // });
-
-
-
-        // {
-        //     "comid":"1",
-        //     "branchid":"2",
-        //     "feebillid":"99229932",
-        //     "rollno":"12451",
-        //     "studentname":"Muhammad Kashan",
-        //     "feemonths":"Feb2024",
-        //     "challanid": "675421",
-        //     "totalamount":30000,
-        //     "receivedate": "2024-04-01"
-        // }
+ 

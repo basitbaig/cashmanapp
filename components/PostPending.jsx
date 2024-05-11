@@ -44,7 +44,7 @@ export default function PostPending({ transid }) {
 
   const { pending } = useFormStatus()
 
-  //const ref = useRef<HTMLFormElement>(null)
+ 
 
   const initialValues = {                   // type all the fields you need
     branchname: '',
@@ -158,36 +158,17 @@ export default function PostPending({ transid }) {
                   <div className="form-control w-full max-w-xs py-4">
                     <label className="inline-block">Branch Name:<h1 className="font-bold text-blue-800 underline">{values.branchname}</h1></label>
 
-                    {/* <input
-                      type="text"
-                      id="branchname"
-                      name="branchname"
-                      className="input input-bordered w-full max-w-xs"
-                      value={values.branchname}
-                      readOnly
-                    /> */}
+      
                   </div>
                   <div className="form-control w-full max-w-xs py-4">
                     <label htmlFor="image">Description</label>
                     <h5 className="font-bold text-blue-800 underline">{values.description}</h5>
-                    {/* <input
-                      type="text"
-                      id="description"
-                      name="description"
-                      value={values.description}
-                      readOnly
-                    /> */}
+         
                   </div>
                   <div className="form-control w-full max-w-xs py-4">
                     <label htmlFor="price">Amount</label>
                     <h3 className="font-bold text-blue-800 underline">{values.totalamount}</h3>
-                    {/* <input
-                      type="number"
-                      id="totalamount"
-                      name="totalamount"
-                      value={values.totalamount}
-                      readOnly
-                    /> */}
+ 
                   </div>
 
                   <button

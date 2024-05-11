@@ -3,16 +3,8 @@
 import { getCookie, getCookies } from 'cookies-next';
 import DataTable, { Alignment } from "react-data-table-component";
 import React, { useMemo, useState, useCallback, useEffect } from 'react';
-import {updateUser} from "@/model/getdata";
-
-//Getting value from Array Objects - Tutorial
-//https://www.geeksforgeeks.org/how-to-get-a-value-from-a-json-array-in-javascript/
-
-
-//Component Reference WEbsite
-//https://react-data-table-component.netlify.app/?path=/story/performance-examples-hook-component--hook-component
-
-
+import {updateUser} from "@/service/getdata";
+ 
 export default function NewUserInfo({...props}) {
   
     const userinfo = getCookies();
@@ -75,10 +67,6 @@ export default function NewUserInfo({...props}) {
       setSelectedRows(state.selectedRows);
       
     }, [selectedRows]);
-  
-    // const handleChange = useCallback(state => {
-    //   setSelectedRows(state.selectedRows);
-    // }, []);    
  
     const customStyles = {
       headRow: {
@@ -183,11 +171,7 @@ export default function NewUserInfo({...props}) {
         },
       },
     ];    
-
-    //{row.isactive ? "Disable" : "Active"}
-
-    // ? "Active" : "InActive"
-
+ 
     function handleFilter(event) {
         const newData = data.filter(row => row.name.toLowerCase().includes(event.target.value.toLowerCase()))
         setActive(false)
@@ -201,12 +185,7 @@ export default function NewUserInfo({...props}) {
   return (
     
     <div className="md:container md:mx-auto">
-
-      {/* <div className="flex flex-col gap-2">
-
-        <Navbar username={decodeURIComponent(username)} userrole={decodeURIComponent(userrole)} firstlogin={decodeURIComponent(firstlogin)} />
-
-      </div> */}
+ 
       
       {/* selectableRowsComponent={Checkbox} */}
 

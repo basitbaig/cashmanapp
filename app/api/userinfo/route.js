@@ -1,4 +1,4 @@
-import { connectMongoDB } from "@/dblib/mongodb";
+import { connectMongoDB } from "@/dblib/dbmongo";
 import { NextResponse, NextRequest } from "next/server";
 import mongoose from "mongoose";
  

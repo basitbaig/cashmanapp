@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { getAllBranchBalance } from '@/model/getdata'
+import { getAllBranchBalance } from '@/service/getdata'
 
 export default function ShowAllBranchBalance() {
 
@@ -26,14 +26,7 @@ export default function ShowAllBranchBalance() {
 
     return (
         <div>
-            {/* {branchbalance.map(item => (
-                <div key={item._id}>
-                    <p className="text-lg decoration-indigo-500 bg-indigo-700 text-white font-bold">
-                   Cash In Hand Balance: {formatNumber(item.balance)}
-                    </p>
-                </div>
-            ))} */}
-          
+ 
             <div className="px-5">
                 <table className="table-fixed min-w-full text-left text-sm font-light">
                     <thead className="border-b bg-neutral-800 font-medium text-white dark:border-neutral-500 dark:bg-neutral-900">

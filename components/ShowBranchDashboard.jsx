@@ -1,8 +1,8 @@
 "use client"
 
 import { useState, useEffect, useCallback } from "react";
-import { getBranchCash } from '@/model/getdata'
-import { cancelTransaction } from '@/model/getdata'
+import { getBranchCash } from '@/service/getdata'
+import { cancelTransaction } from '@/service/getdata'
 import { IconContext } from "react-icons";
 import { Tooltip } from 'react-tooltip'
 import { GiCancel } from "react-icons/gi";
@@ -18,15 +18,6 @@ export default function ShowBranchDashboard({ branchid }) {
   const CallBranchData = async () => {
     SetbranchData(await getBranchCash({ branchid }));
   }
-
-  // const showBranchData = useCallback(() => {
-      
-  //     CallBranchData();
-
-
-  // },[branchid,recordupdate])
- 
-
 
   useEffect(() => {
 
@@ -70,13 +61,7 @@ export default function ShowBranchDashboard({ branchid }) {
         place="top"
         content="Cancel This Transaction"
       />
-      {/* {branchbalance.map(item => (
-                <div key={item._id}>
-                    <p className="text-lg decoration-indigo-500 bg-indigo-700 text-white font-bold">
-                   Cash In Hand Balance: {formatNumber(item.balance)}
-                    </p>
-                </div>
-            ))} */}
+
 
       {/* <div className="px-0.2 mt-1"> */}
       <div className={branchdata.length==0 ? "hidden" : "relative overflow-x-auto px-0.2 mt-2"}>
@@ -94,7 +79,7 @@ export default function ShowBranchDashboard({ branchid }) {
             </tr>
           </thead>
           {/* <APIData /> */}
-          {/* + '-' + data.entrytype */}
+
           <tbody className="border-b dark:border-neutral-500">
 
             {
@@ -113,10 +98,6 @@ export default function ShowBranchDashboard({ branchid }) {
                       </IconContext.Provider>
                     </button>
 
-
-
-                    {/* <CancelTransaction transid={data._id.toString()} branchid={branchid} />   */}
-
                   </td>
                 </tr>
               })
@@ -125,62 +106,12 @@ export default function ShowBranchDashboard({ branchid }) {
               <p className="text-center">There is no Cash Collection.</p>
             )}
 
-
-            {/* <tr>
-                                <td className="border px-4 py-2">Intro to CSS</td>
-                                <td className="border px-4 py-2">Adam</td>
-                                <td className="border px-4 py-2">858</td>
-                            </tr> */}
-
           </tbody>
         </table>
 
       </div>
 
-
-
-
     </div>
   );
 }
-
-
-
-//https://nextui.org/docs/components/table
-
-
-
-// <div className="flex flex-col w-full justify-center items-center min-h-px ">
-// Branch Cash Transactions
-// <div className="flex flex-col w-10/12 bg-gray-900 p-4 rounded-md shadow-2xl my-4">
-//   <div className="text-white w-full flex justify-between px-4 opacity-50 mb-2">
-//     <div>Transaction Detail</div>
-//     <div>Category</div>
-//     <div>Date</div>
-//     <div>Received</div>
-//     <div>Issued</div>
-//     <div>Action</div>
-//   </div>
-//   {
-//    branchdata.map((data, idx) => {   
-//     return (        
-//     <>           
-//       <div className={`${idx === 0 ? "rounded-t-md" : branchdata.length - 1 === idx ? "rounded-b-md" : ""} bg-gray-800 cursor-pointer text-white hover:bg-gray-700 shadow-md flex w-full justify-between p-4`}>
-//         <div className={`${data.isreject ? "animate-bounce truncate" : "truncate"}`}> {data.description + '\n' + data.remarks}</div>
-//         <div>{data.category}</div>
-//         <div>{formatDate(data.entrydate)}</div>
-//         <div>{data.entrytype === "R" ? formatNumber(data.totalamount) : "0"}</div>
-//         <div>{data.entrytype === "I" ? formatNumber(data.totalamount) : "0"}</div>
-//         <div>
-//           <button onClick={() => { if (window.confirm('Are you sure to cancel this transaction?')) { handleCancel(data._id) }; }} data-tooltip-id="cancelbutton-tooltip">
-//             <IconContext.Provider value={{ color: 'red', size: 22 }}>
-//               <GiCancel />
-//             </IconContext.Provider>
-//           </button>
-//         </div>
-//       </div>
-//     </>
-//     )
-//   })}
-// </div>
-// </div>
+ 

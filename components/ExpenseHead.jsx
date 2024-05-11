@@ -27,8 +27,7 @@ export default function ExpenseHead() {
     const [headmode, SetHeadmode] = useState("");
     const [isLoading, setLoading] = useState(true)
     
-     //const branchid = getCookie('userbranchid')
-
+ 
     const handleClose = (e) => {
         e.preventDefault();
         // onClick={() => (document.getElementById('exphead_modal')).close()}
@@ -50,15 +49,9 @@ export default function ExpenseHead() {
 
             if (res.ok) {
  
-               /// revalidatePath('/'+curpath)
-
                 toast("Cash/Expense Head Created...");
 
                 document.getElementById('exphead_modal').close();
- 
-                // setTimeout(() => {
-                //     (handleRedirect());
-                // }, 1000);
  
             } else {
                 const errorMesg = await res.json();
@@ -161,10 +154,7 @@ export default function ExpenseHead() {
                                     </div>
  
                                 </div>
-                                {/* className="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-primary-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800" */}
-                                
-                                {/* className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-700"> */}
-                                
+ 
 
                                 <button
                                     className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-700"

@@ -2,16 +2,24 @@
 
 import Link from "next/link";
 import DropDownAdmin from "./DropdownAdmin";
+import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
-import { deleteCookie, getCookies, getCookie } from 'cookies-next';
+import { deleteCookie, getCookies, getCookie, hasCookie } from 'cookies-next';
 import ReceivedCash from "./ReceivedCash";
 import IssueCash from  "./IssueCash";
-import { getCashTypes } from '@/model/getdata'
+import { getCashTypes } from '@/service/getdata'
  
 export default function Navbar() {
 
+  const router = useRouter()
   const userinfo = getCookies();
+
+  // const { status } = useSession();
+
+  // if (status !== "authenticated"){
+  //   router.push('/');     
+  // }
   
   const branchid = getCookie('branchid');
   const username = getCookie('username');
@@ -23,7 +31,7 @@ export default function Navbar() {
   const [Recvheadlist, SetRecvheadlist]=useState([]);
   const [Issuheadlist, SetIssuheadlist]=useState([]);
 
-  const router = useRouter()
+
 
   const CallDataTypes = async () => {
 
@@ -33,6 +41,11 @@ export default function Navbar() {
 
     SetIssuheadlist(await getCashTypes("I",hmode));
   }
+
+  const handleLogout = () => {
+    removeCookie();    
+  };
+
  
   useEffect(() => {
     
@@ -56,7 +69,7 @@ export default function Navbar() {
           deleteCookie('userrole',{ path: '/', });
           deleteCookie('firstlogin', { path: '/', }); 
       }
-       
+      //signOut();
         router.replace('/');
     };
  
@@ -101,20 +114,13 @@ export default function Navbar() {
       
       </div>
       
-
-      {/* <Link className="bg-white p-2" href={'/issueCash'}>Issue Cash</Link> */}
-
-      
-
-      {/* <Link className="bg-white p-2" href={'/receivecash'}>Receive Cash</Link>
-      <Link className="bg-white p-2" href={'/issuecash'}>Issue Cash</Link> */}
-
-
-
+ 
       <div className="ml-2">
         <span className="flex text-white">{username}</span>
 
-        <Link className="flex text-white" href={'/'}>Logout</Link>
+        {/* <Link className="flex text-white" href={'/'}>Logout</Link> */}
+
+        <button className="flex text-white" onClick={handleLogout}>Sign out</button>
         
       </div>
           

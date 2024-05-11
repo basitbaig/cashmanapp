@@ -1,4 +1,4 @@
-import { connectMongoDB } from "@/dblib/mongodb";
+import { connectMongoDB } from "@/dblib/dbmongo";
 import Financecashbook from "@/model/hofincash";
 import Branchcashbook from "@/model/branchcash";
 import { NextResponse, NextRequest } from "next/server";
@@ -29,9 +29,7 @@ export async function POST(request) {
 
     try {
 
-         // const { comid, branchid, username,entrydate,entrytype,category,description,totalamount,remarks } = await request.json();
-         //transid,username,branchid
-
+ 
          const body = await request.json();
 
          console.log(body);
@@ -60,13 +58,6 @@ export async function POST(request) {
             totalamount=item.totalamount,
             remarks=item.remarks
         });
- 
-        // console.log(comid);
-        // console.log(username);
-        // console.log(category);
-        // console.log(description);
-        // console.log(totalamount);
-        // console.log(remarks);
  
         let currentDate=new Date();
 
@@ -119,15 +110,4 @@ export async function POST(request) {
     }
 }
 
-
-
-
-    //     Branchcashbook.findOneAndUpdate({_id: new ObjectId(userId)}, {
-    //         $set: {
-    //             ispending: false
-    //         } 
-    //    }, {new:true}).then((updatedUser:UserModel) => {
-    //         console.log(updatedUser.profileUrl)
-    //    })
-
-        
+ 

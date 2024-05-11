@@ -1,4 +1,4 @@
-import { connectMongoDB } from "@/dblib/mongodb";
+import { connectMongoDB } from "@/dblib/dbmongo";
 import Financecashbook from "@/model/hofincash";
 import { NextResponse, NextRequest } from "next/server";
 
@@ -9,9 +9,7 @@ export async function POST(request) {
         const  body = await request.json();
  
         await connectMongoDB();
-
-        //const mybranch = JSON.parse(branchid);
-        
+ 
         const branch = await Financecashbook.find({branchid: body.branchid}).select("entrydate entrytype category description totalamount remarks iscancel").sort({ _id: -1 });
 
    

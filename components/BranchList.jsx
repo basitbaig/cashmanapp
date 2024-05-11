@@ -36,12 +36,7 @@ export default function BranchList() {
 
             if (res.ok) {
 
-                //toast("Cash/Expense Head Created...");
-
-                // setTimeout(() => {
-                //     (handleRedirect());
-                // }, 1000);
-
+ 
                 { () => (document.getElementById('branch_modal')).close() }
 
                 router.push("/dashboard");
@@ -155,11 +150,7 @@ export default function BranchList() {
                                     </div>
 
                                 </div>
-                                {/* className="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-primary-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800" */}
-
-                                {/* className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-700"> */}
-
-
+ 
                                 <button
                                     className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-700"
                                     type="button"

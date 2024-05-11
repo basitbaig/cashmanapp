@@ -6,7 +6,7 @@ import { IconContext } from "react-icons";
 import { TiUserDelete } from "react-icons/ti";
 import { BsTrash3 } from "react-icons/bs";
 import { GrUserNew } from "react-icons/gr";
-import { updateUser } from "@/model/getdata"
+import { updateUser } from "@/service/getdata"
  
 export default function Userinfo({...props}) {
     

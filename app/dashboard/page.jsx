@@ -4,17 +4,24 @@ import LoginForm from "@/components/LoginForm";
 import AdminDashboard  from "@/components/AdminDashboard";
 import BranchDashboard  from "@/components/BranchDashboard";
 import { useRouter } from "next/navigation";
-import { setCookie, getCookie,getCookies } from 'cookies-next';
+import { useSession } from "next-auth/react";
+import { getCookies } from 'cookies-next';
  
 export default function Dashboard() {
    
   const router = useRouter();
   const userinfo = getCookies();
 
+  // const { status } = useSession();
+
+  // if (status !== "authenticated"){
+  //   router.replace('/');     
+  // }
+ 
+
   const checkusertype = decodeURIComponent(userinfo?.usertype);
 
- 
- 
+
   return (
     <>
       {

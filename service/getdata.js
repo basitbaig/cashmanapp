@@ -152,7 +152,7 @@ export const getAllBranchBalance = async () => {
     const res = await fetch('/api/cashbalanceall', {
       method: "POST",
       headers: { "Content-Type": "application/json" }
-    });
+    },{ cache: 'no-store' });
 
     if (!res.ok) {
       throw new Error("Balance List Not Found!!");
@@ -175,7 +175,7 @@ export const pendingCash = async ({branchid}) => {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ branchid })
-        });
+        },{ cache: 'no-store' });
 
         if (!res.ok) {
           throw new Error("No Pending Entries Found!!");

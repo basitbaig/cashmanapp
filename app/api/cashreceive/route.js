@@ -1,4 +1,4 @@
-import { connectMongoDB } from "@/dblib/mongodb";
+import { connectMongoDB } from "@/dblib/dbmongo";
 import Branchcashbook from "@/model/branchcash";
 import Financecashbook from "@/model/hofincash";
 import { NextResponse, NextRequest } from "next/server";
@@ -57,7 +57,4 @@ export async function POST(request) {
     }
 }
 
-//    issuetobranch:null,
-//    recevfrombranch:null,  
-//    isreject: isreject,
-//    iscancel:null,
+ 

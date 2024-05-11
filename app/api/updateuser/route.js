@@ -1,4 +1,4 @@
-import { connectMongoDB } from "@/dblib/mongodb";
+import { connectMongoDB } from "@/dblib/dbmongo";
 import { NextResponse } from "next/server";
 import mongoose from "mongoose";
 import User from "@/model/user";
@@ -24,9 +24,7 @@ export async function PUT(request) {
         :
         await User.findByIdAndUpdate(query, { isactive: 'false' })  
 
-        //const data = await User.find({});
-        //return NextResponse.json(data, {message: "User Updated Succesfully..."}, {status: 200});
-
+ 
         const db = mongoose.connection;
 
         let userlist=[];  

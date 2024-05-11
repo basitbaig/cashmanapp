@@ -1,4 +1,4 @@
-import { connectMongoDB } from "@/dblib/mongodb";
+import { connectMongoDB } from "@/dblib/dbmongo";
 import User from "@/model/user";
 import { NextResponse, NextRequest } from "next/server";
 import bcrypt from "bcryptjs";
@@ -19,16 +19,7 @@ export async function POST(request) {
 
         const res = await User.findOneAndUpdate(query, { $set: { password: hashedPassword, firstlogin: 'false' } }, {new: true})
          
-        //console.log(res);
-        // await User.findOneAndUpdate({ email: email }, { $set: { password: hashedPassword } }, { returnNewDocument: true }, function (err, doc) {
-           
-        //     if (err) {
-        //         console.log("Something wrong when updating data!");
-        //     }
-            
-        //     console.log(doc);
-        // });
-
+ 
         return NextResponse.json({ message: "Password Updated" }, { status: 201 });
         
     } catch (error) {

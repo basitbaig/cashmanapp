@@ -1,4 +1,4 @@
-import { connectMongoDB } from "@/dblib/mongodb";
+import { connectMongoDB } from "@/dblib/dbmongo";
 import Financecashbook from "@/model/hofincash";
 import Branchcashbook from "@/model/branchcash";
 import { NextResponse, NextRequest } from "next/server";

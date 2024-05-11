@@ -38,45 +38,14 @@ export default function IssueCash({...props}) {
   const [totalamount, SetTotalamount] = useState("");
   const [remarks, SetRemarks] = useState("");
   
-
-  //const headlist = Object.entries({...props});
-  //cashexphead:"Cash to Head Office"
-
+ 
   const headlist = [...Object.values(props)];
   
-  // var newheadlist = headlist.filter(function (el) {
-  //   return el.cashexphead === "Cash to Head Office" // Changed this so a home would match
-  // });
  
-
   const newheadlist = branchid==19 ? headlist : headlist.filter( x => 
    x.cashexphead == "Cash To Head Office"
   );
  
-//  function SetSelectTop(){
-   
-//   $("#category").prepend("<option value='' selected='selected'>---Select Please---</option>");
-//  }
-   
-  // useEffect(() => {
-  //   SetCategory(newheadlist[0].cashexphead)    
-  // }, [])
-
-
-  //console.log(newheadlist[0].cashexphead);
-
-  // useEffect(() => {
-  //     if (state.message.indexOf('Created entry') === 0) {
-  //         (document.getElementById('my_modal_3') as any).close();
-  //         ref.current?.reset()
-  //         toast(state.message)
-  //     }
-  //     else if (state.message) {
-  //         toast(state.message)
-
-  //     }
-  // }, [state.message])
-
   function refreshMyPage()
   {
     window.location.reload();
@@ -117,25 +86,6 @@ export default function IssueCash({...props}) {
         toast("Cash Sucessfully Issued...")
 
         document.getElementById('issue_modal').close();
-
-       
-
-        //setTimeout(() => {
-          // setActive(false);
-          // setMessage("");
-
-        //}, 3000);
-        //revalidatePath("/");
-
-        //router.push("/dashboard");   
-
-       //refreshMyPage();
-
-        //router.refresh();
-        //router.replace("/dashboard")
-       // router.reload();
-        //router.push("/dashboard").then(() => router.reload());
-        
  
       } else {
         const errorMesg = await res.json();
@@ -161,12 +111,7 @@ export default function IssueCash({...props}) {
       });
   }
 
-  // const handleRedirect = () => {
-      
-  // }
  
-
-
 
   return (
 
@@ -323,19 +268,4 @@ export default function IssueCash({...props}) {
   )
 }
 
-
-// const getCashTypes = async ({entrytype}) => {
  
-//   const res = await fetch('/api/getcashexphead', {
-//     method: "POST",
-//     headers: { "Content-Type": "application/json" },
-//     body: JSON.stringify({entrytype})
-//   }).then(response=> response.json());
-
-//   const data = await res;
- 
-//   return data;
-
-//   return res;
-
-// }

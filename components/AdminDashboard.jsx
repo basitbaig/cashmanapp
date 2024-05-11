@@ -9,25 +9,13 @@ import ShowPendingCash from "@/components/ShowPendingCash";
 // import { authOptions } from "@app/api/auth/[...nextauth]"; // ⚠️ Make sure this is the correct path
 // import { useSession } from "next-auth/react";
 import { useState, useEffect } from "react";
-import { getBranchList } from '@/model/getdata'
-import { pendingCash } from '@/model/getdata'
+import { getBranchList } from '@/service/getdata'
+import { pendingCash } from '@/service/getdata'
 import { setCookie,getCookie, getCookies } from 'cookies-next';
 import TestTypeWritter from "./TestTypeWritter";
 
-
-
-
 export default function AdminDashboard() {
 
-  //const { data: token, status } = useSession();
-
-  //const session = await getServerSession(authOptions);
-
-
-  // const [callapi, SetCallApi] = useState(true);
-
-   
- 
   const username = getCookie('username');
   const branchid = getCookie('branchid');
   const usertype = getCookie('usertype');
@@ -88,31 +76,15 @@ export default function AdminDashboard() {
  
     SetCallBranchID(e.target.value);
  
-    // let utyp = e.target.value == 19 ? "Finance" : "Branch";
-
-    // setUserType(utyp);
-
-    // const brhcomp = branchlist.find((bl) => bl.id == e.target.value);
-
-    // setComID(brhcomp.comid);
- 
 }
  
   return (
 
     <div className="md:container md:mx-auto">
-
-     {/* <div className="flex flex-col gap-2">
-         <Navbar username={token.user?._doc?.name} userrole={token.user?._doc?.userrole} firstlogin={token.user?._doc?.firstlogin}/>             
-
-       <Navbar username={decodeURIComponent(username)} userrole={decodeURIComponent(userrole)} firstlogin={decodeURIComponent(firstlogin)} /> 
-
-      </div>
-    */}
+ 
     {/* <TestTypeWritter /> */}
 
     
- 
       <div className="flex bg-gray-200 min-h-screen">
 
         <div className="px-4 mt-10 w-full justify-center items-center min-h-screen hidden lg:block">
@@ -191,4 +163,4 @@ export default function AdminDashboard() {
 }
 
 
-// https://nextjs.org/docs/app/building-your-application/routing/route-handlers#convention
+ 

@@ -1,7 +1,7 @@
 "use client";
 
 import { getCookie, getCookies } from 'cookies-next';
-import {updateUser} from "@/model/getdata";
+import {updateUser} from "@/service/getdata";
 
 export default function UserList({...props}) {
   

@@ -1,4 +1,4 @@
-import { connectMongoDB } from "@/dblib/mongodb";
+import { connectMongoDB } from "@/dblib/dbmongo";
 
 import { NextResponse } from "next/server";
 import mongoose from "mongoose";
@@ -12,13 +12,7 @@ export async function POST(request) {
 
         const db = mongoose.connection;
 
-        // let pendinglist=[];
-
-        // pendinglist = await db.collection('cashexpheads').find({ headtype: body }).toArray();
  
-        // return NextResponse.json(headlist);
-
-     
          let pendinglist=[];
  
         { body.branchid==19 ?
