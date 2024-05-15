@@ -74,7 +74,8 @@ export default function LoginForm() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
- 
+        setError("");
+        
         signIn("credentials", { email, password, redirect: false }).then(async (e) => {
             if (e.error) {
                 setError("Invalid email/password")

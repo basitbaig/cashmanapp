@@ -2,6 +2,7 @@ import { connectMongoDB } from "@/dblib/dbmongo";
 import User from "@/model/user";
 import { NextResponse, NextRequest } from "next/server";
 import bcrypt from "bcryptjs";
+import { GiConsoleController } from "react-icons/gi";
 
 export async function POST(request) {
    
@@ -11,10 +12,14 @@ export async function POST(request) {
         const newuser = Boolean(1);
 
         const { email, name, password, ubranchid, ucomid, urole, utype} = await request.json();
+    
+        var hashlength = email.length;
+
+        const salt = await bcrypt.genSalt(hashlength);
+
+        const hashedPassword = await bcrypt.hash(password,salt);
  
-        const hashedPassword = await bcrypt.hash(password,10);
- 
-         await connectMongoDB();
+        await connectMongoDB();
 
         await User.create({ name:name, email:email, password:hashedPassword, comid:ucomid, branchid:ubranchid, isactive:active.toString(), firstlogin:newuser.toString(), userrole:urole, usertype:utype})
         

@@ -9,14 +9,16 @@ export async function POST(request) {
 
         const { email, password } = await request.json();
 
-        const hashedPassword = await bcrypt.hash(password, 10);
+        var hashlength = email.length;
+        const salt = await bcrypt.genSalt(hashlength);
+
+        const hashedPassword = await bcrypt.hash(password,salt);
+ 
 
         await connectMongoDB();
 
         const query = { email: email };
-
-        console.log(email);
-
+ 
         const res = await User.findOneAndUpdate(query, { $set: { password: hashedPassword, firstlogin: 'false' } }, {new: true})
          
  

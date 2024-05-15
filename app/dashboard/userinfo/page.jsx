@@ -20,7 +20,8 @@ export default function page() {
 
   useEffect(() => {
     const checkusertype = decodeURIComponent(userinfo?.usertype);
-    if (checkusertype == 'undefined') {
+    const checkuserrole = decodeURIComponent(userinfo?.userrole);
+    if (checkusertype == 'undefined' || checkuserrole == 'User') {
       router.replace('/');
     }
     CallUserList();
