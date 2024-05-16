@@ -42,7 +42,7 @@ export const options = {
                         throw new Error("Invalid Email or Password!");
                     }
                     if (user) {                        
-                        return user;
+                        return { ...user, password: null };
                     } else {
                         return null;
                     }
@@ -53,6 +53,17 @@ export const options = {
             },        
         })
     ],
+    secret: process.env.NEXTAUTH_SECRET,
+    callbacks: {
+        async jwt({ token, user}) {
+            if (user) token.role = user.userrole;
+            return token;
+        },
+        async session({ session, token }) {
+            session.role = token.role;
+            return session;
+        }
+    },
     session: {
         strategy: "jwt",
     },
