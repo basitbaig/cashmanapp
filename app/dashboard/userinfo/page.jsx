@@ -25,7 +25,7 @@ export default function page() {
       router.replace('/');
     }
     CallUserList();
-  }, []);
+  }, [userlist]);
 
 
   return (
