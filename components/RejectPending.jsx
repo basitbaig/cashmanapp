@@ -7,9 +7,10 @@ import { useState, useId } from "react";
 import { IoClose } from "react-icons/io5";
 import toast, { Toaster } from 'react-hot-toast';
 import { getCookie, getCookies } from 'cookies-next';
+import { useTransaction } from '@/context/TransactionContext';
 
 async function findTransaction({ transactionid }) {
-  const apiUrl = process.env.API_URL;
+  const apiUrl = process.env.NEXT_PUBLIC_NEXTAUTH_URL;
   try {
     const res = await fetch('/api/getpendingentry', {
       method: "POST",
@@ -38,6 +39,7 @@ export default function RejectPending({ transid }) {
 
   const [transactionid, SettransactionId] = useState(transid);
   const [rejectreason, SetrejectReason] = useState("");
+  const { setTransactionTrigger } = useTransaction();
 
   const id = useId();
 
@@ -58,11 +60,21 @@ export default function RejectPending({ transid }) {
 
   const handleConfirm = async () => {
 
-    const { pendingEntry } = await findTransaction({ transactionid });
+    // const { pendingEntry } = await findTransaction({ transactionid });
 
-    setValues(values => {
-      return { ...values, ...pendingEntry }
-    })
+    // setValues(values => {
+    //   return { ...values, ...pendingEntry }
+    // })
+
+    const result = await findTransaction({ transactionid });
+
+    // Assuming pendingEntry is an array and you want the first object or need to map it
+    const pendingEntry = result.pendingEntry[0]; // Use the first entry (or map as needed)
+  
+    setValues(prevValues => ({
+      ...prevValues,
+      ...pendingEntry // Merge pendingEntry fields into the existing state
+    }));
 
   }
 
@@ -87,11 +99,13 @@ export default function RejectPending({ transid }) {
 
       if (res.ok) {
 
-        toast("Transaction Rejected Sucessfully...");
+        toast("Transaction Successfully Rejected.");
+
+        setTransactionTrigger(true);
 
         // { (document.getElementById(id)).close() }
 
-        refreshMyPage();
+        //refreshMyPage();
 
       } else {
         toast("Transaction Failed, Please try again...");

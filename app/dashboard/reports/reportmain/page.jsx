@@ -1,6 +1,7 @@
 "use client";
 
 import CashLedger from "@/app/reports/CashLedger";
+import StudentLedger from "@/app/reports/StudentLedger";
 import { useSearchParams } from 'next/navigation';
 
 export default function page() {
@@ -17,6 +18,11 @@ export default function page() {
             {
               reportName=="cashledger" && <CashLedger />          
             }
+            
+            {
+               reportName=="studentledger" && <StudentLedger />          
+            }
+
 
             {reportName=="pendingcash" &&             
                 <div className="grid justify-items-center py-3">

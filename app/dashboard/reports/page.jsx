@@ -6,13 +6,7 @@ import { getCookies } from 'cookies-next';
 export default function page() {
   const router = useRouter();
   const userinfo = getCookies();
-  // const { status } = useSession();
-
-  // if (status !== "authenticated"){
-  //   router.replace('/');     
-  // }
-
-  
+ 
   useEffect(() => {
     const checkusertype = decodeURIComponent(userinfo?.usertype);
     if (checkusertype == 'undefined') {
@@ -30,11 +24,4 @@ export default function page() {
     )
 }
 
-//https://www.youtube.com/watch?v=yK9lguddeSA
-
-//https://www.youtube.com/watch?v=rJvZDWN_sNY&list=PLakmP0ibjfQcNNh7PnmIQ9zTm2bLM_wCC
-
-
-//https://www.youtube.com/watch?v=ytYLlnDu9-8
-
-//https://www.youtube.com/watch?v=Dc-HUp-iI4E
+ 

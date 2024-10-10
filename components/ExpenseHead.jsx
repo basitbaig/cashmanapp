@@ -37,7 +37,8 @@ export default function ExpenseHead() {
    
     const handleSubmit = async (e) => {
         e.preventDefault();
- 
+        const apiUrl = process.env.NEXT_PUBLIC_NEXTAUTH_URL;
+        
         const formvalues = { username,exphead, headtype, headmode };
         try {
  
@@ -148,7 +149,7 @@ export default function ExpenseHead() {
                                                id="createby" 
                                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" 
                                                placeholder="Creator Name" 
-                                               value={username}                                              
+                                               defaultValue={username}                                              
                                                readOnly                                        
                                                />
                                     </div>

@@ -6,6 +6,10 @@ import { NextResponse, NextRequest } from "next/server";
 
 export async function PUT(request) {
 
+  try
+  {
+
+  
     const body = await request.json();
  
     const transid = body.transid;
@@ -24,6 +28,10 @@ export async function PUT(request) {
      }
    
     return NextResponse.json({message: "Transaction Cancelled Succesfully..."}, {status: 200});
+  }
+  catch (error) {
+    return new NextResponse("Error " + error.message, {status:500});
+  }
 
 }
   

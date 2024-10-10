@@ -1,36 +1,30 @@
-"use client";
-
-import { useState, useEffect } from "react";
+//import { useState, useEffect } from "react";
 //import Userinfo from "@/components/Userinfo";
-import { userInfo } from "@/service/getdata";
+
 import Userinfo from "@/components/Userinfo";
-import { useRouter } from "next/navigation";
-import { setCookie, getCookie,getCookies } from 'cookies-next';
+//import { useRouter } from "next/navigation";
+//import { setCookie, getCookie,getCookies } from 'cookies-next';
 
 export default function page() {
 
-  const router = useRouter();
-  const userinfo = getCookies();
+  //const router = useRouter();
+  //const userinfo = getCookies();
 
-  const [userlist, SetuserList] = useState([]);
+  //const [userlist, setUserList] = useState([]);
 
-  const CallUserList = async () => {
-    SetuserList(await userInfo());
-  }
-
-  useEffect(() => {
-    const checkusertype = decodeURIComponent(userinfo?.usertype);
-    const checkuserrole = decodeURIComponent(userinfo?.userrole);
-    if (checkusertype == 'undefined' || checkuserrole == 'User') {
-      router.replace('/');
-    }
-    CallUserList();
-  }, [userlist]);
+  // useEffect(() => {
+  //   const checkUserType = decodeURIComponent(userinfo?.usertype);
+  //   if (!checkUserType || checkUserType === 'undefined') {
+  //     router.replace('/');  // Redirect to login if user type is invalid
+  //     return;
+  //   }
+  //   callUserList();  // Fetch user list on component mount
+  // }, []);  // Empty dependency array ensures this runs only on initial load
 
 
   return (
     <div>
-      <Userinfo {...userlist} />
+      <Userinfo />
     </div>
   );
 }

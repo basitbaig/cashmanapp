@@ -23,12 +23,12 @@ export default function RegisterForm() {
     const [pending, setPending] = useState(false);
     const [error, setError] = useState("");    
  
-    const [branchlist, SetBranchlist] = useState([]);
+    const [branchlist, setBranchlist] = useState([]);
     
-    const router = useRouter()
+    const router = useRouter();
 
     const CallBranchList = async () => {
-        SetBranchlist(await getBranchList("all"));
+        setBranchlist(await getBranchList("all"));
     }
 
     useEffect(() => {    
@@ -71,7 +71,7 @@ export default function RegisterForm() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const apiUrl = process.env.API_URL;
+        const apiUrl = process.env.NEXT_PUBLIC_NEXTAUTH_URL;
 
         const formvalues = { ...values, ucomid, ubranchid, urole, utype };
 

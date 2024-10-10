@@ -2,13 +2,18 @@
 
 import { useState, useEffect } from "react";
 import { pendingCash } from '@/service/getdata'
+import { getCookie } from 'cookies-next';
 import PostPending from '@/components/PostPending';
 import RejectPending from "./RejectPending";
+import { useTransaction } from '@/context/TransactionContext';
 
 export default function ShowPendingCash({branchid}) {
 
     const [pendingcash, Setpendingcash] = useState([]);
+    const [initialLoad, setInitialLoad] = useState(true);
+    //const [datasize, SetDatasize] = useState(0);
     //const pendingcash = await pendingCash({branchid});
+    const { transactionTrigger, setTransactionTrigger } = useTransaction();
  
     let grosstotal = 0;
 
@@ -33,12 +38,33 @@ export default function ShowPendingCash({branchid}) {
     const CallPendingCash = async () => {
         Setpendingcash(await pendingCash({branchid}));
     }
-     
+
     useEffect(() => {
+        // Call the function on the initial load
+        if (initialLoad) {
+          CallPendingCash();
+          setInitialLoad(false);
+        }
+      }, [initialLoad]);
     
-        CallPendingCash();
-      
-      }, [pendingcash]);        
+      useEffect(() => {
+        if (transactionTrigger) {
+          CallPendingCash(); // Fetch data when a transaction occurs
+          setTransactionTrigger(false); // Reset the trigger
+        }
+      }, [transactionTrigger]);
+     
+    
+          
+
+    //   useEffect(() => {
+ 
+    //         if (pendingcash.length !== datasize){
+    //             CallPendingCash();
+    //             SetDatasize(pendingcash.length);
+    //         }
+ 
+    //   }, [pendingcash]);  
 
 
     return (
@@ -82,7 +108,9 @@ export default function ShowPendingCash({branchid}) {
                                 })
                             }
                             {pendingcash.length === 0 && (
-                                <p className="text-center">No Pending Transactions.</p>
+                                <tr>
+                                   <td className="text-center">No Pending Transactions.</td>
+                                </tr>
                             )}
         
                         </tbody>
@@ -122,7 +150,9 @@ export default function ShowPendingCash({branchid}) {
                                 })
                             }
                             {pendingcash.length === 0 && (
-                                <p className="text-center">No Pending Transactions.</p>
+                                 <tr>
+                                    <td className="text-center">No Pending Transactions.</td>
+                                 </tr>  
                             )}
         
                         </tbody>

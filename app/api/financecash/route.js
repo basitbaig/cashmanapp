@@ -16,6 +16,6 @@ export async function POST(request) {
         return NextResponse.json({branch});
 
     } catch (error) {
-        console.log(error);
+        return new NextResponse("Error " + error.message, {status:500});
     }
 }

@@ -6,19 +6,24 @@ import { NextResponse, NextRequest } from "next/server";
 
 export async function PUT(request) {
 
-    const body = await request.json();
- 
-    const transid = body.transid;
+    try {
+        const body = await request.json();
 
-    const ObjectId = require('mongodb').ObjectId;
-    
-    await connectMongoDB();
+        const transid = body.transid;
 
-    let query = {_id: new ObjectId(transid)};
+        const ObjectId = require('mongodb').ObjectId;
 
-    await Branchcashbook.findByIdAndUpdate(query, { isreject: 'true', ispending: 'false', rejectreason: body.rejectreason });
+        await connectMongoDB();
+
+        let query = { _id: new ObjectId(transid) };
+
+        await Branchcashbook.findByIdAndUpdate(query, { isreject: 'true', ispending: 'false', rejectreason: body.rejectreason });
 
 
-    return NextResponse.json({message: "Transaction Reject Succesfully..."}, {status: 200});
+        return NextResponse.json({ message: "Transaction Reject Successfully..." }, { status: 200 });
+    }
+    catch (error) {
+        return new NextResponse("Error " + error.message, { status: 500 });
+    }
 
 }

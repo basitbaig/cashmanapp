@@ -2,18 +2,34 @@
 
 import { useState, useEffect } from "react"; 
 import { getBranchBalance } from "@/service/getdata";
+import { useTransaction } from '@/context/TransactionContext';
 
 export function BranchHandBalance({ branchid })  {
 
     const [cashbalance, SetcashBalance] = useState([]);
+    const [initialLoad, setInitialLoad] = useState(true);
+    const { transactionTrigger, setTransactionTrigger } = useTransaction();
 
     const CallCashBalance = async () => {
         SetcashBalance(await getBranchBalance({ branchid }));
     }
 
     useEffect(() => {
-        CallCashBalance();
-    }, [branchid, cashbalance]);
+        // Call the function on the initial load
+        if (initialLoad) {
+          CallCashBalance();
+          setInitialLoad(false);
+        }
+      }, [initialLoad]);
+    
+      useEffect(() => {
+        if (transactionTrigger) {
+          CallCashBalance(); // Fetch data when a transaction occurs
+          setTransactionTrigger(false); // Reset the trigger
+        }
+      }, [branchid,transactionTrigger]);
+
+  
 
     function formatNumber(num) {
         return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")

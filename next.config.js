@@ -1,4 +1,5 @@
 /** @type {import('next').NextConfig} */
+
 const nextConfig = {    
     images: {
         remotePatterns:[{
@@ -11,17 +12,8 @@ const nextConfig = {
         // your project has ESLint errors.
         ignoreDuringBuilds: true,
       },
-     
-      // ... rest of the configuration.
-      //output: "standalone",   //This is for Docker Image
+    output: "standalone",   //This is for Docker Image
       
 }
- 
+
 module.exports = nextConfig
-
-
-// webpack: (config) => {
-//     config.resolve.fallback = {
-//       "mongodb-client-encryption": false ,
-//       "aws4": false
-//     },

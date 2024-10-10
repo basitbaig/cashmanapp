@@ -21,6 +21,7 @@ export async function POST(request) {
         
     } catch (error) {
         
-        return  NextResponse.json({message: "Error In Cash/Expense Head"},{status: 500});     
+        return new NextResponse("Error " + error.message, {status:500});
+           
     }
 }

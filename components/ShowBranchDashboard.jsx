@@ -7,23 +7,57 @@ import { IconContext } from "react-icons";
 import { Tooltip } from 'react-tooltip'
 import { GiCancel } from "react-icons/gi";
 import { getCookie } from 'cookies-next';
+import { useTransaction } from '@/context/TransactionContext';
 import classNames from 'classnames';
 
 export default function ShowBranchDashboard({ branchid }) {
 
+   
+  //const [datasize, SetDatasize] = useState(0);
+  const [showMe, setShowMe] = useState(false);
+  const [initialLoad, setInitialLoad] = useState(true);
   const [branchdata, SetbranchData] = useState([]);
-
-  const [recordupdate, Setrecordupdate] = useState(getCookie('recordupdate'))
+  const { transactionTrigger, setTransactionTrigger } = useTransaction();
   
   const CallBranchData = async () => {
+
     SetbranchData(await getBranchCash({ branchid }));
+
   }
 
   useEffect(() => {
+    // Call the function on the initial load
+    if (initialLoad) {
+      CallBranchData();
+      setInitialLoad(false);
+    }
+  }, [initialLoad]);
 
-    CallBranchData();
+  useEffect(() => {
+    if (transactionTrigger) {
+      CallBranchData(); // Fetch data when a transaction occurs
+      setTransactionTrigger(false); // Reset the trigger
+    }
+  }, [transactionTrigger]);
+
+  
+
+  //Listen for the Custom Event in the Dashboard:
+
+  // useEffect(() => {
+  //   const handleTransactionEvent = () => {
+  //     CallBranchData(); // Fetch the latest data
+  //   };
+  
+  //   window.addEventListener('transactionCompleted', handleTransactionEvent);
+  
+  //   return () => {
+  //     window.removeEventListener('transactionCompleted', handleTransactionEvent);
+  //   };
+  // }, []);
+
  
-  }, [branchid,branchdata]);
+
 
   const CallCancelTransaction = async (transid) => {
     await cancelTransaction({ transid, branchid })
@@ -91,19 +125,24 @@ export default function ShowBranchDashboard({ branchid }) {
                   <td className="whitespace-nowrap  text-center">{data.entrytype === "R" ? formatNumber(data.totalamount) : "0"}</td>
                   <td className="whitespace-nowrap  text-center">{data.entrytype === "I" ? formatNumber(data.totalamount) : "0"}</td>
                   <td className="whitespace-nowrap  px-7 py-2">
-
-                    <button onClick={() => { if (window.confirm('Are you sure to cancel this transaction?')) { handleCancel(data._id) }; }} data-tooltip-id="cancelbutton-tooltip">
-                      <IconContext.Provider value={{ color: 'red', size: 22 }}>
-                        <GiCancel />
-                      </IconContext.Provider>
-                    </button>
+                    {data.isposted==false && data.isreject==true ?
+                        <button onClick={() => { if (window.confirm('Are you sure to cancel this transaction?')) { handleCancel(data._id) }; }} data-tooltip-id="cancelbutton-tooltip">
+                          <IconContext.Provider value={{ color: 'red', size: 22 }}>
+                            <GiCancel />
+                          </IconContext.Provider>
+                        </button>
+                        :
+                        <label>Posted</label>
+                    }
 
                   </td>
                 </tr>
               })
             }
             {branchdata.length === 0 && (
-              <p className="text-center">There is no Cash Collection.</p>
+              <tr>
+                 <td className="text-center">There is no Cash Collection.</td>
+              </tr>
             )}
 
           </tbody>

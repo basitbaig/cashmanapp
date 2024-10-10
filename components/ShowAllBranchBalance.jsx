@@ -2,10 +2,13 @@
 
 import { useState, useEffect } from "react";
 import { getAllBranchBalance } from '@/service/getdata'
+import { useTransaction } from '@/context/TransactionContext';
 
 export default function ShowAllBranchBalance() {
 
     const [branchbalance,Setbranchbalance]=useState([]);
+    const [initialLoad, setInitialLoad] = useState(true);
+    const { transactionTrigger, setTransactionTrigger } = useTransaction();
  
     let grosstotal = 0;
      
@@ -16,12 +19,23 @@ export default function ShowAllBranchBalance() {
     const CallAllBranchBalance = async () => {
         Setbranchbalance(await getAllBranchBalance());
     }
-     
+
     useEffect(() => {
+        // Call the function on the initial load
+        if (initialLoad) {
+          CallAllBranchBalance();
+          setInitialLoad(false);
+        }
+      }, [initialLoad]);
     
-        CallAllBranchBalance();
-      
-      }, []);    
+      useEffect(() => {
+        if (transactionTrigger) {
+          CallAllBranchBalance(); // Fetch data when a transaction occurs
+          setTransactionTrigger(false); // Reset the trigger
+        }
+      }, [transactionTrigger]);    
+     
+     
  
 
     return (
@@ -48,7 +62,9 @@ export default function ShowAllBranchBalance() {
                             })
                         }
                         {branchbalance.length === 0 && (
-                            <p className="text-center">Branch Balance Not Available.</p>
+                            <tr>
+                               <td className="text-center">Branch Balance Not Available.</td>
+                            </tr>
                         )}
 
                     </tbody>

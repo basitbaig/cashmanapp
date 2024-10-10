@@ -13,8 +13,6 @@ export async function POST(request) {
         if (!user) {
             return NextResponse.json({"Error":"Invalid Email / User Is not Authorized to Login"});
         }
-
-  
         const passwordsMatch = await bcrypt.compare(password, user.password);
 
         if (!passwordsMatch) {
@@ -24,7 +22,7 @@ export async function POST(request) {
         return NextResponse.json({user});
 
     } catch (error) {        
-        console.log(error);
+         
         return new NextResponse("Error in getting user" + error.message, {status:500});
     }
 }

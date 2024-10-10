@@ -7,9 +7,10 @@ import { useState, useId } from "react";
 import { IoClose } from "react-icons/io5";
 import toast, { Toaster } from 'react-hot-toast';
 import { getCookie, getCookies } from 'cookies-next';
+import { useTransaction } from '@/context/TransactionContext';
 
 async function findTransaction({ transactionid }) {
-  const apiUrl = process.env.API_URL;
+  const apiUrl = process.env.NEXT_PUBLIC_NEXTAUTH_URL;
   try {
     const res = await fetch('/api/getpendingentry', {
       method: "POST",
@@ -23,7 +24,7 @@ async function findTransaction({ transactionid }) {
     }
 
     const data = await res.json();
-
+  
     return data;
 
   } catch (error) {
@@ -37,6 +38,7 @@ export default function PostPending({ transid }) {
   //https://react-icons.github.io/react-icons/search/#q=close
 
   const [transactionid, SettransactionId] = useState(transid);
+  const { setTransactionTrigger } = useTransaction();
 
   const id = useId();
 
@@ -56,24 +58,30 @@ export default function PostPending({ transid }) {
 
   const handleConfirm = async () => {
 
-    const { pendingEntry } = await findTransaction({ transactionid });
+    const result = await findTransaction({ transactionid });
 
-    setValues(values => {
-      return { ...values, ...pendingEntry }
-    })
+    // Assuming pendingEntry is an array and you want the first object or need to map it
+    const pendingEntry = result.pendingEntry[0]; // Use the first entry (or map as needed)
+  
+    setValues(prevValues => ({
+      ...prevValues,
+      ...pendingEntry // Merge pendingEntry fields into the existing state
+    }));
+
+  
 
   }
 
-  function refreshMyPage()
-  {
-    window.location.reload();
-  }
+  // function refreshMyPage()
+  // {
+  //   window.location.reload();
+  // }
 
   const handleSubmit = async (e) => {
 
     e.preventDefault();
 
-    const apiUrl = process.env.API_URL;
+    const apiUrl = process.env.NEXT_PUBLIC_NEXTAUTH_URL;
 
     try {
 
@@ -85,7 +93,7 @@ export default function PostPending({ transid }) {
 
       if (res.ok) {
 
-        console.log('Branch Transaction Updated as Per Confirm Pending from Finanace');
+        //console.log('Branch Transaction Updated as Per Confirm Pending from Finanace.');
         // const form = e.target;
         const username = getCookie('username');
         const branchid = getCookie('branchid');
@@ -97,13 +105,15 @@ export default function PostPending({ transid }) {
         });
 
 
-        console.log('Create Confirm Transaction into Finance Account')
+       // console.log('Create Confirm Transaction into Finance Account')
 
-        toast("Transaction Confirm Sucessfully...");
+        toast("Transaction Successfully Confirmed.");
+
+        setTransactionTrigger(true);
 
         // { (document.getElementById(id)).close() }
 
-        refreshMyPage();
+        //refreshMyPage();
 
       } else {
         toast("Transaction Failed, Please try again...");

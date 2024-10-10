@@ -1,6 +1,6 @@
 "use client";
 
- 
+
 import ShowBranchBalance from "@/components/ShowBranchBalance";
 import ShowAllBranchBalance from "@/components/ShowAllBranchBalance";
 import ShowBranchDashboard from "@/components/ShowBranchDashboard";
@@ -11,8 +11,9 @@ import ShowPendingCash from "@/components/ShowPendingCash";
 import { useState, useEffect } from "react";
 import { getBranchList } from '@/service/getdata'
 import { pendingCash } from '@/service/getdata'
-import { setCookie,getCookie, getCookies } from 'cookies-next';
+import { setCookie, getCookie, getCookies } from 'cookies-next';
 import TestTypeWritter from "./TestTypeWritter";
+import { useTransaction } from '@/context/TransactionContext';
 
 export default function AdminDashboard() {
 
@@ -21,49 +22,68 @@ export default function AdminDashboard() {
   const usertype = getCookie('usertype');
   const userrole = getCookie('userrole');
   const firstlogin = getCookie('firstlogin');
- 
+
   const [showMe, setShowMe] = useState(false);
   const [callbranchid, SetCallBranchID] = useState(0);
-  const [branchlist, Setbranchlist]=useState([]);  
-  
-  const [totalpending, SetTotalpending]=useState(0);
-  
-  let pendingcount="";
+  const [branchlist, Setbranchlist] = useState([]);
+  const [initialLoad, setInitialLoad] = useState(true);
+  const { transactionTrigger, setTransactionTrigger } = useTransaction();
 
-  function toggle(e){
+  const [totalpending, SetTotalpending] = useState(0);
+
+  let pendingcount = 0;
+
+  function toggle(e) {
     e.preventDefault();
-    
+
     setShowMe(!showMe);
   }
 
   const callBranchList = async () => {
     Setbranchlist(await getBranchList("all"));
 
-    if (totalpending=="")
-    {   
-      CallPendingCash();           
+    if (totalpending == 0) {
+      CallPendingCash();
     }
   }
 
   const CallPendingCash = async () => {
-  
-    const pendData = await pendingCash({branchid})
 
-    pendingcount=pendData.length;   
-    
-    SetPendingTag();
- 
-  }  
+    const pendData = await pendingCash({ branchid })
 
-  function SetPendingTag() {    
-    SetTotalpending(pendingcount);  
+    pendingcount = pendData.length;
+
+    SetTotalpending(pendingcount);
+
+    if (totalpending == 0) {
+      setShowMe(false);
+    }
+
   }
 
 
-  useEffect(() => {    
-    callBranchList(); 
-  
-  }, []);
+  useEffect(() => {
+    // Call the function on the initial load
+    if (initialLoad) {
+      callBranchList();
+      setInitialLoad(false);
+    }
+  }, [initialLoad]);
+
+  useEffect(() => {
+    if (transactionTrigger) {
+      CallPendingCash(); // Fetch data when a transaction occurs
+      setTransactionTrigger(false); // Reset the trigger
+    }
+  }, [transactionTrigger]);
+ 
+
+      
+
+   
+
+
+
 
   //Make Coma Separated Number
   function formatNumber(num) {
@@ -73,18 +93,18 @@ export default function AdminDashboard() {
 
   const handleBranch = (e) => {
     e.preventDefault();
- 
+    setTransactionTrigger(true);
     SetCallBranchID(e.target.value);
- 
-}
- 
+
+  }
+
   return (
 
     <div className="md:container md:mx-auto">
- 
-    {/* <TestTypeWritter /> */}
 
-    
+      {/* <TestTypeWritter /> */}
+
+
       <div className="flex bg-gray-200 min-h-screen">
 
         <div className="px-4 mt-10 w-full justify-center items-center min-h-screen hidden lg:block">
@@ -104,25 +124,25 @@ export default function AdminDashboard() {
 
           {/* animate-blinkingBg */}
           {totalpending > 0 &&
-                <button type="button" className="relative inline-flex items-center p-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" onClick={toggle}>
-                  {showMe ? "Hide Pending Entries" : "Show Pending Entries"}
+            <button type="button" className="relative inline-flex items-center p-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" onClick={toggle}>
+              {showMe ? "Hide Pending Entries" : "Show Pending Entries"}
 
-                  <div className="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -end-2 dark:border-gray-900">{totalpending}</div>
-                </button>
-              }
+              <div className="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -end-2 dark:border-gray-900">{totalpending}</div>
+            </button>
+          }
 
-            
-              <div style={{ display: showMe ? "block" : "none" }}>
-            
-                <ShowPendingCash branchid={decodeURIComponent(branchid)} />
-              
-              </div>  
+
+          <div style={{ display: showMe ? "block" : "none" }}>
+
+            <ShowPendingCash branchid={decodeURIComponent(branchid)} />
+
+          </div>
 
 
           <div className="flex flex-col w-full justify-between items-center min-h-screen ">
 
             <div className="flex flex-col w-full bg-slate-200 p-4 rounded-md shadow-2xl my-2">
-            
+
               <div className="mt-11">
                 <div>
                   <select className="w-full max-w-xs text-black" name="ubranchid" required onChange={handleBranch}>
@@ -150,9 +170,7 @@ export default function AdminDashboard() {
               </div>
 
             </div>
-          </div> 
-
-
+          </div>
 
         </div>
 
@@ -163,4 +181,3 @@ export default function AdminDashboard() {
 }
 
 
- 

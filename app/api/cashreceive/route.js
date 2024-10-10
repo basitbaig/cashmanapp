@@ -53,7 +53,7 @@ export async function POST(request) {
         
     } catch (error) {
         
-        return  NextResponse.json({message: "Error In Amount Receiving"},{status: 500});     
+        return  new NextResponse.json({message: "Error In Cash Receiving"},{status: 500});     
     }
 }
 

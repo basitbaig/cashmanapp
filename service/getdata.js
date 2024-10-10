@@ -1,3 +1,4 @@
+import { NextResponse, NextRequest } from "next/server";
 
 //import useSWR from 'swr'
  
@@ -19,7 +20,7 @@
 // }
  
 export const getLoginUser = async ({email,password}) => {
-  
+  const apiUrl = process.env.NEXT_PUBLIC_NEXTAUTH_URL;
   try {
     
       const res = await fetch('/api/checklogin', {
@@ -41,14 +42,16 @@ export const getLoginUser = async ({email,password}) => {
 }
 
 export const getBranchCash = async ({branchid}) => {
-  
+  const apiUrl = process.env.NEXT_PUBLIC_NEXTAUTH_URL;
     try {     
       
-        const res = await fetch('/api/branchcash', {
+        const res = await fetch('/api/branchcash', { 
+            cache: 'no-store',
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ branchid })
-        },{ cache: 'no-store' });
+            
+        });
 
         const data = await res.json();
 
@@ -60,32 +63,43 @@ export const getBranchCash = async ({branchid}) => {
     }
 } 
 
+ 
 export const getBranchBalance = async ({branchid}) => {
-
+  const apiUrl = process.env.NEXT_PUBLIC_NEXTAUTH_URL;
       //  const fetcher = (...args) => fetch(...args).then((res) => res.json());
       //  const { data, error } = useSWR('/api/cashbalance', fetcher)
        // const apiUrl = process.env.API_URL;
        try {   
           const res = await fetch('/api/cashbalance', {
+              cache: 'no-store',
               method: "POST",
-              headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ branchid })
-            },{ cache: 'no-store' });
+              
+            });
+
+ 
+            const responseData = await res.text(); // Instead of .json(), use .text() first
+            //console.log('API Response:', responseData);
+            const jsonData = JSON.parse(responseData); // Now parse if it looks fine
       
-            const data = await res.json();
+            //const data = await res.json();
 
-            return data;
+            return jsonData;
 
-      } catch (error) {
-        throw new Error(error);
-      }
+          } catch (error) {
+            console.error('Error details:', error); // Log the full error
+            if (error instanceof SyntaxError) {
+              console.error('There was an issue with JSON parsing.');
+            }
+            throw new Error('Something went wrong while processing the data.'); // A more informative error message
+          }
   
 
 
 }
  
 export const getCashTypes = async (entrytype,entrymode) => {
- 
+  const apiUrl = process.env.NEXT_PUBLIC_NEXTAUTH_URL;
   try {
     const res = await fetch('/api/getcashexphead', {
       method: "POST",
@@ -106,7 +120,7 @@ export const getCashTypes = async (entrytype,entrymode) => {
 }  
 
 export const getBranchList = async (comid) => {
-  const apiUrl = process.env.API_URL;
+  const apiUrl = process.env.NEXT_PUBLIC_NEXTAUTH_URL;
     try {
 
         const res = await fetch('/api/getbranchlist', {
@@ -117,7 +131,7 @@ export const getBranchList = async (comid) => {
         
 
         if (!res.ok) {
-          throw new Error("Balance List Not Found!!");
+          throw new Error("Branch List Not Found!!");
         }
     
         return res.json();
@@ -143,16 +157,14 @@ export const getBranchList = async (comid) => {
 };
 
 export const getAllBranchBalance = async () => {
-  const apiUrl = process.env.API_URL;
-
-  //console.log(`${apiUrl}/api/cashbalanceall`);
-//, { cache: 'no-store' }
+  const apiUrl = process.env.NEXT_PUBLIC_NEXTAUTH_URL;
 
   try {
     const res = await fetch('/api/cashbalanceall', {
       method: "POST",
-      headers: { "Content-Type": "application/json" }
-    },{ cache: 'no-store' });
+      headers: { "Content-Type": "application/json" },
+      cache: 'no-store' 
+    });
 
     if (!res.ok) {
       throw new Error("Balance List Not Found!!");
@@ -167,15 +179,16 @@ export const getAllBranchBalance = async () => {
 }
 
 export const pendingCash = async ({branchid}) => {
-  const apiUrl = process.env.API_URL;
-
+  const apiUrl = process.env.NEXT_PUBLIC_NEXTAUTH_URL;
+    
     try {    
 
         const res = await fetch('/api/pendingcash', {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ branchid })
-        },{ cache: 'no-store' });
+            body: JSON.stringify( {branchid}),
+            cache: 'no-store' 
+        });
 
         if (!res.ok) {
           throw new Error("No Pending Entries Found!!");
@@ -189,30 +202,30 @@ export const pendingCash = async ({branchid}) => {
 
 } 
 
+export const getallTransactions = async ({branchid}) => {
+  const apiUrl = process.env.NEXT_PUBLIC_NEXTAUTH_URL;
+    try {     
+      
+        const res = await fetch('/api/alltransactions', { 
+            cache: 'no-store',
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ branchid })
+            
+        });
 
-export const userInfo = async () => {
-  const apiUrl = process.env.API_URL;
-  try {     
-      const res = await fetch('/api/userinfo', {
-          method: "GET",
-          headers: { "Content-Type": "application/json" }
-      },{ cache: 'no-store' });
+        const data = await res.json();
 
-      if (!res.ok) {
-        throw new Error("No Pending Entries Found!!");
-      }
-   
-      return res.json();
+        
+        return data;
 
-  } catch (error) {
-    throw new Error("Connection Issue With API Call");
-  }
-
+    } catch (error) {
+      throw new Error(error);
+    }
 } 
- 
 
 export async function findTransaction({transactionid}){
-  const apiUrl = process.env.API_URL;
+  const apiUrl = process.env.NEXT_PUBLIC_NEXTAUTH_URL;
   try {
     const res = await fetch('/api/getpendingentry', {
       method: "POST",
@@ -231,10 +244,33 @@ export async function findTransaction({transactionid}){
     throw new Error("Connection Issue With API Call");
   }
 }
+
+export const userInfo = async () => {
+  const apiUrl = process.env.NEXT_PUBLIC_NEXTAUTH_URL;
+ 
+  try {     
+    const res = await fetch('/api/userinfo', {
+      cache: 'no-store',
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    });
+
+    if (!res.ok) {
+      throw new Error("No User Entries Found!!");
+    }
+    
+    const data = await res.json();
+    return data;
+
+  } catch (error) {
+    console.error(error);
+    throw new Error("Connection Issue With API Call");
+  }
+};
  
  
 export async function updateUser({userid, action}){
- 
+  const apiUrl = process.env.NEXT_PUBLIC_NEXTAUTH_URL;
   try {
          
       const res = 
@@ -263,7 +299,7 @@ export async function updateUser({userid, action}){
 }
 
 export async function cancelTransaction({transid, branchid}){
- 
+  const apiUrl = process.env.NEXT_PUBLIC_NEXTAUTH_URL;
   try {
          
       const res = await fetch('/api/canceltransaction', {
@@ -285,14 +321,15 @@ export async function cancelTransaction({transid, branchid}){
 
 
 export const getReportCash = async ({branchid, feehead, report}) => {
-  
+  const apiUrl = process.env.NEXT_PUBLIC_NEXTAUTH_URL;
   try {     
     
       const res = await fetch('/api/branchcash', {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ branchid,feehead,report })
-      },{ cache: 'no-store' });
+          body: JSON.stringify({ branchid,feehead,report }),
+          cache: 'no-store'
+      });
 
       const data = await res.json();
 
@@ -303,6 +340,70 @@ export const getReportCash = async ({branchid, feehead, report}) => {
     throw new Error(error);
   }
 } 
+
+export const getStudentLedger = async ({comid, report}) => {
+  const apiUrl = process.env.NEXT_PUBLIC_NEXTAUTH_URL;
+  try {     
+      const res = await fetch('/api/branchstudentcash', {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ comid,report }),
+          cache: 'no-store'
+      });
+
+      const data = await res.json();
+
+      
+      return data;
+
+  } catch (error) {
+    throw new Error(error);
+  }
+} 
+
+
+export const getCollectionSummary = async ({branchid}) => {
+  const apiUrl = process.env.NEXT_PUBLIC_NEXTAUTH_URL;
+  try {     
+      const res = await fetch('/api/collectionsummary', {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ branchid }),
+          cache: 'no-store'
+      });
+
+      const data = await res.json();
+
+      
+      return data;
+
+  } catch (error) {
+    throw new Error(error);
+  }
+} 
+
+export const getRejectEntries = async ({branchid}) => {
+  const apiUrl = process.env.NEXT_PUBLIC_NEXTAUTH_URL;
+  try {     
+      const res = await fetch('/api/getrejectentry', {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ branchid }),
+          cache: 'no-store'
+      });
+
+      //const data = await res.json();
+
+      return  res.json();
+
+  } catch (error) {
+    throw new Error(error);
+  }
+} 
+
+
+
+
 
 // export async function DELETE(request) {
 //   const id = request.nextUrl.searchParams.get("id");
@@ -331,12 +432,12 @@ const getFeeData = () => {
   
   const GetApiData = async () => {
   
-    const apiUrl = process.env.API_URL;
+    const apiUrl = process.env.NEXT_PUBLIC_NEXTAUTH_URL;
   
     const feedata = getFeeData();
   
     try {
-      const response = await fetch(process.env.API_URL + '/api/fetchandpostapi', {
+      const response = await fetch(apiUrl + '/api/fetchandpostapi', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

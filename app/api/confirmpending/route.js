@@ -32,7 +32,7 @@ export async function POST(request) {
  
          const body = await request.json();
 
-         console.log(body);
+         //console.log(body);
 
          await connectMongoDB();
          const transid = body.transid;
@@ -47,6 +47,20 @@ export async function POST(request) {
         let comid, branchid, username,entrydate,entrytype,category,description,totalamount,remarks;
 
         console.log('---Get Data From Branch Entry to Insert into Finance Table');
+
+        function formatDate(date) {
+            var d = new Date(date),
+              month = '' + (d.getMonth() + 1),
+              day = '' + d.getDate(),
+              year = d.getFullYear();
+        
+            if (month.length < 2)
+              month = '0' + month;
+            if (day.length < 2)
+              day = '0' + day;
+        
+            return [day, month, year].join('-');
+          }        
         
 
         data.map((item) => {
@@ -56,7 +70,7 @@ export async function POST(request) {
             category=item.category,
             description=item.description,
             totalamount=item.totalamount,
-            remarks=item.remarks
+            remarks='Issance Date: ' + formatDate(item.entrydate) +', ' + item.remarks
         });
  
         let currentDate=new Date();
@@ -100,13 +114,11 @@ export async function POST(request) {
                iscancel:null
            })
         }
-
-        console.log('--Create Finance Entry From API--')
-                 
+    
          return NextResponse.json({message: "Amount Received"},{status: 201});
 
     } catch (error) {
-        return  NextResponse.json({message: "Error In Amount Receiving"},{status: 500}); 
+      return new NextResponse("Error " + error.message, {status:500});
     }
 }
 

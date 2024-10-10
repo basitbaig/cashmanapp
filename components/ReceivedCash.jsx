@@ -8,10 +8,13 @@ import { setCookie, getCookie, getCookies } from 'cookies-next';
 import toast, { Toaster } from 'react-hot-toast';
 import { revalidatePath } from "next/cache"
 import { usePathname } from "next/navigation";
+import { useTransaction } from '@/context/TransactionContext';
 
 export default function ReceivedCash({ ...props }) {
  
     const curpath = usePathname();
+
+    const { setTransactionTrigger } = useTransaction();
 
     const { pending } = useFormStatus()
 
@@ -43,7 +46,7 @@ export default function ReceivedCash({ ...props }) {
     const handleSubmit = async (e) => {
         e.preventDefault();
  
-        const apiUrl = process.env.API_URL;
+        const apiUrl = process.env.NEXT_PUBLIC_NEXTAUTH_URL;
 
         const formvalues = { comid, branchid, username, entrydate, entrytype, category, description, totalamount, remarks };
 
@@ -57,9 +60,23 @@ export default function ReceivedCash({ ...props }) {
 
             if (res.ok) {
 
-                setCookie('recordupdate','true')
+                toast("Cash successfully Received...");
+
+                setTransactionTrigger(true);
+                //setCookie('recordupdate','true')
                 // revalidatePath('/' + curpath)
-                toast("Cash Sucessfully Received...")
+
+
+                // Dispatch a custom event
+                // const event = new Event('transactionCompleted');
+                // window.dispatchEvent(event);
+
+
+                SetCategory("Select Cash Head");
+                SetDescription("");
+                SetTotalamount("");
+                SetRemarks("");
+         
 
                 document.getElementById('recv_modal').close();
 
@@ -101,7 +118,7 @@ export default function ReceivedCash({ ...props }) {
 
 
         <div>
-            <button className='rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-700'
+            <button className='rounded bg-blue-500 px-4 py-4 w-40 text-white hover:bg-blue-700'
                 onClick={() => (document.getElementById('recv_modal')).showModal()}
             >
                 Cash Received
@@ -116,7 +133,7 @@ export default function ReceivedCash({ ...props }) {
                         </button>
                     </div>
                     <section className="bg-white dark:bg-gray-900">
-                        <div className="py-8 px-4 mx-auto max-w-2xl lg:py-16">
+                        <div className="py-4 px-4 mx-auto max-w-2xl lg:py-10">
                             <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-white">Cash Collection Form</h2>
 
                             <form onSubmit={handleSubmit}>
@@ -141,7 +158,8 @@ export default function ReceivedCash({ ...props }) {
                                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                             placeholder="Collection Date"
                                             required
-                                            onChange={(e) => SetEntrydate(e.target.value)}
+                                            defaultValue={new Date().toISOString().split('T')[0]} // Set default value as current date
+                                            //onChange={(e) => SetEntrydate(e.target.value)}
                                         />
                                     </div>
                                     <div className="w-full">
@@ -159,7 +177,7 @@ export default function ReceivedCash({ ...props }) {
                                         <label htmlFor="category" className="w-full max-w-xs">Collection Purpose</label>
 
                                         <select data-te-select-init data-te-select-clear-button="true" className="w-full max-w-xs" id="category" name="category" required onChange={(e) => SetCategory(e.target.value)}>
-                                        <option value="0">Select Cash Head</option>
+                                        <option value="">Select Cash Head</option>
                                             {
                                                 headlist.map((opts, _id) => <option key={_id} value={opts.cashexphead}>{opts.cashexphead}</option>)
                                             }
@@ -173,14 +191,14 @@ export default function ReceivedCash({ ...props }) {
                                             id="receiveby"
                                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                             placeholder="Receiver Name"
-                                            value={username}
+                                            defaultValue={username}
                                             readOnly
                                         />
                                     </div>
                                     <div className="sm:col-span-2">
                                         <label htmlFor="description" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
                                         <textarea id="description" name="description"
-                                            rows="5"
+                                            rows="3"
                                             className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                             placeholder="Your description here"
                                             value={description}

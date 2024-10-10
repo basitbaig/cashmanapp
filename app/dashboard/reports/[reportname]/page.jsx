@@ -1,6 +1,10 @@
 "use client";
 
 import CashLedger from "@/app/reports/CashLedger";
+import StudentLedger from "@/app/reports/StudentLedger";
+import HeadwiseSummary from "@/app/reports/HeadwiseSummary";
+import RejectEntries from "@/app/reports/RejectEntries";
+
 
 export default function ReportName({params}) {
  
@@ -12,6 +16,20 @@ export default function ReportName({params}) {
             {
               reportName=="cashledger" && <CashLedger />          
             }
+
+           {
+               reportName=="studentledger" && <StudentLedger />          
+            }
+
+            {
+                reportName=="headwisesummary" && <HeadwiseSummary /> 
+            }
+
+            {
+                reportName=="rejectentry" && <RejectEntries /> 
+            }
+
+
 
             {reportName=="pendingcash" &&             
                 <div className="grid justify-items-center py-3">

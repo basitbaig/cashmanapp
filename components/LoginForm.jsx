@@ -4,14 +4,11 @@ import toast, { Toaster } from 'react-hot-toast';
 import Image from 'next/image';
 import { useRouter } from "next/navigation";
 import { signIn, signOut, useSession } from "next-auth/react";
- 
-
-
 import { deleteCookie, setCookie, getCookies, hasCookie } from 'cookies-next';
 import Link from "next/link";
 
 const getLoginUser = async ({ email, password }) => {
-
+    const apiUrl = process.env.NEXT_PUBLIC_NEXTAUTH_URL;
     try {
 
         const res = await fetch('/api/checklogin', {
@@ -58,6 +55,8 @@ export default function LoginForm() {
             deleteCookie('usertype', { path: '/', });
             deleteCookie('userrole', { path: '/', });
             deleteCookie('firstlogin', { path: '/', });
+            deleteCookie('recordupdate', { path: '/', });
+
 
             console.log('Cookies Removed....');
         }
@@ -74,8 +73,7 @@ export default function LoginForm() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setError("");
-        
+ 
         signIn("credentials", { email, password, redirect: false }).then(async (e) => {
             if (e.error) {
                 setError("Invalid email/password")
@@ -105,6 +103,8 @@ export default function LoginForm() {
                         setCookie('usertype', userdata?.user?.usertype, { path: '/', });
                         setCookie('userrole', userdata?.user?.userrole, { path: '/', });
                         setCookie('firstlogin', userdata?.user?.firstlogin, { path: '/', });
+                        setCookie('recordupdate', true , { path: '/', });
+
 
                         const userinfo = getCookies();
 
@@ -113,7 +113,7 @@ export default function LoginForm() {
 
                         router.push('dashboard');
 
-                        toast("User Sucessfully Login...")
+                        toast("User Successfully Login...")
                     }
 
                 } catch (error) {

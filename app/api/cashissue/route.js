@@ -9,8 +9,8 @@ export async function POST(request) {
 
         const body = await request.json();
  
-        let ispending = body.branchid==19 ? Boolean(0) : Boolean(1);
-        let isposted = body.branchid == 19 ? Boolean(1) : Boolean(0);
+        let ispending = parseInt(body.branchid)==19 ? Boolean(0) : Boolean(1);
+        let isposted = parseInt(body.branchid) == 19 ? Boolean(1) : Boolean(0);
  
         await connectMongoDB();
 
@@ -47,10 +47,8 @@ export async function POST(request) {
         return NextResponse.json({message: "Amount Issued"},{status: 201});
         
     } catch (error) {
-        
-        console.log('Try Block Error');
-
-        return  NextResponse.json({message: "Error In Amount Issuance"},{status: 500});     
+  
+        return  new NextResponse.json({message: "Error In Cash Issuance"},{status: 500});     
     }
 }
 

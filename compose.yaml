@@ -43,7 +43,7 @@ services:
           action: rebuild
           # it'll watch for changes in the frontend directory and sync the changes with the container real time
         - path: .
-          target: /cashmanapp
+          target: /cashmanager
           action: sync
 
   # define the db service
@@ -58,8 +58,8 @@ services:
     # we're mounting the volume named "amazona" inside the container at /data/db directory
     # this is done so that the data inside the mongodb container is persisted even if the container is stopped
     volumes:
-      - .:/cashmanapp
-      - /cashmanapp/node_modules
+      - .:/cashmanager
+      - /cashmanager/node_modules
       - amazona:/data/db
     env_file:
       - .env

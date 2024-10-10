@@ -30,6 +30,7 @@ export default function Navbar() {
 
   const [Recvheadlist, SetRecvheadlist]=useState([]);
   const [Issuheadlist, SetIssuheadlist]=useState([]);
+  const [loginuser, setLoginUser]=useState(username);
 
 
 
@@ -50,10 +51,11 @@ export default function Navbar() {
   useEffect(() => {
     
     CallDataTypes();
+     
   
   }, []);
  
- 
+    // <IssueCash {...Issuheadlist,...Recvheadlist} />
 
       // removing cookies
     const removeCookie = () => {
@@ -84,24 +86,30 @@ export default function Navbar() {
       
         <ul className="flex flex-row top-2">
 
-  
-
           <li className="px-3">
             <ReceivedCash {...Recvheadlist} />
           </li>
 
           <li className="px-3">
-            <IssueCash {...Issuheadlist} />
+            <IssueCash Issuheadlist={Issuheadlist} Recvheadlist={Recvheadlist} />
           </li>
 
-          <li className="px-2 py-2">
-            <Link className='rounded bg-blue-500 px-4 py-2.5 text-white hover:bg-blue-700' href={'/dashboard/reports'}>
+          <li className="px-3 py-4">
+            <Link className='rounded bg-blue-500 px-4 py-5 text-white hover:bg-blue-700' href={'/dashboard/transactions'}>
+              Transactions
+            </Link>
+          </li>               
+
+          <li className="px-3 py-4">
+            <Link className='rounded bg-blue-500 px-4 py-5 text-white hover:bg-blue-700' href={'/dashboard/reports'}>
               Reports
             </Link>
           </li>
 
+     
+
           <li className="px-2">
-            <div className="px-60">
+            <div className="px-40">
               <span>
                 {firstlogin === 'true' ? router.push('/updatepassword') : ""}
               </span>
@@ -116,7 +124,7 @@ export default function Navbar() {
       
  
       <div className="ml-2">
-        <span className="flex text-white">{username}</span>
+        <span className="flex text-white">{loginuser}</span>
 
         {/* <Link className="flex text-white" href={'/'}>Logout</Link> */}
 

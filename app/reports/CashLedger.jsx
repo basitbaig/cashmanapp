@@ -12,11 +12,41 @@ import { useReactToPrint } from 'react-to-print';
 
 export default function CashLedger() {
 
+ //https://stackoverflow.com/questions/tagged/react-to-print
+ //https://medium.com/readytowork-org/adding-a-header-footer-on-every-print-page-in-a-react-app-66ceccf9b35c
+
   const contentToPrint = useRef(null);
   const handlePrint = useReactToPrint({
     documentTitle: "Print This Document",
+    
+    pageStyle: `@media all {
+        .page-break {
+          display: none;
+        }
+      }
+      @media print {
+        html, body {
+          height: initial !important;
+          overflow: initial !important;
+          -webkit-print-color-adjust: exact;
+        }
+      }
+
+      @media print {
+        .page-break {
+          margin-top: 1rem;
+          display: block;
+          page-break-before: auto;
+        }
+      }
+
+      @page {
+        size: auto;
+        margin: 5mm;
+      }`,
+  content: () => componentRef.current,
     onBeforePrint: () => console.log("before printing..."),
-    onAfterPrint: () => console.log("after printing..."),
+    onAfterPrint: () => console.log("after printing..."),  
     removeAfterPrint: true,
   });
 
@@ -36,10 +66,13 @@ export default function CashLedger() {
   const [branchlist, Setbranchlist] = useState([]);
   const [headlist, Setheadlist] = useState([]);
   const [branchdata, Setbranchdata] = useState([]);
+  const [opbalance, Setopbalance]=useState(0);
   const [showbranchlist, Setshowbranchlist] = useState('none');
   const [showheadlist, Setshowheadlist] = useState('none');
 
   let balance = 0;
+  let opbal = 0;
+   
 
   const callBranchList = async () => {
     Setbranchlist(await getBranchList("all"));
@@ -61,6 +94,7 @@ export default function CashLedger() {
     let htype = "undefined";
     const res = await getCashTypes(htype, hmode)
     Setheadlist(res);
+ 
 
   }
 
@@ -131,10 +165,59 @@ export default function CashLedger() {
     return sa;
   }
 
+  function getOpeningBalance() {
+
+    const balancedata = branchdata.filter(d => {
+       
+      var fdate = new Date(d.entrydate).getTime()
+ 
+      return (fdate < new Date(startdateFilter).getTime());
+     }).sort(firstBy(function (a, b) {
+      return new Date(a.entrydate).getTime() - new Date(b.entrydate).getTime()
+    }));
+
+  
+    balancedata.map((data) => {
+      { 
+
+        data.entrytype === "R" ? opbal += Number(data.totalamount) : opbal -= Number(data.totalamount) 
+      
+      }
+
+      })
+
+      Setopbalance(opbal);
+
+      balance = opbal;
+    }
+
   function getReportData() {
+    const adjustedEndDate = new Date(enddateFilter);
+    adjustedEndDate.setDate(adjustedEndDate.getDate() + 1);  // Add 1 day to the end date
+
+    const data = branchdata.filter(d => {
+        var fdate = new Date(d.entrydate).getTime();
+        
+        return (
+            fdate >= new Date(startdateFilter).getTime() && 
+            fdate < adjustedEndDate.getTime()  // Use the adjusted end date
+        );
+    }).sort(
+        firstBy(function (a, b) {
+            return new Date(a.entrydate).getTime() - new Date(b.entrydate).getTime();
+        }).thenBy("entrytype", "desc")
+    );
+
+    SetcashLedger(data);
+
+    getOpeningBalance();
+
+    setShowMe('inline');
+}
+
+  function getReportDataOLD() {
 
       //this.setState( { bookings : this.state.bookings.filter( book => new Date(book.FromDate).getTime() >= this.state.startDate.getTime() && new Date(book.FromDate).getTime() <= this.state.endDate.getTime())});
-     
 
     const data = branchdata.filter(d => {
        
@@ -175,7 +258,7 @@ export default function CashLedger() {
     CallHeadList();
     CallBranchData();
 
-  }, [branchdata]);
+  }, []);
 
   return (
     <div>
@@ -303,6 +386,9 @@ export default function CashLedger() {
                       <h1 className="font-bold text-1xl text-blue-800">{branchname}</h1>
                       <h3 className="mt-5">From:{startdateFilter}</h3>
                       <h3>To: {enddateFilter}</h3>
+                      <div className="flex flex-row">
+                        <h3>Opening Balance: {formatNumber(opbalance)}</h3>
+                      </div>
                     </div>
                     <div className="mr-5 px-8">
                       <table id="headerTable" className="table-fixed min-w-fit text-left text-sm font-light">
@@ -320,15 +406,17 @@ export default function CashLedger() {
                         <tbody className="border-b dark:border-neutral-500">
 
                           {
+                           
                             cashledger.map((data) => {
+                              
                               { data.entrytype === "R" ? balance += Number(data.totalamount) : balance -= Number(data.totalamount) }
 
                               return <tr className="border-b dark:border-neutral-500" key={data._id}>
                                 <td className="whitespace-nowrap  px-3 py-2">{formatDate(data.entrydate)}</td>
-                                <td className="whitespace-nowrap  px-3 py-2">{data.category + '\n' + data.description + '\n' + data.remarks}</td>
-                                <td className="whitespace-nowrap  text-right">{data.entrytype === "R" ? formatNumber(data.totalamount) : "0"}</td>
-                                <td className="whitespace-nowrap  text-right">{data.entrytype === "I" ? formatNumber(data.totalamount) : "0"}</td>
-                                <td className="whitespace-nowrap  text-right font-bold text-blue-800">{formatNumber(balance)}</td>
+                                <td className="text-wrap px-3 py-2">{data.category + '\n' + data.description }</td>
+                                <td className="whitespace-nowrap  ">{data.entrytype === "R" ? formatNumber(data.totalamount) : "0"}</td>
+                                <td className="whitespace-nowrap  ">{data.entrytype === "I" ? formatNumber(data.totalamount) : "0"}</td>
+                                <td className="whitespace-nowrap  font-bold text-blue-800">{formatNumber(balance+opbalance)}</td>
 
                               </tr>
                             })

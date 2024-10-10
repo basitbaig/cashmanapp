@@ -39,7 +39,7 @@ export default function UpdatePassword() {
         // console.log(newpassword);
         // console.log(confirmpassword);
 
-        const apiUrl = process.env.API_URL;
+        const apiUrl = process.env.NEXT_PUBLIC_NEXTAUTH_URL;
 
         try {
 

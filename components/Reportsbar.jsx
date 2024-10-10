@@ -36,24 +36,34 @@ export default function Reportsbar() {
 
                   <li className="relative mt-9">
                       <Link className="text-md px-8 py-8" href={{ pathname: '/dashboard/reports/cashledger' }}>
-                         Cash Ledger Report
+                         Cash Ledger
                       </Link>
                   </li>
+
+
                   <li className="relative mt-9">
-                      <Link className="text-md px-8 py-8 " href={{ pathname: '/dashboard/reports/pendingcash' }}>
-                         Pending Cash Report
+                      <Link className="text-md px-8 py-8" href={{ pathname: '/dashboard/reports/studentledger' }}>
+                         Students Wise Ledger
                       </Link>
                   </li>
+
                   <li className="relative mt-9">
-                      <Link className="text-md px-8 py-8 " href={{ pathname: '/dashboard/reports/rejectcash' }}>
-                         Reject Cash Report
+                      <Link className="text-md px-8 py-8" href={{ pathname: '/dashboard/reports/headwisesummary' }}>
+                         Head Wise Summary
                       </Link>
-                  </li>       
-                  <li className="relative mt-9">
+                  </li>                  
+
+                   <li className="relative mt-9">
+                      <Link className="text-md px-8 py-8 " href={{ pathname: '/dashboard/reports/rejectentry' }}>
+                         Reject Entries List
+                      </Link>
+                  </li>
+    
+                  {/*<li className="relative mt-9">
                       <Link className="text-md px-8 py-8 " href={{ pathname: '/dashboard/reports/cancelcash' }}>
                         Cancel Cash Report 
                       </Link>
-                  </li>       
+                  </li>        */}
  
                 </ul>
             </nav>

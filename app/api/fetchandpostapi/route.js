@@ -44,7 +44,5 @@ export async function POST(request, response) {
  
   } catch (error) {
     return NextResponse.json({ message: "Error In User Registration" }, { status: 500 });
-
- 
   }
 }

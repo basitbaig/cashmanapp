@@ -23,9 +23,10 @@ export default function BranchList() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        const apiUrl = process.env.NEXT_PUBLIC_NEXTAUTH_URL;
 
         const formvalues = { branchid, branchname, company, branchemail };
-        const apiUrl = process.env.API_URL;
+
         try {
 
             const res = await fetch('/api/addupdatebranchlist', {
@@ -119,10 +120,11 @@ export default function BranchList() {
                                     </div>
                                     <div>
                                         <label htmlFor="company" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Company Name</label>
-                                        <select data-te-select-init data-te-select-clear-button="true" name="company" required onChange={(e) => SetHeadType(e.target.value)}>
+                                        <select data-te-select-init data-te-select-clear-button="true" name="company" required onChange={(e) => SetCompany(e.target.value)}>
                                             <option value="">Select Company</option>
                                             <option value="1">FPS</option>
-                                            <option value="2">HSS</option>
+                                            <option value="2">HSS</option>   
+                                            <option value="3">VIDA</option>
                                         </select>
                                     </div>
                                     <div className="sm:col-span-2">
@@ -144,7 +146,7 @@ export default function BranchList() {
                                             id="createby"
                                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                             placeholder="Creator Name"
-                                            value={username}
+                                            defaultValue={username}
                                             readOnly
                                         />
                                     </div>

@@ -6,49 +6,90 @@ import { IconContext } from "react-icons";
 import { TiUserDelete } from "react-icons/ti";
 import { BsTrash3 } from "react-icons/bs";
 import { GrUserNew } from "react-icons/gr";
-import { updateUser } from "@/service/getdata"
+import { userInfo, updateUser } from "@/service/getdata";
  
-export default function Userinfo({...props}) {
+
+
+export default function Userinfo() {
     
+   //...props
+
     const username = getCookie('username');
     const branchid = getCookie('branchid');
     const usertype = getCookie('usertype');
     const userrole = getCookie('userrole');
     const firstlogin = getCookie('firstlogin');
 
-    const userlist = [...Object.values(props)];
+    //const userlist = [...Object.values(props)];
+    //...Object.values(props)
+
+    const [userlist, setUserlist] = useState([]);
+    const [loading, setLoading] = useState(false);
  
-     
-    const [state, setState] = useState('initial');
-    const [userdata, SetuserData] = useState([]);
+  
+    //await userInfo()
+
+    const CallUserList = async () => {
+
+      setUserlist(await userInfo());
+    }
+
 
     const CallUpdateUser = async (userid,action) => {
 
       //<Link to={`#`} onClick={() => {if(window.confirm('Are you sure to delete this record?')){ this.deleteHandler(item.id)};}}> <i className="material-icons">Delete</i> </Link>
       //console.log(userid,action)
+
+      await updateUser({userid,action});
       
-      SetuserData(await updateUser({userid,action}))
-  }
+      CallUserList();
+      
+      //setUserlist(await updateUser({userid,action}));
+ 
+      
+    }
 
     function handleActive (userid,status) {
       //e.preventDefault();
-      console.log(status);
+      //console.log(status);
       CallUpdateUser(userid,status == false ? "InActive" : "Active")
- 
+     
+       
     }
 
     function handleDelete (userid) {
       //e.preventDefault();
-      CallUpdateUser(userid,"Delete")  
+      CallUpdateUser(userid,"Delete");
+      
+      
+ 
     };    
 
     useEffect(() => {
+      // Call the function on the initial load
+      CallUserList();
+     
+    }, []);
 
-      if (userdata.length==0)
-      {
-        SetuserData(userlist) 
-      }                
-    }, [userdata]);   
+
+    // useEffect(() => {
+    //   if (transactionTrigger) {
+    //     console.log('Now Calling API for Fresh user information');
+    //     CallUserList();
+    //     setTransactionTrigger(false); // Reset the trigger
+    //   }
+    // }, [transactionTrigger]);
+
+
+
+    // useEffect(() => {
+
+    //   if (userdata.length==0 || recordchange==true)
+    //   {
+        
+    //     setRecordChange(false);
+    //   }                
+    // }, [userdata]);   
 
     //Filter array to create new array on condition
     // setArtists(                                                                                                                                                                                                                                                                      
@@ -61,9 +102,7 @@ export default function Userinfo({...props}) {
 
   return (
     
-    <div className="md:container md:mx-auto">
-
-    
+      <div className="md:container md:mx-auto">
         <div className="relative overflow-x-auto mt-8">
  
           <table className="table-fixed min-w-full text-left text-sm font-light">
@@ -81,7 +120,7 @@ export default function Userinfo({...props}) {
 
               <tbody className="border-b dark:border-neutral-500">
                 {
-                  userdata.map((item) => {
+                  userlist.map((item) => {
                     
                     return <tr className="border-b dark:border-neutral-500" key={item._id}>
                       <td className="whitespace-nowrap  px-3 py-2">{item.branchname}</td>
@@ -117,20 +156,20 @@ export default function Userinfo({...props}) {
                     </tr>                                                        
                   })
                 }
-                {userdata.length === 0 && (
-                  <p className="text-center">No User Record.</p>
+                {userlist.length === 0 && (
+                  <tr className="text-center"><td>No User Record.</td></tr>
                 )}
 
               </tbody>
  
-            </table>
+          </table>
 
          
 
         </div>
 
-    </div>
-  );
+      </div>
+    );
 }
 
  

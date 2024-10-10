@@ -6,6 +6,7 @@ import ShowBranchDashboard from "@/components/ShowBranchDashboard";
 import ShowPendingCash from "@/components/ShowPendingCash";
 import { useState, useEffect } from "react";
 import { pendingCash } from '@/service/getdata'
+import { useTransaction } from '@/context/TransactionContext';
  
 import { setCookie, getCookie, getCookies } from 'cookies-next';
  
@@ -20,6 +21,8 @@ export default function BranchDashboard() {
 
   const [showMe, setShowMe] = useState(false);
   const [pendingcash, Setpendingcash] = useState([]);
+  const [initialLoad, setInitialLoad] = useState(true);
+  const { transactionTrigger, setTransactionTrigger } = useTransaction();  
 
   let pendingcount = "";
 
@@ -32,7 +35,15 @@ export default function BranchDashboard() {
 
     pendingcount = pendData.length;
 
-    SetPendingTag();
+    if (pendData.length==0)
+    {
+      setShowMe(false);
+    }
+    else
+    {
+      SetPendingTag();
+    }
+    
 
   }
 
@@ -46,15 +57,27 @@ export default function BranchDashboard() {
     setShowMe(!showMe);
   }
 
-  function refreshMyPage() {
-    window.location.reload();
-  }
+  // function refreshMyPage() {
+  //   window.location.reload();
+  // }
 
   useEffect(() => {
-    CallPendingCash();
+    // Call the function on the initial load
+    if (initialLoad) {
+      CallPendingCash();
+      setInitialLoad(false);
+    }
+  }, [initialLoad]);
 
-  }, []);
+  useEffect(() => {
+    if (transactionTrigger) {
+      CallPendingCash();// Fetch data when a transaction occurs
+      setTransactionTrigger(false); // Reset the trigger
+    }
+  }, [transactionTrigger]);
 
+
+   
   //Format Data as per Customize Style
   function formatDate(date) {
     var d = new Date(date),
